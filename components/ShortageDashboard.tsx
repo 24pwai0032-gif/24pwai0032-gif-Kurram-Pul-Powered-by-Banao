@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { AreaCard } from "@/components/dashboard/AreaCard";
 import { KurramMap } from "@/components/dashboard/KurramMap";
+import { ReportStock } from "@/components/dashboard/ReportStock";
 import { RoadStatus } from "@/components/dashboard/RoadStatus";
 import { SummaryPanel } from "@/components/dashboard/SummaryPanel";
 import { computeStats, summarizeAreas } from "@/lib/dashboard";
@@ -21,11 +22,14 @@ export function ShortageDashboard() {
 
   return (
     <section aria-labelledby="dashboard-title" className="space-y-6">
-      <header className="space-y-2">
-        <h1 id="dashboard-title" className="text-heading text-text-primary">
-          {t("dashboard.title")}
-        </h1>
-        <p className="text-body text-text-secondary">{t("dashboard.subtitle")}</p>
+      <header className="flex flex-wrap items-end justify-between gap-4">
+        <div className="space-y-2">
+          <h1 id="dashboard-title" className="text-heading text-text-primary">
+            {t("dashboard.title")}
+          </h1>
+          <p className="text-body text-text-secondary">{t("dashboard.subtitle")}</p>
+        </div>
+        <ReportStock />
       </header>
 
       {/* First, the situation in one line: the road is closed, and what that means right now. */}

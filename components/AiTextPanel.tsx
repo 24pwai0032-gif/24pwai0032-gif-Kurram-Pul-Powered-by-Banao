@@ -118,7 +118,7 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
               type="button"
               aria-expanded={expanded}
               onClick={() => setExpanded((v) => !v)}
-              className="mt-2 text-caption font-semibold text-brand-text underline-offset-4 hover:underline"
+              className="mt-2 py-1 text-caption font-semibold text-brand-text underline-offset-4 hover:underline"
             >
               {expanded ? t("ai.showLess") : t("ai.showMore")}
             </button>

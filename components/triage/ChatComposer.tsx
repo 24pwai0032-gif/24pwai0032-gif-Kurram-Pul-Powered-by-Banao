@@ -39,6 +39,7 @@ export function ChatComposer() {
         </label>
         <textarea
           id="triage-input"
+          aria-label={t("triage.inputLabel")}
           rows={2}
           value={draft}
           maxLength={500}

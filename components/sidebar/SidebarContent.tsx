@@ -5,6 +5,7 @@ import { useMemo, type ReactNode } from "react";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { BrandMark } from "@/components/sidebar/BrandMark";
 import { useTour } from "@/components/tour/useTour";
+import { resetWork } from "@/lib/savedWork";
 import { computeStats, summarizeAreas } from "@/lib/dashboard";
 import { parseRiskLevel, type RiskLevel } from "@/lib/forecast";
 import { findMatches } from "@/lib/matching";
@@ -133,7 +134,10 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           <Info aria-hidden />
           <span>
             <strong className="block font-semibold text-on-sign">{t("app.demoBadge")}</strong>
-            {t("app.demoBadgeText")}
+            {t("app.demoBadgeText")}{" "}
+            <button type="button" data-reset-demo onClick={resetWork} className="font-semibold text-signal underline-offset-4 hover:underline">
+              {t("report.reset")}
+            </button>
           </span>
         </p>
         <LanguageToggle />

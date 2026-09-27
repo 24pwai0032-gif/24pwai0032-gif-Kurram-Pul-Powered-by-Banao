@@ -63,6 +63,29 @@ function Point({ title, children, sources }: { title: string; children: ReactNod
   );
 }
 
+const WHO = ["hospital", "pharmacy", "edhi", "elders"] as const;
+
+/** The first users, all people who already coordinate during closures; no new institution needed. */
+function WhoUsesIt() {
+  const { t } = useT();
+  return (
+    <section aria-labelledby="who-title" className="@container">
+      <h2 id="who-title" className="text-title text-text-primary">
+        {t("about.who.title")}
+      </h2>
+      <p className="mt-2 max-w-3xl text-body text-text-secondary">{t("about.who.intro")}</p>
+      <ul className="mt-4 grid gap-4 @xl:grid-cols-2 @4xl:grid-cols-4">
+        {WHO.map((who) => (
+          <li key={who} className="card-routine">
+            <h3 className="text-lead text-text-primary">{t(`about.who.${who}.title`)}</h3>
+            <p className="mt-1 text-body text-text-secondary">{t(`about.who.${who}.body`)}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 const EXPLORE: { view: Exclude<ViewId, "about">; icon: LucideIcon }[] = [
   { view: "dashboard", icon: LayoutGrid },
   { view: "matcher", icon: ArrowLeftRight },
@@ -122,9 +145,13 @@ export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => voi
         <HowItWorks />
       </div>
 
-      <KurramMap variant="place" title={t("about.mapTitle")} caption={t("about.mapCaption")} className="rise" style={riseOrder(3)} />
+      <div className="rise" style={riseOrder(3)}>
+        <WhoUsesIt />
+      </div>
 
-      <div className="rise grid gap-8 @3xl:grid-cols-3 @3xl:gap-6" style={riseOrder(4)}>
+      <KurramMap variant="place" title={t("about.mapTitle")} caption={t("about.mapCaption")} className="rise" style={riseOrder(4)} />
+
+      <div className="rise grid gap-8 @3xl:grid-cols-3 @3xl:gap-6" style={riseOrder(5)}>
         <Point title={t("about.whyTitle")} sources={[SOURCES.mobileData]}>
           <p>{t("about.whyText")}</p>
           <p className="font-medium text-text-primary">{t("about.commsFact")}</p>
@@ -138,7 +165,7 @@ export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => voi
         </Point>
       </div>
 
-      <section aria-labelledby="explore-title" className="rise" style={riseOrder(5)}>
+      <section aria-labelledby="explore-title" className="rise" style={riseOrder(6)}>
         <h2 id="explore-title" className="text-title text-text-primary">
           {t("about.exploreTitle")}
         </h2>

@@ -41,11 +41,21 @@ async function savedLanguage(): Promise<Locale> {
   return isLocale(saved) ? saved : DEFAULT_LOCALE;
 }
 
+const DESCRIPTION =
+  "When the road to Parachinar closes, Kurram Pul tells responders who needs what, how urgently, who can help nearby, and how soon it might happen again.";
+
+// Absolute URLs for the share preview (app/opengraph-image.png): the production domain on Vercel.
+const SITE = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000";
+
 export async function generateMetadata(): Promise<Metadata> {
+  const title = translate(await savedLanguage(), "app.name");
   return {
-    title: translate(await savedLanguage(), "app.name"),
-    description:
-      "When the road to Parachinar closes, Kurram Pul tells responders who needs what, how urgently, who can help nearby, and how soon it might happen again.",
+    metadataBase: new URL(SITE),
+    title,
+    description: DESCRIPTION,
+    // What a pasted link shows in WhatsApp, Discord or X: the name, the pitch and the preview card.
+    openGraph: { type: "website", siteName: "Kurram Pul", title: "Kurram Pul · Parachinar, Kurram District", description: DESCRIPTION },
+    twitter: { card: "summary_large_image", title: "Kurram Pul · Parachinar, Kurram District", description: DESCRIPTION },
   };
 }
 

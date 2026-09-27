@@ -97,6 +97,21 @@
   font-family: var(--font-display-face), var(--font-pashto);
 }
 
+/* The language buttons name each language in its own script. Unless the page is already in that
+   language, they use the system's font, so an English visit doesn't download the Urdu and Pashto
+   faces (about 400 KB) for two words. */
+[data-lang-option] {
+  font-family: var(--font-sans);
+}
+
+html[lang="ur"] [data-lang-option][lang="ur"] {
+  font-family: var(--font-body-face), var(--font-urdu);
+}
+
+html[lang="ps"] [data-lang-option][lang="ps"] {
+  font-family: var(--font-body-face), var(--font-pashto);
+}
+
 /* Line height on every element, since Tailwind's per-size line heights would clip Nastaliq's tall letterforms. */
 :lang(ur) {
   line-height: var(--leading-nastaliq);

@@ -22,6 +22,9 @@ export function ReportRow({ report, stale }: ReportView) {
           }
         >
           {tSupply(report.supply)}
+          {report.submitted && (
+            <span className="ms-2 text-caption font-bold tracking-wide text-brand-text uppercase">{t("report.newLabel")}</span>
+          )}
         </span>
         <SeverityBadge status={report.status} muted={stale} quiet />
       </div>

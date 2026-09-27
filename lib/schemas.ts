@@ -56,7 +56,11 @@ export type SeedReports = z.infer<typeof SeedReportsSchema>;
 // The JSON has no ids, so the app adds one when loading (lib/seed.ts). React keys and
 // later edits (verifying a report, logging a case) need a stable handle on each item.
 
-export type ReportRecord = SupplyReport & { id: string };
+export type ReportRecord = SupplyReport & {
+  id: string;
+  /** Set on a report someone submitted in the app (seed reports have none). */
+  submitted?: boolean;
+};
 export type AreaRecord = Omit<Area, "reports"> & { reports: ReportRecord[] };
 export type TriageCaseRecord = TriageCase & {
   id: string;

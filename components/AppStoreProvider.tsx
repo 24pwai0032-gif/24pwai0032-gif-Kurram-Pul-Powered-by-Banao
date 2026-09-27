@@ -4,7 +4,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import { INTRO_COOKIE } from "@/lib/about";
 import { dirFor, LOCALE_COOKIE, translate } from "@/lib/i18n";
 import { MINUTE_MS } from "@/lib/staleness";
-import { AppStoreContext, createAppStore, type AppStoreInit } from "@/lib/store";
+import { loadWork, saveWork } from "@/lib/savedWork";
+import { AppStoreContext, createAppStore, savedWork, type AppStoreInit } from "@/lib/store";
 
 type AppStoreProviderProps = AppStoreInit & { children: ReactNode };
 
@@ -30,6 +31,25 @@ export function AppStoreProvider({ children, ...init }: AppStoreProviderProps) {
       }),
     [store],
   );
+
+  // Bring back this visitor's own work after a reload, then keep saving it as it changes.
+  // Restoring after the first render keeps the server and client renders identical.
+  useEffect(() => {
+    const saved = loadWork();
+    if (saved) store.getState().restore(saved);
+    return store.subscribe((state, prev) => {
+      if (
+        state.areas !== prev.areas ||
+        state.triageCases !== prev.triageCases ||
+        state.notified !== prev.notified ||
+        state.triage.messages !== prev.triage.messages ||
+        state.triage.area !== prev.triage.area ||
+        state.triage.mode !== prev.triage.mode
+      ) {
+        saveWork(savedWork(state));
+      }
+    });
+  }, [store]);
 
   // Remember a dismissed intro so it isn't shown again on the next visit.
   useEffect(

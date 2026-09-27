@@ -71,7 +71,27 @@
       }
     },
     "introExplore": "Explore on my own",
-    "introReadMore": "Read the full background"
+    "introReadMore": "Read the full background",
+    "who": {
+      "title": "Who uses it first",
+      "intro": "No new institution, no government action and no new hardware: it runs on the people who already coordinate by phone and WhatsApp in every closure, and on basic phones over SMS when mobile data is cut. Residents and health workers use the triage assistant.",
+      "hospital": {
+        "title": "DHQ Hospital staff",
+        "body": "Log medicine and equipment stock, and see where spare supplies are nearby."
+      },
+      "pharmacy": {
+        "title": "Pharmacies",
+        "body": "Report what has run out, and what they can spare."
+      },
+      "edhi": {
+        "title": "Edhi Foundation coordinators",
+        "body": "Report from the community, and carry same-day transfers between areas."
+      },
+      "elders": {
+        "title": "Jirga elders",
+        "body": "Vouch for reports from their area, so responders know which to trust."
+      }
+    }
   },
   "nav": {
     "label": "Main sections",
@@ -181,7 +201,7 @@
     "areaLabel": "Patient’s area",
     "areaPlaceholder": "Choose an area",
     "areaFirst": "Choose the patient’s area first.",
-    "inputLabel": "Describe the patient’s condition",
+    "inputLabel": "Describe the patient",
     "inputPlaceholder": "e.g. My 2-year-old has a high fever and isn’t drinking",
     "answerPlaceholder": "Answer the question above",
     "send": "Send",
@@ -423,5 +443,19 @@
     "silent": "areas silent 12 h+",
     "verified": "reports verified",
     "verifiedValue": "{verified}/{total}"
+  },
+  "report": {
+    "open": "Report stock",
+    "title": "Report stock",
+    "intro": "For pharmacies, health facilities, Edhi coordinators and jirga elders. A new report shows as unverified until an elder or a facility record vouches for it.",
+    "area": "Area",
+    "supply": "Supply",
+    "status": "Stock level",
+    "reporter": "Your name or organisation",
+    "reporterPlaceholder": "e.g. Al-Shifa Pharmacy",
+    "submit": "Add report",
+    "cancel": "Cancel",
+    "newLabel": "New",
+    "reset": "Reset demo"
   }
 }

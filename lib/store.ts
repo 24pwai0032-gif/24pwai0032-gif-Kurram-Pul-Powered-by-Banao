@@ -2,9 +2,9 @@ import { createContext, useContext } from "react";
 import { createStore, useStore, type StoreApi } from "zustand";
 import { ApiError, fetchForecast, fetchMatchReview, fetchSummary, fetchTriage, type AiText } from "@/lib/api";
 import type { Locale } from "@/lib/i18n";
-import type { AreaRecord, ClosureHistory, SeedReports, TriageCaseRecord, VerificationTag } from "@/lib/schemas";
+import type { AreaRecord, ClosureHistory, ReportRecord, SeedReports, SupplyStatus, TriageCaseRecord, VerificationTag } from "@/lib/schemas";
 import { loadSeed, toSeedShape } from "@/lib/seed";
-import { canonicalSupply } from "@/lib/stock";
+import { canonicalSupply, sameSupply } from "@/lib/stock";
 import type { TourStep } from "@/lib/tour";
 import { composeDescription, type TriageClassification } from "@/lib/triage";
 
@@ -96,6 +96,38 @@ export interface AppActions {
   sendTriageMessage: (text: string, options?: { newCase?: boolean }) => Promise<void>;
   retryTriage: () => Promise<void>;
   resetTriage: () => void;
+  /**
+   * Adds a stock report from a pharmacy, facility, coordinator or elder. It replaces the area's
+   * previous report for the same supply and starts unverified. Returns the new report's id.
+   */
+  addReport: (input: { area: string; supply: string; status: SupplyStatus; reportedBy: string }) => string;
+  /** Puts back what this visitor did before a reload (see AppStoreProvider). */
+  restore: (saved: SavedWork) => void;
+}
+
+/** What survives a reload: the visitor's own reports, logged cases, notifications and conversation. */
+export interface SavedWork {
+  reports: { area: string; report: ReportRecord }[];
+  cases: TriageCaseRecord[];
+  notified: Record<string, string>;
+  triage: Pick<TriageState, "mode" | "area" | "messages">;
+}
+
+/** The area's reports with a new one in place of any earlier report for the same supply. */
+function withReport(areas: AreaRecord[], areaName: string, report: ReportRecord): AreaRecord[] {
+  return areas.map((a) =>
+    a.name === areaName ? { ...a, reports: [report, ...a.reports.filter((r) => !sameSupply(r.supply, report.supply))] } : a,
+  );
+}
+
+/** Reads the visitor's saved work out of the store, for saving. */
+export function savedWork(s: AppState): SavedWork {
+  return {
+    reports: s.areas.flatMap((a) => a.reports.filter((r) => r.submitted).map((report) => ({ area: a.name, report }))),
+    cases: s.triageCases.filter((c) => c.loggedAt !== undefined),
+    notified: s.notified,
+    triage: { mode: s.triage.mode, area: s.triage.area, messages: s.triage.messages },
+  };
 }
 
 export type AppStore = AppState & AppActions;
@@ -244,6 +276,29 @@ export function createAppStore({ language, showIntro, seed, verificationTags, cl
         const { lastDescription, pending } = get().triage;
         if (lastDescription !== null && !pending) await runTriage(lastDescription);
       },
+      addReport: ({ area, supply, status, reportedBy }) => {
+        const report: ReportRecord = {
+          id: nextId("report"),
+          supply: canonicalSupply(supply, get().areas),
+          status,
+          reported_by: reportedBy.trim(),
+          verified_by: null,
+          timestamp: new Date().toISOString(),
+          submitted: true,
+        };
+        set((s) => ({ areas: withReport(s.areas, area, report), dataVersion: s.dataVersion + 1 }));
+        return report.id;
+      },
+
+      restore: (saved) =>
+        set((s) => ({
+          areas: saved.reports.reduce((areas, { area, report }) => withReport(areas, area, report), s.areas),
+          triageCases: [...s.triageCases.filter((c) => c.loggedAt === undefined), ...saved.cases],
+          notified: saved.notified,
+          triage: { ...s.triage, ...saved.triage },
+          dataVersion: s.dataVersion + 1,
+        })),
+
       resetTriage: () => updateTriage({ messages: [], awaiting: null, lastDescription: null }),
     };
   });

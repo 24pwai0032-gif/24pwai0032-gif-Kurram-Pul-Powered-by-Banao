@@ -32,6 +32,7 @@ export function LanguageToggle() {
             type="button"
             lang={locale}
             dir={dirFor(locale)}
+            data-lang-option
             aria-pressed={active}
             onClick={() => choose(locale)}
             className={`rounded-sm px-2 py-2 text-caption font-semibold transition-colors ${

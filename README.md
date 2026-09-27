@@ -8,6 +8,7 @@ Built for the Banao Imaginathon (Health, Parachinar, Kurram District). Full spec
 
 During a Parachinar closure, phone and internet service break down along with supply. Every part is built to keep working in that situation, not just in the best case.
 
+- **Report stock.** A pharmacy, health facility, Edhi coordinator or elder picks the area, the supply and its level, and signs it. The report appears on the dashboard at once, updates the road-status figures and feeds the surplus matcher; it starts unverified until an elder or facility record vouches for it.
 - **Shortage dashboard.** Supply reports from six areas, each marked by who verified it (a jirga elder, a facility record, an Edhi coordinator) and how recent it is. An area that has gone quiet is flagged as a blind spot. An AI summary gives a responder a 30-second read.
 - **Triage assistant.** Someone describes a patient and gets an urgency level (critical, needs supplies, routine) and a next step. A chat mode works over full connectivity; a plain-text SMS mode works when mobile data is down. Each case is logged to the dashboard.
 - **Surplus matcher.** Spare stock in one area is matched to shortages nearby: same-day fixes that don't wait for the road to reopen. Needs that no other area can cover are listed separately.
@@ -67,7 +68,7 @@ Measured with `gpt-6-luna`: triage replies in 3–4.5 s, the forecast in 5–7 s
 - **"Notify coordinator" sends nothing.** The button records the click; no message goes out.
 - **SMS mode is a simulated gateway.** It shows exactly what an SMS reply would say, with the real message count, but no SMS is sent or received.
 - **"Flagged for air ambulance / Edhi" is display only.** Nothing is dispatched. The Edhi ambulance number (115) is shown as text, not a tap-to-call link, so testers can't call it by accident.
-- **No database.** Triage cases logged in the app live in the browser tab; reloading the page resets to the seed data.
+- **No database.** Reports you submit, cases you log and coordinators you notify are kept in your own browser (local storage), so a reload doesn't lose them; they never leave the device. "Reset demo" in the sidebar clears them.
 - **Not a doctor.** The triage assistant is a prototype and says so at all times.
 
 ## Deploying (Vercel) and CI/CD
