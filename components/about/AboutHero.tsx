@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useTour } from "@/components/tour/useTour";
 import { riseOrder } from "@/lib/motion";
 import { useT } from "@/lib/useT";
-import parachinar from "@/public/images/parachinar.jpg";
 
 const PHOTO_PAGE = "https://commons.wikimedia.org/wiki/File:Parachinar_in_winter.jpg";
 
@@ -20,11 +19,10 @@ export function AboutHero() {
   return (
     <header data-sign className="rise relative isolate min-h-112 overflow-hidden rounded-lg bg-sign text-on-sign" style={riseOrder(0)}>
       <Image
-        src={parachinar}
+        src="/images/parachinar.jpg"
         alt={t("about.photoAlt")}
         fill
         priority
-        placeholder="blur"
         sizes="(min-width: 1024px) 75vw, 100vw"
         className="-z-20 object-cover object-[center_60%]"
       />
