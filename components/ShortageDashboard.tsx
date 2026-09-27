@@ -5,6 +5,7 @@ import { AreaCard } from "@/components/dashboard/AreaCard";
 import { KurramMap } from "@/components/dashboard/KurramMap";
 import { ReportStock } from "@/components/dashboard/ReportStock";
 import { RoadStatus } from "@/components/dashboard/RoadStatus";
+import { StockChart } from "@/components/dashboard/StockChart";
 import { SummaryPanel } from "@/components/dashboard/SummaryPanel";
 import { computeStats, summarizeAreas } from "@/lib/dashboard";
 import { riseOrder } from "@/lib/motion";
@@ -23,21 +24,19 @@ export function ShortageDashboard() {
   return (
     <section aria-labelledby="dashboard-title" className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
-        <div className="space-y-2">
-          <h1 id="dashboard-title" className="text-heading text-text-primary">
-            {t("dashboard.title")}
-          </h1>
-          <p className="text-body text-text-secondary">{t("dashboard.subtitle")}</p>
-        </div>
+        <h1 id="dashboard-title" className="text-heading text-text-primary">
+          {t("dashboard.title")}
+        </h1>
         <ReportStock />
       </header>
 
       {/* First, the situation in one line: the road is closed, and what that means right now. */}
       <RoadStatus summaries={summaries} stats={stats} className="rise" style={riseOrder(0)} />
 
-      {/* Wide screens: the map beside the AI summary. Phones read the summary first. */}
+      {/* Wide screens: the map beside the stock chart and the AI summary. Phones read the chart and summary first. */}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-start">
-        <div className="rise lg:col-start-2 lg:row-start-1" style={riseOrder(2)}>
+        <div className="rise space-y-4 lg:col-start-2 lg:row-start-1" style={riseOrder(2)}>
+          <StockChart summaries={summaries} />
           <SummaryPanel />
         </div>
         <KurramMap

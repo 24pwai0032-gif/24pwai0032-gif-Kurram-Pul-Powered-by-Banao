@@ -3,58 +3,199 @@
     {
       "name": "Parachinar City Center",
       "reports": [
-        { "supply": "Insulin", "status": "critical", "reported_by": "DHQ Hospital", "verified_by": "Hospital record", "timestamp": "2026-09-26T08:00:00Z" },
-        { "supply": "Oxygen", "status": "critical", "reported_by": "DHQ Hospital", "verified_by": "Hospital record", "timestamp": "2026-09-26T08:10:00Z" },
-        { "supply": "Antibiotics", "status": "low", "reported_by": "Al-Shifa Pharmacy", "verified_by": null, "timestamp": "2026-09-26T07:50:00Z" },
-        { "supply": "Surgical supplies", "status": "critical", "reported_by": "DHQ Hospital", "verified_by": "Hospital record", "timestamp": "2026-09-26T09:30:00Z" },
-        { "supply": "Paracetamol", "status": "stable", "reported_by": "Al-Shifa Pharmacy", "verified_by": null, "timestamp": "2026-09-26T07:50:00Z" }
+        {
+          "supply": "Insulin",
+          "status": "critical",
+          "reported_by": "DHQ Hospital",
+          "verified_by": "Hospital record",
+          "timestamp": "2026-09-26T08:00:00Z"
+        },
+        {
+          "supply": "Oxygen",
+          "status": "critical",
+          "reported_by": "DHQ Hospital",
+          "verified_by": "Hospital record",
+          "timestamp": "2026-09-26T08:10:00Z"
+        },
+        {
+          "supply": "Antibiotics",
+          "status": "low",
+          "reported_by": "Al-Shifa Pharmacy",
+          "verified_by": null,
+          "timestamp": "2026-09-26T07:50:00Z"
+        },
+        {
+          "supply": "Surgical supplies",
+          "status": "critical",
+          "reported_by": "DHQ Hospital",
+          "verified_by": "Hospital record",
+          "timestamp": "2026-09-26T09:30:00Z"
+        },
+        {
+          "supply": "Paracetamol",
+          "status": "stable",
+          "reported_by": "Al-Shifa Pharmacy",
+          "verified_by": null,
+          "timestamp": "2026-09-26T07:50:00Z"
+        }
       ]
     },
     {
       "name": "Sadda",
       "reports": [
-        { "supply": "Baby formula", "status": "critical", "reported_by": "Community reporter", "verified_by": "Area elder - Malik Jan", "timestamp": "2026-09-26T06:30:00Z" },
-        { "supply": "ORS", "status": "surplus", "reported_by": "Sadda Medical Store", "verified_by": "Area elder - Malik Jan", "timestamp": "2026-09-26T10:15:00Z" },
-        { "supply": "Paracetamol", "status": "low", "reported_by": "Community reporter", "verified_by": null, "timestamp": "2026-09-26T11:00:00Z" }
+        {
+          "supply": "Baby formula",
+          "status": "critical",
+          "reported_by": "Community reporter",
+          "verified_by": "Area elder - Malik Jan",
+          "timestamp": "2026-09-26T06:30:00Z"
+        },
+        {
+          "supply": "ORS",
+          "status": "surplus",
+          "reported_by": "Sadda Medical Store",
+          "verified_by": "Area elder - Malik Jan",
+          "timestamp": "2026-09-26T10:15:00Z"
+        },
+        {
+          "supply": "Paracetamol",
+          "status": "low",
+          "reported_by": "Community reporter",
+          "verified_by": null,
+          "timestamp": "2026-09-26T11:00:00Z"
+        }
       ]
     },
     {
       "name": "Alizai",
       "reports": [
-        { "supply": "Insulin", "status": "surplus", "reported_by": "Alizai Pharmacy", "verified_by": "Area elder - Sardar Khan", "timestamp": "2026-09-26T09:00:00Z" },
-        { "supply": "Antibiotics", "status": "stable", "reported_by": "Alizai Pharmacy", "verified_by": "Area elder - Sardar Khan", "timestamp": "2026-09-26T09:00:00Z" },
-        { "supply": "Oxygen", "status": "low", "reported_by": "Alizai Basic Health Unit", "verified_by": "Health facility record", "timestamp": "2026-09-26T08:45:00Z" }
+        {
+          "supply": "Insulin",
+          "status": "surplus",
+          "reported_by": "Alizai Pharmacy",
+          "verified_by": "Area elder - Sardar Khan",
+          "timestamp": "2026-09-26T09:00:00Z"
+        },
+        {
+          "supply": "Antibiotics",
+          "status": "stable",
+          "reported_by": "Alizai Pharmacy",
+          "verified_by": "Area elder - Sardar Khan",
+          "timestamp": "2026-09-26T09:00:00Z"
+        },
+        {
+          "supply": "Oxygen",
+          "status": "low",
+          "reported_by": "Alizai Basic Health Unit",
+          "verified_by": "Health facility record",
+          "timestamp": "2026-09-26T08:45:00Z"
+        }
       ]
     },
     {
       "name": "Balishkhel",
       "reports": [
-        { "supply": "Asthma inhalers", "status": "critical", "reported_by": "Community reporter", "verified_by": "Area elder - Haji Gul", "timestamp": "2026-09-26T07:00:00Z" },
-        { "supply": "Antibiotics", "status": "surplus", "reported_by": "Balishkhel Medical Store", "verified_by": null, "timestamp": "2026-09-26T10:30:00Z" },
-        { "supply": "IV fluids", "status": "low", "reported_by": "Edhi Foundation field coordinator", "verified_by": "Area elder - Haji Gul", "timestamp": "2026-09-26T09:15:00Z" }
+        {
+          "supply": "Asthma inhalers",
+          "status": "critical",
+          "reported_by": "Community reporter",
+          "verified_by": "Area elder - Haji Gul",
+          "timestamp": "2026-09-26T07:00:00Z"
+        },
+        {
+          "supply": "Antibiotics",
+          "status": "surplus",
+          "reported_by": "Balishkhel Medical Store",
+          "verified_by": null,
+          "timestamp": "2026-09-26T10:30:00Z"
+        },
+        {
+          "supply": "IV fluids",
+          "status": "low",
+          "reported_by": "Edhi Foundation field coordinator",
+          "verified_by": "Area elder - Haji Gul",
+          "timestamp": "2026-09-26T09:15:00Z"
+        }
       ]
     },
     {
       "name": "Bagan",
       "reports": [
-        { "supply": "ORS", "status": "critical", "reported_by": "Community reporter", "verified_by": null, "timestamp": "2026-09-25T18:00:00Z" },
-        { "supply": "Baby formula", "status": "critical", "reported_by": "Community reporter", "verified_by": "Edhi Foundation coordinator", "timestamp": "2026-09-25T14:00:00Z" },
-        { "supply": "IV fluids", "status": "low", "reported_by": "Community reporter", "verified_by": null, "timestamp": "2026-09-25T20:00:00Z" }
+        {
+          "supply": "ORS",
+          "status": "critical",
+          "reported_by": "Community reporter",
+          "verified_by": null,
+          "timestamp": "2026-09-25T18:00:00Z"
+        },
+        {
+          "supply": "Baby formula",
+          "status": "critical",
+          "reported_by": "Community reporter",
+          "verified_by": "Edhi Foundation coordinator",
+          "timestamp": "2026-09-25T14:00:00Z"
+        },
+        {
+          "supply": "IV fluids",
+          "status": "low",
+          "reported_by": "Community reporter",
+          "verified_by": null,
+          "timestamp": "2026-09-25T20:00:00Z"
+        }
       ]
     },
     {
       "name": "Pewar",
       "reports": [
-        { "supply": "IV fluids", "status": "surplus", "reported_by": "Pewar Basic Health Unit", "verified_by": "Health facility record", "timestamp": "2026-09-26T10:40:00Z" },
-        { "supply": "Paracetamol", "status": "surplus", "reported_by": "Community reporter", "verified_by": null, "timestamp": "2026-09-25T16:00:00Z" }
+        {
+          "supply": "Insulin",
+          "status": "surplus",
+          "reported_by": "Pewar Basic Health Unit",
+          "verified_by": "Area elder - Sher Ali",
+          "timestamp": "2026-09-26T09:30:00Z"
+        },
+        {
+          "supply": "IV fluids",
+          "status": "surplus",
+          "reported_by": "Pewar Basic Health Unit",
+          "verified_by": "Health facility record",
+          "timestamp": "2026-09-26T10:40:00Z"
+        },
+        {
+          "supply": "Paracetamol",
+          "status": "surplus",
+          "reported_by": "Community reporter",
+          "verified_by": null,
+          "timestamp": "2026-09-25T16:00:00Z"
+        }
       ]
     }
   ],
   "triage_cases_logged": [
-    { "area": "Parachinar City Center", "urgency_tier": "critical", "supply_needed": "Oxygen" },
-    { "area": "Sadda", "urgency_tier": "needs_supplies", "supply_needed": "Baby formula" },
-    { "area": "Balishkhel", "urgency_tier": "needs_supplies", "supply_needed": "Asthma inhalers" },
-    { "area": "Parachinar City Center", "urgency_tier": "needs_supplies", "supply_needed": "Insulin" },
-    { "area": "Alizai", "urgency_tier": "routine", "supply_needed": null }
+    {
+      "area": "Parachinar City Center",
+      "urgency_tier": "critical",
+      "supply_needed": "Oxygen"
+    },
+    {
+      "area": "Sadda",
+      "urgency_tier": "needs_supplies",
+      "supply_needed": "Baby formula"
+    },
+    {
+      "area": "Balishkhel",
+      "urgency_tier": "needs_supplies",
+      "supply_needed": "Asthma inhalers"
+    },
+    {
+      "area": "Parachinar City Center",
+      "urgency_tier": "needs_supplies",
+      "supply_needed": "Insulin"
+    },
+    {
+      "area": "Alizai",
+      "urgency_tier": "routine",
+      "supply_needed": null
+    }
   ]
 }

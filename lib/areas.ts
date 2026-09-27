@@ -1,15 +1,16 @@
 /**
  * Which areas are a short, local trip from each other. This is the "simple named-area
- * adjacency" the surplus matcher ranks by (SPEC section 8). It roughly follows the
- * Thall–Parachinar road: Pewar – Parachinar – Alizai – Balishkhel – Sadda – Bagan.
+ * adjacency" the surplus matcher ranks by (SPEC section 8). It follows the real road order
+ * (lib/geo.ts, from OpenStreetMap): Pewar – Parachinar in Upper Kurram, then down the
+ * Thall road through Balishkhel, Sadda and Alizai to Bagan in Lower Kurram.
  * Kept in code rather than seed-reports.json so that file matches the spec's shape exactly.
  */
 export const AREA_LINKS: ReadonlyArray<readonly [string, string]> = [
   ["Pewar", "Parachinar City Center"],
-  ["Parachinar City Center", "Alizai"],
-  ["Alizai", "Balishkhel"],
+  ["Parachinar City Center", "Balishkhel"],
   ["Balishkhel", "Sadda"],
-  ["Sadda", "Bagan"],
+  ["Sadda", "Alizai"],
+  ["Alizai", "Bagan"],
 ];
 
 export function neighboursOf(areaName: string): string[] {

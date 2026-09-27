@@ -8,13 +8,13 @@ Built for the Banao Imaginathon (Health, Parachinar, Kurram District). Full spec
 
 During a Parachinar closure, phone and internet service break down along with supply. Every part is built to keep working in that situation, not just in the best case.
 
-- **Report stock.** A pharmacy, health facility, Edhi coordinator or elder picks the area, the supply and its level, and signs it. The report appears on the dashboard at once, updates the road-status figures and feeds the surplus matcher; it starts unverified until an elder or facility record vouches for it.
-- **Shortage dashboard.** Supply reports from six areas, each marked by who verified it (a jirga elder, a facility record, an Edhi coordinator) and how recent it is. An area that has gone quiet is flagged as a blind spot. An AI summary gives a responder a 30-second read.
+- **Report stock.** A pharmacy, health facility, Edhi coordinator or elder picks the area, the supply and its level, and signs it, or, with no internet, texts `STOCK Pewar Insulin surplus` from any phone (English, Roman Urdu, Urdu or Pashto words; parsed without the AI). The report appears on the dashboard at once, updates the road-status figures and feeds the surplus matcher; it starts unverified until an elder or facility record vouches for it.
+- **Shortage dashboard.** A real map of the district (Leaflet over Esri's topographic tiles, with the Thall–Parachinar road traced from OpenStreetMap) with a status pin per area, a stock-by-area bar chart, and supply reports from six areas, each marked by who verified it (a jirga elder, a facility record, an Edhi coordinator) and how recent it is. An area that has gone quiet is flagged as a blind spot. An AI summary gives a responder a 30-second read.
 - **Triage assistant.** Someone describes a patient and gets an urgency level (critical, needs supplies, routine) and a next step. A chat mode works over full connectivity; a plain-text SMS mode works when mobile data is down. Each case is logged to the dashboard.
 - **Surplus matcher.** Spare stock in one area is matched to shortages nearby: same-day fixes that don't wait for the road to reopen. Needs that no other area can cover are listed separately.
 - **Closure-risk forecaster.** An estimate of the risk of a new closure, from past closures and current signals, with a stock-up recommendation, so hospitals prepare before the road shuts.
-- **A 60-second guided tour.** One tap (from the first-visit notification, the About page or the sidebar) walks through the whole loop with real actions: a critical case comes in through triage, appears on Parachinar's dashboard card, finds Alizai's spare insulin next door, and the forecaster says what to stock up on.
-- **About this crisis.** The 2024–25 closure the app is modeled on, why the road and the phones fail together, and why jirga elders verify reports, each fact with its news source. It opens by itself on a first visit.
+- **A 60-second guided tour.** One tap (from the first-visit notification, the About page or the sidebar) walks through the whole loop with real actions: a critical case comes in through triage, appears on Parachinar's dashboard card, finds Pewar's spare insulin next door, and the forecaster says what to stock up on.
+- **About this crisis.** A photo of Parachinar in winter, the 2024–25 closure the app is modeled on, where it happens on the map, how it is used when mobile data is cut (SMS from any phone, office landlines, teams outside Kurram), and who uses it first, each fact with its news source. It opens by itself on a first visit.
 
 A sidebar (a drawer on phones) reaches every section from anywhere, with live counts: critical shortages, matches found, cases logged, current closure risk. The whole interface, including the AI's answers, works in English, Urdu and Pashto, with right-to-left layout for Urdu and Pashto.
 
@@ -66,7 +66,8 @@ Measured with `gpt-6-luna`: triage replies in 3–4.5 s, the forecast in 5–7 s
 - **All data is illustrative.** Supply reports, elder verifications, the closure history and the current signals in [data/](data/) are made up to show how the system behaves. They are not real-world findings, and a "Demo data" note stays on screen everywhere (in the sidebar on desktop, in the top bar on phones).
 - **Report times follow the clock.** Seed timestamps are shifted on load so a report written as "4 hours old" stays 4 hours old whatever day the demo runs.
 - **"Notify coordinator" sends nothing.** The button records the click; no message goes out.
-- **SMS mode is a simulated gateway.** It shows exactly what an SMS reply would say, with the real message count, but no SMS is sent or received.
+- **SMS is a simulated gateway.** Triage by SMS and stock reports by SMS show exactly what the reply would say, with the real message count, but no SMS is sent or received.
+- **Map locations.** Parachinar, Sadda, Alizai, Bagan, Thall and Kharlachi are OpenStreetMap coordinates; Pewar and Balishkhel aren't in OpenStreetMap, so they are placed approximately. Without a connection the map tiles don't load, but the roads, pins and labels still draw.
 - **"Flagged for air ambulance / Edhi" is display only.** Nothing is dispatched. The Edhi ambulance number (115) is shown as text, not a tap-to-call link, so testers can't call it by accident.
 - **No database.** Reports you submit, cases you log and coordinators you notify are kept in your own browser (local storage), so a reload doesn't lose them; they never leave the device. "Reset demo" in the sidebar clears them.
 - **Not a doctor.** The triage assistant is a prototype and says so at all times.
@@ -153,7 +154,7 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 
 ## Look and feel
 
-The identity is Pakistan's motorway signs, because the product is about a road: a deep sign-green panel with white type (the sidebar, the phone header, the About hero), signal yellow for what needs your eye, and bright, plain pages for the data. The district map and the About hero's mountain ridges are the only pictures of the place; nothing is decorative.
+The identity is Pakistan's motorway signs, because the product is about a road: a deep sign-green panel with white type (the sidebar, the phone header, the About hero), signal yellow for what needs your eye, and bright, plain pages for the data. The district map and the About hero's photograph are the only pictures of the place; nothing is decorative.
 
 **One source of truth.** Every value lives in [app/design-tokens.css](app/design-tokens.css) as a Tailwind 4 theme. Tailwind's own palette, type scale, shadows and radii are switched off, so a stray `text-red-500` or `text-sm` does nothing, and `npm run check:tokens` fails on any raw colour, off-scale size or space, undefined variable or per-icon size.
 
@@ -193,3 +194,5 @@ This formalizes coordination that already happens. Pharmacy owners, DHQ Hospital
 - Built with Claude Code (Anthropic) as the coding assistant.
 - AI features run on OpenAI (`gpt-6-luna` by default) or xAI Grok, switchable with `LLM_PROVIDER`.
 - Fonts: Barlow Condensed, Atkinson Hyperlegible Next, Noto Nastaliq Urdu, Noto Sans Arabic. Icons: Lucide.
+- Photo: "Parachinar in winter" by Mujtaba Hassan, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Parachinar_in_winter.jpg); resized.
+- Map: [Leaflet](https://leafletjs.com/); tiles © Esri; place coordinates from OpenStreetMap (Nominatim) and road lines from OSRM routes over OpenStreetMap data, © OpenStreetMap contributors (ODbL).

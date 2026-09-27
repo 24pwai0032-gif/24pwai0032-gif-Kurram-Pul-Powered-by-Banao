@@ -25,13 +25,7 @@
     "source": "Source",
     "sources": "Sources",
     "citation": "{outlet}, {date}",
-    "whyTitle": "Why the road and the phones fail together",
-    "whyText": "The violence that closes the road also brings security shutdowns of mobile phones and internet, so people can’t call for help or report shortages just when supplies run out.",
     "commsFact": "Mobile data (3G/4G) in Kurram has been suspended for nearly two years.",
-    "existingTitle": "It formalizes coordination that already happens",
-    "existingText": "Pharmacies, DHQ Hospital staff and Edhi Foundation volunteers already coordinate by phone and WhatsApp during closures. Kurram Pul makes that shared, structured and verifiable, and adds what phone calls can’t: matching spare stock in one area to shortages in another.",
-    "jirgaTitle": "Why jirga elders verify reports",
-    "jirgaText": "Kurram’s closures have been resolved through jirga mediation, so reports here are vouched for by named jirga elders and facility records rather than an anonymous crowd.",
     "jirgaFact": "A grand jirga in Kohat brokered the 14-point peace accord both sides signed on {date}.",
     "exploreTitle": "Try it in a minute",
     "explore": {
@@ -50,7 +44,7 @@
       "brecorder": "Business Recorder"
     },
     "mapTitle": "Where this happens",
-    "mapCaption": "Parachinar sits at the end of one road. When the Thall road and the Kharlachi crossing close, every area on this map is cut off at once. Illustrative, not to scale.",
+    "mapCaption": "Parachinar sits at the end of one road. When the Thall road and the Kharlachi crossing close, every area here is cut off at once.",
     "how": {
       "title": "How it works",
       "report": {
@@ -74,7 +68,7 @@
     "introReadMore": "Read the full background",
     "who": {
       "title": "Who uses it first",
-      "intro": "No new institution, no government action and no new hardware: it runs on the people who already coordinate by phone and WhatsApp in every closure, and on basic phones over SMS when mobile data is cut. Residents and health workers use the triage assistant.",
+      "intro": "People who already coordinate in every closure. No new institution needed.",
       "hospital": {
         "title": "DHQ Hospital staff",
         "body": "Log medicine and equipment stock, and see where spare supplies are nearby."
@@ -90,6 +84,24 @@
       "elders": {
         "title": "Jirga elders",
         "body": "Vouch for reports from their area, so responders know which to trust."
+      }
+    },
+    "photoAlt": "Parachinar in winter: snow on the valley and the mountains around it",
+    "photoCredit": "Photo: {name}, CC BY-SA 4.0",
+    "offline": {
+      "title": "When the network is down",
+      "intro": "The violence that closes the road also shuts down mobile phones and internet.",
+      "sms": {
+        "title": "Any phone, by SMS",
+        "body": "Triage and stock reports work by text message. No internet needed."
+      },
+      "office": {
+        "title": "Office connections",
+        "body": "Hospital, Edhi and pharmacy offices open the dashboard on fixed-line internet."
+      },
+      "outside": {
+        "title": "Teams outside Kurram",
+        "body": "Relief teams in Peshawar and Kohat see the same picture and plan convoys."
       }
     }
   },
@@ -157,7 +169,6 @@
   },
   "dashboard": {
     "title": "Shortage dashboard",
-    "subtitle": "Supply reports from each area, weighted by who verified them and how recent they are.",
     "summary": {
       "title": "Situation summary",
       "loading": "Reading {reports} reports and {cases} triage cases…",
@@ -175,11 +186,14 @@
     },
     "map": {
       "title": "District map",
-      "caption": "Illustrative, not to scale. Tap a pin to jump to that area.",
+      "caption": "Real map. Tap a pin to open that area.",
       "thallRoad": "Thall road: closed",
       "kharlachi": "Kharlachi crossing: closed",
-      "border": "Afghanistan border",
-      "legend": "Legend"
+      "legend": "Legend",
+      "afghanistan": "Afghanistan",
+      "legendTown": "Town",
+      "legendRoad": "The one road",
+      "legendClosed": "Closed"
     },
     "area": {
       "triageCases": "Triage cases: {count}",
@@ -188,6 +202,10 @@
       "blindSpot": "No update for {hours} h. Silence may mean conditions are getting worse.",
       "reportedBy": "Reported by {name}",
       "newCase": "New"
+    },
+    "chart": {
+      "title": "Stock by area",
+      "caption": "Supplies each area has reported, by level. Tap a bar to open the area."
     }
   },
   "triage": {
@@ -280,7 +298,6 @@
     "title": "Surplus matcher",
     "subtitle": "Spare stock in one area matched to shortages nearby: same-day fixes that don’t wait for the road to reopen.",
     "matchesTitle": "Matches found: {count}",
-    "rules": "Surplus or stable stock matched to critical or low stock and triage needs for the same supply in other areas. Critical needs first, then nearest.",
     "none": "No matches right now: no area has spare stock of anything another area is short of.",
     "from": "From",
     "to": "To",
@@ -385,7 +402,8 @@
     "Haji Gul": "Haji Gul",
     "Sher Ali": "Sher Ali",
     "Noor Muhammad": "Noor Muhammad",
-    "Edhi Foundation field team": "Edhi Foundation field team"
+    "Edhi Foundation field team": "Edhi Foundation field team",
+    "SMS reporter": "SMS reporter"
   },
   "events": {
     "Reported tension between tribal groups near Sadda": "Reported tension between tribal groups near Sadda",
@@ -419,7 +437,7 @@
       },
       "matcher": {
         "title": "Spare stock next door, not across a closed road",
-        "body": "Alizai, one area away, has verified spare insulin for Parachinar's critical shortage. One tap tells the coordinator to move it today."
+        "body": "Pewar, next door in Upper Kurram, has verified spare insulin for Parachinar's critical shortage. One tap tells the coordinator to move it today."
       },
       "forecast": {
         "title": "Prepare before the road closes again",
@@ -456,6 +474,17 @@
     "submit": "Add report",
     "cancel": "Cancel",
     "newLabel": "New",
-    "reset": "Reset demo"
+    "reset": "Reset demo",
+    "tabForm": "Form",
+    "tabSms": "By SMS",
+    "smsHint": "No internet? Text this from any phone:",
+    "smsLevels": "Levels: critical, low, ok, surplus",
+    "smsLabel": "Message",
+    "smsSend": "Send SMS",
+    "smsReplyOk": "KURRAM PUL: Received. {area}, {supply}: {level}. Unverified until an elder or facility confirms.",
+    "smsReplyError": "KURRAM PUL: Not understood ({part} missing). Send: STOCK area supply level, e.g. {example}",
+    "smsKeyword": "the word STOCK",
+    "smsDone": "See it on the dashboard",
+    "smsDemo": "Demo: this simulates the SMS gateway on the page."
   }
 }

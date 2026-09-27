@@ -38,7 +38,6 @@ export function SurplusMatcher() {
         <div className="space-y-3">
           <div>
             <h2 className="text-body font-semibold text-text-primary">{t("matcher.matchesTitle", { count: matches.length })}</h2>
-            <p className="mt-1 text-caption text-text-secondary">{t("matcher.rules")}</p>
           </div>
           {matches.length === 0 ? (
             <p className="rounded-lg border border-dashed border-border-control bg-surface p-4 text-body text-text-secondary">

@@ -24,11 +24,11 @@ const base = describe(findMatches(areas, triageCases, now));
 console.log("   matches:", base.matches);
 console.log("   unmatched:", base.unmatched);
 check("6 matches, in urgency-then-distance order", JSON.stringify(base.matches) === JSON.stringify([
-  "Insulin: Alizai -> Parachinar City Center (critical, d1, 1 triage)",
-  "ORS: Sadda -> Bagan (critical, d1)",
-  "Antibiotics: Alizai -> Parachinar City Center (needs_supplies, d1, +1 alt)",
-  "IV fluids: Pewar -> Balishkhel (needs_supplies, d3)",
-  "Paracetamol: Parachinar City Center -> Sadda (needs_supplies, d3, +1 alt)",
+  "Insulin: Pewar -> Parachinar City Center (critical, d1, 1 triage, +1 alt)",
+  "ORS: Sadda -> Bagan (critical, d2)",
+  "Antibiotics: Balishkhel -> Parachinar City Center (needs_supplies, d1, +1 alt)",
+  "IV fluids: Pewar -> Balishkhel (needs_supplies, d2)",
+  "Paracetamol: Parachinar City Center -> Sadda (needs_supplies, d2, +1 alt)",
   "IV fluids: Pewar -> Bagan (needs_supplies, d5)",
 ]), base.matches);
 check("insulin need escalated to critical by the triage case, low-stock need stays needs_supplies", base.matches[0].includes("(critical"), base.matches[0]);
@@ -45,14 +45,14 @@ const live = [
   { id: "live-1", area: "Bagan", urgency_tier: "critical", supply_needed: "oral rehydration salts (ORS)" },
   { id: "live-2", area: "Sadda", urgency_tier: "needs_supplies", supply_needed: "oxygen cylinder" },
   { id: "live-3", area: "Sadda", urgency_tier: "critical", supply_needed: "ORS" },
-  { id: "live-4", area: "Pewar", urgency_tier: "needs_supplies", supply_needed: "insulin" },
+  { id: "live-4", area: "Bagan", urgency_tier: "needs_supplies", supply_needed: "insulin" },
   { id: "live-5", area: "Alizai", urgency_tier: "routine", supply_needed: "paracetamol" },
 ];
 const withLive = describe(findMatches(areas, live, now));
-check("Bagan ORS triage case joins Bagan's ORS need", withLive.matches.includes("ORS: Sadda -> Bagan (critical, d1, 1 triage)"), withLive.matches);
+check("Bagan ORS triage case joins Bagan's ORS need", withLive.matches.includes("ORS: Sadda -> Bagan (critical, d2, 1 triage)"), withLive.matches);
 check("Sadda oxygen case joins the Oxygen no-match group", withLive.unmatched[0] === "Oxygen: Parachinar City Center + Alizai + Sadda", withLive.unmatched);
 check("Sadda ORS case skipped: Sadda has its own ORS surplus", !withLive.matches.some((m) => m.endsWith("-> Sadda (critical, d1, 1 triage)") && m.startsWith("ORS")), withLive.matches);
-check("triage-only need (Pewar insulin) matched to Alizai, 2 hops", withLive.matches.includes("Insulin: Alizai -> Pewar (needs_supplies, d2, 1 triage)"), withLive.matches);
+check("triage-only need (Bagan insulin) matched to Alizai, next door", withLive.matches.includes("Insulin: Alizai -> Bagan (needs_supplies, d1, 1 triage, +1 alt)"), withLive.matches);
 check("routine cases never create needs", !withLive.matches.some((m) => m.includes("-> Alizai")), withLive.matches);
 
 const ids = findMatches(areas, triageCases, now).matches.map((m) => m.id);

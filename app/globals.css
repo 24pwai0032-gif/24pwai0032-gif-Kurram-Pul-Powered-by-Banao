@@ -131,3 +131,77 @@ html[lang="ps"] [data-lang-option][lang="ps"] {
 :lang(ps) :lang(en) {
   line-height: var(--text-body--line-height);
 }
+
+/*
+ * The district map (Leaflet, components/dashboard/KurramMap.tsx). Its markers are divIcons: a pin
+ * plus the place name, set in the page's own font and language.
+ */
+.kp-map.leaflet-container {
+  background: var(--color-map-land);
+  font-family: inherit;
+  font-size: var(--text-caption);
+}
+
+.kp-pin {
+  position: relative;
+  background: none;
+  border: 0;
+}
+
+.kp-pin:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.kp-map-label {
+  position: absolute;
+  white-space: nowrap;
+  padding-inline: --spacing(1);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--text-caption--line-height);
+}
+
+:lang(ur) .kp-map-label {
+  line-height: var(--leading-nastaliq);
+}
+
+.kp-map-label-right {
+  left: calc(100% + --spacing(1));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.kp-map-label-left {
+  right: calc(100% + --spacing(1));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.kp-map-label-top {
+  bottom: calc(100% + --spacing(1));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.kp-map-label-bottom {
+  top: calc(100% + --spacing(1));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.kp-map-label-closed {
+  color: var(--color-critical-text);
+}
+
+/* The country across the border: a quiet place name, not a marker. */
+.kp-map-label-country {
+  background: none;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}

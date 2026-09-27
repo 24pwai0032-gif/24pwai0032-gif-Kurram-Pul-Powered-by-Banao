@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeftRight, ChevronRight, Gauge, LayoutGrid, Stethoscope, type LucideIcon } from "lucide-react";
+import { ArrowLeftRight, Building2, ChevronRight, Gauge, LayoutGrid, MessageSquareText, Stethoscope, Truck, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { HowItWorks } from "@/components/about/HowItWorks";
 import { KurramMap } from "@/components/dashboard/KurramMap";
@@ -53,12 +53,34 @@ function Stat({ value, label, sources, critical = false }: {
   );
 }
 
-function Point({ title, children, sources }: { title: string; children: ReactNode; sources?: Source[] }) {
+const CHANNELS: { id: "sms" | "office" | "outside"; icon: LucideIcon }[] = [
+  { id: "sms", icon: MessageSquareText },
+  { id: "office", icon: Building2 },
+  { id: "outside", icon: Truck },
+];
+
+/** How it is used with mobile data cut: SMS from any phone, office lines, and teams outside the district. */
+function WhenOffline() {
+  const { t } = useT();
   return (
-    <section className="border-t border-border-control pt-4">
-      <h3 className="text-lead text-text-primary">{title}</h3>
-      <div className="mt-2 space-y-2 text-body text-text-secondary">{children}</div>
-      {sources && <Citation sources={sources} />}
+    <section aria-labelledby="offline-title" className="@container">
+      <h2 id="offline-title" className="text-title text-text-primary">
+        {t("about.offline.title")}
+      </h2>
+      <p className="mt-2 max-w-3xl text-body text-text-secondary">{t("about.offline.intro")}</p>
+      <p className="mt-2 max-w-3xl text-body font-semibold text-text-primary">{t("about.commsFact")}</p>
+      <Citation sources={[SOURCES.mobileData]} />
+      <ul className="mt-4 grid gap-4 @xl:grid-cols-3">
+        {CHANNELS.map(({ id, icon: Icon }) => (
+          <li key={id} className="card-routine flex gap-3">
+            <Icon aria-hidden className="mt-1 text-brand" />
+            <div>
+              <h3 className="text-lead text-text-primary">{t(`about.offline.${id}.title`)}</h3>
+              <p className="mt-1 text-body text-text-secondary">{t(`about.offline.${id}.body`)}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -67,7 +89,7 @@ const WHO = ["hospital", "pharmacy", "edhi", "elders"] as const;
 
 /** The first users, all people who already coordinate during closures; no new institution needed. */
 function WhoUsesIt() {
-  const { t } = useT();
+  const { t, formatDate } = useT();
   return (
     <section aria-labelledby="who-title" className="@container">
       <h2 id="who-title" className="text-title text-text-primary">
@@ -79,6 +101,15 @@ function WhoUsesIt() {
           <li key={who} className="card-routine">
             <h3 className="text-lead text-text-primary">{t(`about.who.${who}.title`)}</h3>
             <p className="mt-1 text-body text-text-secondary">{t(`about.who.${who}.body`)}</p>
+            {/* Why elders: Kurram's closures are settled through jirgas. */}
+            {who === "elders" && (
+              <>
+                <p className="mt-2 text-body font-medium text-text-primary">
+                  {t("about.jirgaFact", { date: formatDate(MODEL_CLOSURE.jirgaAccord, "full") })}
+                </p>
+                <Citation sources={[SOURCES.jirgaAccord]} />
+              </>
+            )}
           </li>
         ))}
       </ul>
@@ -95,8 +126,8 @@ const EXPLORE: { view: Exclude<ViewId, "about">; icon: LucideIcon }[] = [
 
 /**
  * The problem, the stakes and the mechanism, legible to someone opening the link cold:
- * the real closure the app is modeled on (with sources), where it happens, why phones fail
- * with the road, the existing coordination it formalizes, and why jirga elders verify reports.
+ * the real closure the app is modeled on (with sources), how it works, where it happens, how it
+ * is used with mobile data cut, and who uses it first (with why jirga elders verify reports).
  *
  * Laid out by its own width (container queries).
  */
@@ -133,7 +164,7 @@ export function ModelFigures() {
 }
 
 export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => void }) {
-  const { t, formatDate } = useT();
+  const { t } = useT();
 
   return (
     <div className="@container space-y-12">
@@ -145,24 +176,14 @@ export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => voi
         <HowItWorks />
       </div>
 
-      <div className="rise" style={riseOrder(3)}>
-        <WhoUsesIt />
+      <KurramMap variant="place" title={t("about.mapTitle")} caption={t("about.mapCaption")} className="rise" style={riseOrder(3)} />
+
+      <div className="rise" style={riseOrder(4)}>
+        <WhenOffline />
       </div>
 
-      <KurramMap variant="place" title={t("about.mapTitle")} caption={t("about.mapCaption")} className="rise" style={riseOrder(4)} />
-
-      <div className="rise grid gap-8 @3xl:grid-cols-3 @3xl:gap-6" style={riseOrder(5)}>
-        <Point title={t("about.whyTitle")} sources={[SOURCES.mobileData]}>
-          <p>{t("about.whyText")}</p>
-          <p className="font-medium text-text-primary">{t("about.commsFact")}</p>
-        </Point>
-        <Point title={t("about.existingTitle")}>
-          <p>{t("about.existingText")}</p>
-        </Point>
-        <Point title={t("about.jirgaTitle")} sources={[SOURCES.jirgaAccord]}>
-          <p>{t("about.jirgaText")}</p>
-          <p className="font-medium text-text-primary">{t("about.jirgaFact", { date: formatDate(MODEL_CLOSURE.jirgaAccord, "full") })}</p>
-        </Point>
+      <div className="rise" style={riseOrder(5)}>
+        <WhoUsesIt />
       </div>
 
       <section aria-labelledby="explore-title" className="rise" style={riseOrder(6)}>
