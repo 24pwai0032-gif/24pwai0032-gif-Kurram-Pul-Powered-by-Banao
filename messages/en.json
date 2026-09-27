@@ -87,7 +87,7 @@
       }
     },
     "photoAlt": "Parachinar in winter: snow on the valley and the mountains around it",
-    "photoCredit": "Photo: {name}, CC BY-SA 4.0",
+    "photoCredit": "Header photo: Parachinar in winter, by {name}, CC BY-SA 4.0, Wikimedia Commons",
     "offline": {
       "title": "When the network is down",
       "intro": "The violence that closes the road also shuts down mobile phones and internet.",
@@ -123,7 +123,8 @@
       "matcher": "Spare stock nearby",
       "triage": "Assess a patient",
       "forecast": "Risk of the next closure"
-    }
+    },
+    "resize": "Resize the sidebar"
   },
   "language": {
     "label": "Language"

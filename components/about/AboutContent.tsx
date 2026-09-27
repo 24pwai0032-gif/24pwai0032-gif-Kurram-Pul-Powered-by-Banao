@@ -96,7 +96,7 @@ function WhoUsesIt() {
         {t("about.who.title")}
       </h2>
       <p className="mt-2 max-w-3xl text-body text-text-secondary">{t("about.who.intro")}</p>
-      <ul className="mt-4 grid gap-4 @xl:grid-cols-2 @4xl:grid-cols-4">
+      <ul className="mt-4 grid items-start gap-4 @xl:grid-cols-2 @4xl:grid-cols-4">
         {WHO.map((who) => (
           <li key={who} className="card-routine">
             <h3 className="text-lead text-text-primary">{t(`about.who.${who}.title`)}</h3>
@@ -116,6 +116,8 @@ function WhoUsesIt() {
     </section>
   );
 }
+
+const PHOTO_PAGE = "https://commons.wikimedia.org/wiki/File:Parachinar_in_winter.jpg";
 
 const EXPLORE: { view: Exclude<ViewId, "about">; icon: LucideIcon }[] = [
   { view: "dashboard", icon: LayoutGrid },
@@ -209,6 +211,18 @@ export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => voi
           ))}
         </ul>
       </section>
+
+      {/* The header photo's licence (CC BY-SA 4.0) asks for credit; it sits here, off the picture. */}
+      <p data-credit className="text-caption text-text-secondary">
+        <a
+          href={PHOTO_PAGE}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-border-control underline-offset-4 transition-colors hover:text-text-primary hover:decoration-current"
+        >
+          {t("about.photoCredit", { name: "Mujtaba Hassan" })}
+        </a>
+      </p>
     </div>
   );
 }

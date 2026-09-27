@@ -1,13 +1,14 @@
 "use client";
 
 import { Menu } from "lucide-react";
-import { useState, type ComponentType } from "react";
+import { useState, type ComponentType, type CSSProperties } from "react";
 import { AboutCrisis } from "@/components/AboutCrisis";
 import { ForecasterPanel } from "@/components/ForecasterPanel";
 import { ShortageDashboard } from "@/components/ShortageDashboard";
 import { BrandMark } from "@/components/sidebar/BrandMark";
 import { MobileDrawer } from "@/components/sidebar/MobileDrawer";
 import { SidebarContent } from "@/components/sidebar/SidebarContent";
+import { SidebarResizer, useSidebarWidth } from "@/components/sidebar/SidebarResizer";
 import { SurplusMatcher } from "@/components/SurplusMatcher";
 import { TourCoach } from "@/components/tour/TourCoach";
 import { TourPrompt } from "@/components/tour/TourPrompt";
@@ -24,7 +25,8 @@ const VIEW_COMPONENTS: Record<ViewId, ComponentType> = {
 };
 
 /**
- * Desktop: a persistent sidebar at the reading start edge. Phones and tablets: a top bar with
+ * Desktop: a persistent sidebar at the reading start edge, which the visitor can drag wider or
+ * narrower. Phones and tablets: a top bar with
  * a menu button (the sidebar becomes a drawer) and an always-visible "Demo data" chip.
  */
 export function AppShell() {
@@ -33,11 +35,16 @@ export function AppShell() {
   const ActiveView = VIEW_COMPONENTS[activeView];
   const [drawerOpen, setDrawerOpen] = useState(false);
   const touring = useAppStore((s) => s.tour !== null);
+  const sidebarWidth = useSidebarWidth();
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
+    <div
+      className="min-h-dvh lg:grid lg:grid-cols-[var(--sidebar-width)_minmax(0,1fr)]"
+      style={{ "--sidebar-width": `${sidebarWidth}px` } as CSSProperties}
+    >
       <aside className="sticky top-0 hidden h-dvh overflow-y-auto bg-sign lg:block">
         <SidebarContent />
+        <SidebarResizer />
       </aside>
 
       <div className="flex min-h-dvh min-w-0 flex-col">

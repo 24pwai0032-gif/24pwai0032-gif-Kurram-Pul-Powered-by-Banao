@@ -41,7 +41,7 @@ export function StockChart({ summaries, className = "", style }: { summaries: Ar
         <p className="mt-1 text-caption text-text-secondary">{t("dashboard.chart.caption")}</p>
       </figcaption>
 
-      <ul className="mt-4 space-y-3">
+      <ul className="mt-4 space-y-1">
         {rows.map(({ name, counts, total }) => {
           const parts = ORDER.filter((c) => counts[c] > 0);
           const summary = parts.map((c) => `${counts[c]} ${t(`status.${c}`)}`).join(", ");
@@ -52,7 +52,7 @@ export function StockChart({ summaries, className = "", style }: { summaries: Ar
                 data-chart-area={name}
                 onClick={() => goTo("dashboard", areaAnchorId(name))}
                 aria-label={`${tArea(name)}: ${summary}`}
-                className="group grid w-full grid-cols-[minmax(0,8rem)_minmax(0,1fr)_auto] items-center gap-3 rounded-md text-start"
+                className="group grid w-full grid-cols-[minmax(0,8rem)_minmax(0,1fr)_auto] items-center gap-3 rounded-md py-1 text-start"
               >
                 <span className="text-body font-semibold text-text-primary group-hover:underline">{tArea(name)}</span>
                 <span className="flex h-4 gap-1" style={{ width: `${(total / max) * 100}%` }}>

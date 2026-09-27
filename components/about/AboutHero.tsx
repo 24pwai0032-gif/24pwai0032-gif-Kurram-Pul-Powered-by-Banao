@@ -5,12 +5,11 @@ import { useTour } from "@/components/tour/useTour";
 import { riseOrder } from "@/lib/motion";
 import { useT } from "@/lib/useT";
 
-const PHOTO_PAGE = "https://commons.wikimedia.org/wiki/File:Parachinar_in_winter.jpg";
-
 /**
  * The About page's opening: the place, the page title and the pitch, over a photograph of
  * Parachinar in winter (the season the 2024–25 closure ran through). A sign-green wash on the
  * text side keeps white text legible over the snow; the photo shows through on the far side.
+ * The photo's credit (CC BY-SA) is at the end of the About page, not over the picture.
  */
 export function AboutHero() {
   const { t } = useT();
@@ -47,11 +46,6 @@ export function AboutHero() {
         </button>
       </div>
 
-      <p data-credit className="absolute end-3 bottom-2 rounded-sm bg-sign/80 px-2 text-caption text-on-sign-muted">
-        <a href={PHOTO_PAGE} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-on-sign">
-          {t("about.photoCredit", { name: "Mujtaba Hassan" })}
-        </a>
-      </p>
     </header>
   );
 }

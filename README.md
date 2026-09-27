@@ -14,9 +14,9 @@ During a Parachinar closure, phone and internet service break down along with su
 - **Surplus matcher.** Spare stock in one area is matched to shortages nearby: same-day fixes that don't wait for the road to reopen. Needs that no other area can cover are listed separately.
 - **Closure-risk forecaster.** An estimate of the risk of a new closure, from past closures and current signals, with a stock-up recommendation, so hospitals prepare before the road shuts.
 - **A 60-second guided tour.** One tap (from the first-visit notification, the About page or the sidebar) walks through the whole loop with real actions: a critical case comes in through triage, appears on Parachinar's dashboard card, finds Pewar's spare insulin next door, and the forecaster says what to stock up on.
-- **About this crisis.** A photo of Parachinar in winter, the 2024–25 closure the app is modeled on, where it happens on the map, how it is used when mobile data is cut (SMS from any phone, office landlines, teams outside Kurram), and who uses it first, each fact with its news source. It opens by itself on a first visit.
+- **About this crisis.** A photo of Parachinar in winter, the 2024–25 closure the app is modeled on, where it happens on the map, how it is used when mobile data is cut (SMS from any phone, office landlines, teams outside Kurram), and who uses it first, each fact with its news source. The app opens on it every visit, and offers the 60-second tour there until you have taken it.
 
-A sidebar (a drawer on phones) reaches every section from anywhere, with live counts: critical shortages, matches found, cases logged, current closure risk. The whole interface, including the AI's answers, works in English, Urdu and Pashto, with right-to-left layout for Urdu and Pashto.
+A sidebar (a drawer on phones; on desktop, drag its edge or use the arrow keys to make it wider or narrower) reaches every section from anywhere, with live counts: critical shortages, matches found, cases logged, current closure risk. The whole interface, including the AI's answers, works in English, Urdu and Pashto, with right-to-left layout for Urdu and Pashto.
 
 ## Run it locally
 

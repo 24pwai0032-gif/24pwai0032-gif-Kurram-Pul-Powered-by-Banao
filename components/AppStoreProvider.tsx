@@ -51,11 +51,11 @@ export function AppStoreProvider({ children, ...init }: AppStoreProviderProps) {
     });
   }, [store]);
 
-  // Remember a dismissed intro so it isn't shown again on the next visit.
+  // Once the visitor has taken the tour, stop offering it. "Not now" only hides it for this visit.
   useEffect(
     () =>
       store.subscribe((state, prev) => {
-        if (prev.introOpen && !state.introOpen) {
+        if (prev.tour === null && state.tour !== null) {
           document.cookie = `${INTRO_COOKIE}=seen; path=/; max-age=31536000; samesite=lax`;
         }
       }),

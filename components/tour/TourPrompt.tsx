@@ -8,11 +8,13 @@ import { useTour } from "@/components/tour/useTour";
 /**
  * A first visit's invitation, as a notification rather than a wall: the visitor lands on the
  * About page (the problem and the stakes) and this card offers the 60-second guided tour.
- * "Not now" remembers the choice; the tour stays one tap away in the sidebar.
+ * "Not now" hides it for this visit; it comes back on the next one until the tour has been
+ * taken. The tour also stays one tap away in the sidebar and the About header.
  */
 export function TourPrompt() {
   const { t } = useT();
-  const open = useAppStore((s) => s.introOpen && s.tour === null);
+  // Only on About: once the visitor opens another screen, they are exploring on their own.
+  const open = useAppStore((s) => s.introOpen && s.tour === null && s.activeView === "about");
   const dismiss = useAppStore((s) => s.dismissIntro);
   const { start } = useTour();
   if (!open) return null;

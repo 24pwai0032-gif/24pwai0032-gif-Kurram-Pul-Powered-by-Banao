@@ -85,15 +85,15 @@ export function KurramMap({ variant = "status", summaries = [], title, caption, 
       const token = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
       const m = L.map(box.current, { scrollWheelZoom: false, dragging: !L.Browser.mobile, zoomSnap: 0.25, zoomControl: false });
-      // Bottom left is open country on both screen sizes; top left would cover Pewar's label on phones.
-      L.control.zoom({ position: "bottomleft" }).addTo(m);
+      // Top right is open country on both screen sizes; top left would cover Pewar's label on phones.
+      L.control.zoom({ position: "topright" }).addTo(m);
       // Leaflet is credited in the README; dropping its prefix keeps the tile credit on one line on phones.
       m.attributionControl.setPrefix(false);
       // Esri's topographic basemap: the mountains that close the valley in, the border, the Kurram
       // river, and few place names of its own, so ours (in the reader's language) stay the ones read.
       L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", {
         maxZoom: 15,
-        attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a>, OpenStreetMap contributors and the GIS user community',
+        attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> · Roads &copy; OpenStreetMap contributors',
       }).addTo(m);
 
       // The road the district depends on, in sign green with a white casing, as on a road map.

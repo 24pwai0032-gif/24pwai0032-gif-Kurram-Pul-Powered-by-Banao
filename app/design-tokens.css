@@ -140,6 +140,10 @@
      1 2 3 4 6 8 12 16 = 4, 8, 12, 16, 24, 32, 48, 64px. */
   --spacing: 4px;
 
+  /* ── Layout ────────────────────────────────────────────────────────────────── */
+
+  --sidebar-width: 16rem; /* desktop sidebar; the visitor can drag it (components/sidebar/SidebarResizer.tsx) */
+
   /* ── Shape and icons ───────────────────────────────────────────────────────── */
 
   --radius-sm: 4px; /* inner chips */

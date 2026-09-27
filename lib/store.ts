@@ -231,7 +231,8 @@ export function createAppStore({ language, showIntro, seed, verificationTags, cl
     return {
       language,
       // A first visit opens on the story (About) with the tour offered; a return visit, on the dashboard.
-      activeView: showIntro ? "about" : "dashboard",
+      // Every visit opens on About: the problem and the stakes, before any one screen.
+      activeView: "about",
       introOpen: showIntro,
       tour: null,
       areas,
