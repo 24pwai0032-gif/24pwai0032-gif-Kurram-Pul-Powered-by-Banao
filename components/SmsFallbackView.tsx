@@ -63,28 +63,28 @@ export function SmsFallbackView() {
   const { segments } = smsSegments(draft);
 
   return (
-    <div className={`rounded-lg border border-line-strong bg-surface text-sm text-ink ${locale === "en" ? "font-mono" : ""}`}>
-      <p className="border-b border-line px-3 py-2 text-xs text-muted">{t("triage.smsNote")}</p>
+    <div className={`rounded-md border border-border-control bg-surface text-body text-text-primary `}>
+      <p className="border-b border-border px-3 py-2 text-caption text-text-secondary">{t("triage.smsNote")}</p>
 
       {messages.length === 0 && !pending ? (
-        <p className="px-3 py-4 text-muted">{t("triage.intro")}</p>
+        <p className="px-3 py-4 text-text-secondary">{t("triage.intro")}</p>
       ) : (
-        <ol aria-live="polite" className="divide-y divide-line">
+        <ol aria-live="polite" className="divide-y divide-border">
           {messages.map((message) => {
             const text = message.role === "user" ? message.text : replyText(message);
             return (
-              <li key={message.id} className="px-3 py-2.5">
-                <p className="text-xs text-muted">
+              <li key={message.id} className="px-3 py-3">
+                <p className="text-caption text-text-secondary">
                   {message.role === "user" ? `> ${t("triage.you")}` : `< ${t("triage.service")}`} {clock(message.at)}
                   {message.role === "assistant" && ` · ${smsSegments(text).segments} SMS`}
                 </p>
-                <p dir="auto" className="mt-0.5 break-words whitespace-pre-wrap">
+                <p dir="auto" className="mt-1 break-words whitespace-pre-wrap">
                   {text}
                 </p>
               </li>
             );
           })}
-          {pending && <li className="px-3 py-2.5 text-muted">&lt; …</li>}
+          {pending && <li className="px-3 py-3 text-text-secondary">&lt; …</li>}
         </ol>
       )}
 
@@ -93,7 +93,7 @@ export function SmsFallbackView() {
           e.preventDefault();
           if (canSend) void send(draft);
         }}
-        className="border-t border-line p-3"
+        className="border-t border-border p-3"
       >
         <label htmlFor="sms-input" className="sr-only">
           {t("triage.inputLabel")}
@@ -107,19 +107,19 @@ export function SmsFallbackView() {
           disabled={area === null}
           placeholder={awaiting ? t("triage.answerPlaceholder") : t("triage.inputPlaceholder")}
           onChange={(e) => setDraft(e.target.value)}
-          className="w-full resize-none border border-line-strong bg-page px-2 py-1.5 text-sm text-ink placeholder:text-muted disabled:opacity-50"
+          className="w-full resize-none border border-border-control bg-background px-2 py-2 text-body text-text-primary placeholder:text-text-secondary disabled:opacity-50"
         />
-        <div className="mt-2 flex items-center justify-between gap-3 text-xs text-muted">
+        <div className="mt-2 flex items-center justify-between gap-3 text-caption text-text-secondary">
           <span>{t("sms.counter", { count: [...draft].length, segments })}</span>
           <button
             type="submit"
             disabled={!canSend}
-            className="border border-ink px-3 py-1.5 font-semibold text-ink disabled:opacity-40"
+            className="border border-text-primary px-3 py-2 font-semibold text-text-primary disabled:opacity-40"
           >
             {t("sms.send")}
           </button>
         </div>
-        {area === null && <p className="mt-1.5 text-xs text-muted">{t("triage.areaFirst")}</p>}
+        {area === null && <p className="mt-2 text-caption text-text-secondary">{t("triage.areaFirst")}</p>}
       </form>
     </div>
   );

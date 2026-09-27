@@ -48,7 +48,9 @@
       "geo": "Geo News",
       "news": "The News",
       "brecorder": "Business Recorder"
-    }
+    },
+    "mapTitle": "Where this happens",
+    "mapCaption": "Parachinar sits at the end of one road. When the Thall road and the Kharlachi crossing close, every area on this map is cut off at once. Illustrative, not to scale."
   },
   "nav": {
     "label": "Main sections",
@@ -205,7 +207,8 @@
     "recentTitle": "Recently logged",
     "recentMore": "+{count} more",
     "viewShortages": "Shortages",
-    "viewMatcher": "Surplus match"
+    "viewMatcher": "Surplus match",
+    "noSupplyNamed": "No specific supply was named for this case, so there is no stock to look up. Focus on getting the patient to care."
   },
   "sms": {
     "header": "KURRAM PUL",

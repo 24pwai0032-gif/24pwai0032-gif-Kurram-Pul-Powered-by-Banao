@@ -20,16 +20,16 @@ const NAV: { id: ViewId; icon: LucideIcon }[] = [
 ];
 
 const RISK_PILL: Record<RiskLevel, string> = {
-  low: "bg-stable-bg text-stable-ink",
-  elevated: "bg-low-bg text-low-ink",
-  high: "bg-critical text-surface",
+  low: "bg-stable-tint text-stable-text",
+  elevated: "bg-warning-tint text-warning-text",
+  high: "border border-critical bg-critical-tint text-critical-text",
 };
 
 function Count({ children, label, tone = "plain" }: { children: ReactNode; label: string; tone?: "plain" | "critical" }) {
   return (
     <span
-      className={`ms-auto rounded-full px-1.5 py-px text-[11px] font-bold tabular-nums ${
-        tone === "critical" ? "bg-critical text-surface" : "bg-on-side/15 text-on-side"
+      className={`ms-auto rounded-full px-2 text-caption font-bold tabular-nums ${
+        tone === "critical" ? "border border-critical bg-critical-tint text-critical-text" : "bg-background text-text-secondary"
       }`}
     >
       <span aria-hidden>{children}</span>
@@ -64,7 +64,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
     if (id === "triage" && logged > 0) return <Count label={t("nav.caseCount", { count: logged })}>{logged}</Count>;
     if (id === "forecast" && risk)
       return (
-        <span className={`ms-auto rounded-full px-2 py-px text-[11px] font-bold ${RISK_PILL[risk]}`}>
+        <span className={`ms-auto rounded-full px-2 text-caption font-bold ${RISK_PILL[risk]}`}>
           {t("forecast.riskValue", { level: t(`forecast.levels.${risk}`) })}
         </span>
       );
@@ -72,17 +72,17 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   };
 
   return (
-    <div className="flex h-full flex-col gap-6 px-3 py-5">
-      <div className="flex items-center gap-2.5 px-2">
+    <div className="flex h-full flex-col gap-6 px-3 py-6">
+      <div className="flex items-center gap-3 px-2">
         <BrandMark />
         <div className="min-w-0">
-          <p className="truncate leading-tight font-bold text-on-side">{t("app.name")}</p>
-          <p className="truncate text-xs text-on-side-muted">{t("about.eyebrow")}</p>
+          <p className="truncate font-display text-lead font-semibold text-text-primary">{t("app.name")}</p>
+          <p className="truncate text-caption text-text-secondary">{t("about.eyebrow")}</p>
         </div>
       </div>
 
       <nav aria-label={t("nav.label")}>
-        <ul className="grid gap-0.5">
+        <ul className="grid gap-1">
           {NAV.map(({ id, icon: Icon }) => {
             const active = id === activeView;
             return (
@@ -96,12 +96,12 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                     window.scrollTo({ top: 0 });
                     onNavigate?.();
                   }}
-                  className={`relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start text-sm transition-colors ${
-                    active ? "bg-side-2 font-semibold text-on-side" : "text-on-side-muted hover:bg-side-2/60 hover:text-on-side"
+                  className={`relative flex w-full items-center gap-3 rounded-md px-3 py-3 text-start text-body transition-colors ${
+                    active ? "bg-surface-raised font-semibold text-text-primary" : "text-text-secondary hover:bg-surface-raised hover:text-text-primary"
                   }`}
                 >
-                  {active && <span aria-hidden className="absolute inset-y-2 start-0 w-[3px] rounded-full bg-on-side" />}
-                  <Icon aria-hidden className="size-[18px] shrink-0" />
+                  {active && <span aria-hidden className="absolute inset-y-2 start-0 w-[3px] rounded-full bg-brand" />}
+                  <Icon aria-hidden className={active ? "text-brand" : undefined} />
                   <span className="min-w-0 truncate">{t(`nav.${id}`)}</span>
                   {badge(id)}
                 </button>
@@ -112,10 +112,10 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
 
       <div className="mt-auto grid gap-3">
-        <p className="flex items-start gap-2 rounded-lg border border-dashed border-on-side/30 px-3 py-2 text-xs text-on-side-muted">
-          <Info aria-hidden className="mt-0.5 size-3.5 shrink-0" />
+        <p className="flex items-start gap-2 rounded-md border border-dashed border-border-control px-3 py-2 text-caption text-text-secondary">
+          <Info aria-hidden />
           <span>
-            <strong className="block font-semibold text-on-side">{t("app.demoBadge")}</strong>
+            <strong className="block font-semibold text-text-primary">{t("app.demoBadge")}</strong>
             {t("app.demoBadgeText")}
           </span>
         </p>

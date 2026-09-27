@@ -31,12 +31,12 @@ interface AiTextPanelProps {
 function Skeleton({ label }: { label: string }) {
   return (
     <div role="status" className="mt-3">
-      <p className="text-xs text-muted">{label}</p>
-      <div aria-hidden className="mt-2.5 space-y-2 motion-safe:animate-pulse">
-        <div className="h-3 w-11/12 rounded bg-surface-2" />
-        <div className="h-3 w-full rounded bg-surface-2" />
-        <div className="h-3 w-4/5 rounded bg-surface-2" />
-        <div className="h-3 w-2/3 rounded bg-surface-2" />
+      <p className="text-caption text-text-secondary">{label}</p>
+      <div aria-hidden className="mt-3 space-y-2">
+        <div className="h-3 w-11/12 rounded-sm bg-surface-raised" />
+        <div className="h-3 w-full rounded-sm bg-surface-raised" />
+        <div className="h-3 w-4/5 rounded-sm bg-surface-raised" />
+        <div className="h-3 w-2/3 rounded-sm bg-surface-raised" />
       </div>
     </div>
   );
@@ -62,10 +62,10 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
   const collapsed = long && !expanded;
 
   return (
-    <section aria-labelledby={headingId} aria-busy={busy} className="rounded-2xl border border-line bg-surface p-4">
+    <section aria-labelledby={headingId} aria-busy={busy} className="rounded-lg border border-border bg-surface p-4">
       <div className="flex items-center justify-between gap-3">
-        <h2 id={headingId} className="flex items-center gap-2 text-sm font-semibold text-ink">
-          <Sparkles aria-hidden className="size-4 text-muted" />
+        <h2 id={headingId} className="flex items-center gap-2 text-body font-semibold text-text-primary">
+          <Sparkles aria-hidden className="text-text-secondary" />
           {title}
         </h2>
         {!busy && (
@@ -75,9 +75,9 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
               setExpanded(false);
               void onRequest();
             }}
-            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-xs font-medium text-ink-2 hover:bg-surface-2 hover:text-ink"
+            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-caption font-medium text-text-secondary hover:bg-surface-raised hover:text-text-primary"
           >
-            <RefreshCw aria-hidden className="size-3.5" />
+            <RefreshCw aria-hidden />
             {state.status === "error" ? t("ai.retry") : t("ai.refresh")}
           </button>
         )}
@@ -86,12 +86,12 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
       {busy && <Skeleton label={labels.loading} />}
 
       {state.status === "error" && (
-        <div role="alert" className="mt-3 rounded-lg bg-surface-2 p-3">
-          <p className="flex items-start gap-2 text-sm font-medium text-ink">
-            <TriangleAlert aria-hidden className="mt-0.5 size-4 shrink-0" style={{ color: "var(--low)" }} />
+        <div role="alert" className="mt-3 rounded-md bg-surface-raised p-3">
+          <p className="flex items-start gap-2 text-body font-medium text-text-primary">
+            <TriangleAlert aria-hidden className="text-warning-text" />
             {state.code === "llm_not_configured" ? labels.notConfigured : labels.failed}
           </p>
-          <p lang="en" dir="ltr" className="mt-1 text-xs break-words text-muted">
+          <p lang="en" dir="ltr" className="mt-1 text-caption break-words text-text-secondary">
             {state.message}
           </p>
         </div>
@@ -104,7 +104,7 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
             <div
               lang={textLang(text)}
               dir={textDir(text)}
-              className={`reading text-sm leading-relaxed text-ink-2 ${collapsed ? "max-h-64 overflow-hidden" : ""}`}
+              className={`text-body text-text-secondary ${collapsed ? "max-h-64 overflow-hidden" : ""}`}
             >
               <Markdown>{text}</Markdown>
             </div>
@@ -117,15 +117,15 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
               type="button"
               aria-expanded={expanded}
               onClick={() => setExpanded((v) => !v)}
-              className="mt-2 text-xs font-semibold text-ink underline underline-offset-2"
+              className="mt-2 text-caption font-semibold text-brand-text underline-offset-4 hover:underline"
             >
               {expanded ? t("ai.showLess") : t("ai.showMore")}
             </button>
           )}
           {labels.outdated && state.dataVersion !== dataVersion && (
-            <p className="mt-3 rounded-lg bg-low-bg px-2.5 py-1.5 text-xs font-medium text-low-ink">{labels.outdated}</p>
+            <p className="mt-3 rounded-md bg-warning-tint px-3 py-2 text-caption font-medium text-warning-text">{labels.outdated}</p>
           )}
-          <div className="mt-3 space-y-0.5 border-t border-line pt-2 text-xs text-muted">
+          <div className="mt-3 space-y-1 border-t border-border pt-2 text-caption text-text-secondary">
             <p>
               {t("ai.generatedBy", {
                 model: `${state.provider} ${state.model}`,

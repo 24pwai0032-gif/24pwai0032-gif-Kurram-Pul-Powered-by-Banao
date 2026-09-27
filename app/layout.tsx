@@ -1,30 +1,40 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Naskh_Arabic, Noto_Nastaliq_Urdu, Noto_Sans } from "next/font/google";
+import { Fraunces, Inter, Noto_Nastaliq_Urdu, Noto_Sans_Arabic } from "next/font/google";
 import { cookies } from "next/headers";
+import type { CSSProperties } from "react";
 import { AppStoreProvider } from "@/components/AppStoreProvider";
 import { INTRO_COOKIE } from "@/lib/about";
 import { closureHistory, seedReports, verificationTags } from "@/lib/data";
 import { DEFAULT_LOCALE, dirFor, isLocale, LOCALE_COOKIE, translate, type Locale } from "@/lib/i18n";
 import "./globals.css";
 
-// English. Drawn to match the Noto Arabic-script faces below, so mixed lines don't jump.
-const notoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["latin"],
-});
+// The faces behind the --font-* tokens in design-tokens.css.
 
-// Urdu and Pashto interface text.
-const naskh = Noto_Naskh_Arabic({
-  variable: "--font-naskh",
-  subsets: ["arabic"],
-});
+// Headings, area names and stat figures. The optical-size axis keeps large figures crisp.
+const fraunces = Fraunces({ subsets: ["latin"], axes: ["opsz"] });
 
-// Urdu reading text (headings, About, AI answers). Large, so only fetched when used.
-const nastaliq = Noto_Nastaliq_Urdu({
-  variable: "--font-nastaliq",
-  subsets: ["arabic"],
-  preload: false,
-});
+// All data, labels, buttons and body copy.
+const inter = Inter({ subsets: ["latin"] });
+
+// Urdu, in real Nastaliq. Large, so it's fetched only when a page uses it, not preloaded.
+const nastaliq = Noto_Nastaliq_Urdu({ subsets: ["arabic"], preload: false });
+
+// Pashto (upright, as Pashto is normally printed), and the fallback if Nastaliq fails to load.
+const arabicSans = Noto_Sans_Arabic({ subsets: ["arabic"], preload: false });
+
+/**
+ * A next/font family without its generated fallback face. That fallback is Arial or Times under
+ * another name, and both carry Arabic letters, so Urdu and Pashto would render in it instead of
+ * falling through to Nastaliq or Noto Sans Arabic further down the stack.
+ */
+const family = (font: { style: { fontFamily: string } }) => font.style.fontFamily.split(",")[0].trim();
+
+const FONT_FACES = {
+  "--font-fraunces-face": family(fraunces),
+  "--font-inter-face": family(inter),
+  "--font-nastaliq-face": family(nastaliq),
+  "--font-arabic-sans-face": family(arabicSans),
+} as CSSProperties;
 
 async function savedLanguage(): Promise<Locale> {
   const saved = (await cookies()).get(LOCALE_COOKIE)?.value;
@@ -40,10 +50,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#1e2b27" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e1412" },
-  ],
+  // The browser chrome can't read CSS variables, so this repeats --color-background from design-tokens.css.
+  themeColor: "#16181b", // token-audit: allow
+  colorScheme: "dark",
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -53,11 +62,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const showIntro = !(await cookies()).has(INTRO_COOKIE);
 
   return (
-    <html
-      lang={language}
-      dir={dirFor(language)}
-      className={`${notoSans.variable} ${naskh.variable} ${nastaliq.variable} h-full antialiased`}
-    >
+    <html lang={language} dir={dirFor(language)} style={FONT_FACES} className="h-full antialiased">
       <body className="min-h-full">
         <AppStoreProvider
           language={language}

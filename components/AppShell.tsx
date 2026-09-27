@@ -34,33 +34,33 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
-      <aside className="sticky top-0 hidden h-dvh overflow-y-auto bg-side lg:block">
+      <aside className="sticky top-0 hidden h-dvh overflow-y-auto border-e border-border bg-surface lg:block">
         <SidebarContent />
       </aside>
 
       <div className="flex min-h-dvh min-w-0 flex-col">
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-line bg-surface/95 px-4 py-2.5 backdrop-blur lg:hidden">
+        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-surface/95 px-4 py-3 backdrop-blur lg:hidden">
           <button
             type="button"
             data-menu-button
             onClick={() => setDrawerOpen(true)}
             aria-label={t("nav.open")}
             aria-expanded={drawerOpen}
-            className="grid size-10 shrink-0 place-items-center rounded-lg border border-line text-ink hover:bg-surface-2"
+            className="grid size-10 shrink-0 place-items-center rounded-md border border-border text-text-primary hover:bg-surface-raised"
           >
-            <Menu aria-hidden className="size-5" />
+            <Menu aria-hidden />
           </button>
           <BrandMark size="sm" />
-          <span className="truncate font-bold text-ink">{t("app.name")}</span>
+          <span className="truncate font-display text-lead font-semibold text-text-primary">{t("app.name")}</span>
           <span
             title={t("app.demoBadgeText")}
-            className="ms-auto shrink-0 rounded-full border border-dashed border-line-strong px-2.5 py-1 text-[11px] font-semibold text-ink-2"
+            className="ms-auto shrink-0 rounded-full border border-dashed border-border-control px-3 py-1 text-caption font-medium text-text-secondary"
           >
             {t("app.demoBadge")}
           </span>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 pt-5 pb-10 lg:px-8 lg:pt-8">
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 pt-6 pb-12 lg:px-8 lg:pt-8">
           <ActiveView />
         </main>
       </div>

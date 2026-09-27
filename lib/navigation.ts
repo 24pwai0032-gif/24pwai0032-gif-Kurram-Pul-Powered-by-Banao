@@ -7,8 +7,9 @@ export const matchAnchorId = (area: string, supply: string) => `match-${slug(are
 export const unmatchedAnchorId = (supply: string) => `unmatched-${slug(supply)}`;
 
 /**
- * Switches view, then scrolls to the first of `anchorIds` that exists and briefly outlines it,
- * so the link between screens (a triage case → its dashboard card) is visible, not implied.
+ * Switches view, jumps to the first of `anchorIds` that exists and rings it once (the
+ * `attention` utility), so the link between screens (a triage case → its dashboard card) is
+ * visible, not implied.
  */
 export function useGoTo() {
   const setActiveView = useAppStore((s) => s.setActiveView);
@@ -23,13 +24,11 @@ export function useGoTo() {
           window.scrollTo({ top: 0 });
           return;
         }
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          target.animate(
-            [{ boxShadow: "0 0 0 3px var(--focus)" }, { boxShadow: "0 0 0 3px var(--focus)", offset: 0.6 }, { boxShadow: "0 0 0 0 transparent" }],
-            { duration: 1800, easing: "ease-out" },
-          );
-        }
+        target.scrollIntoView({ block: "start" });
+        // Restart the ring even if this card was the target last time.
+        target.classList.remove("attention");
+        void target.offsetWidth;
+        target.classList.add("attention");
       }, 60);
     },
     [setActiveView],

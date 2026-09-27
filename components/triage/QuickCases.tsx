@@ -31,8 +31,8 @@ export function QuickCases() {
 
   return (
     <div>
-      <p className="text-xs font-semibold text-muted">{t("triage.quickTitle")}</p>
-      <div className="mt-1.5 flex gap-2 overflow-x-auto pb-1 md:flex-wrap md:overflow-visible">
+      <p className="text-caption font-semibold text-text-secondary">{t("triage.quickTitle")}</p>
+      <div className="mt-2 flex gap-2 overflow-x-auto pb-1 md:flex-wrap md:overflow-visible">
         {QUICK_CASES.map(({ tier, area: suggestedArea }) => (
           <button
             key={tier}
@@ -40,7 +40,7 @@ export function QuickCases() {
             data-quick-case={tier}
             disabled={pending}
             onClick={() => run(tier, suggestedArea)}
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-line-strong bg-surface py-1 ps-1 pe-3 text-xs font-medium text-ink hover:bg-surface-2 disabled:opacity-50"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border-control bg-surface py-1 ps-1 pe-3 text-caption font-medium text-text-primary hover:bg-surface-raised disabled:opacity-50"
           >
             <UrgencyBadge tier={tier} />
             {t(`triage.quick.${tier}.label`)}

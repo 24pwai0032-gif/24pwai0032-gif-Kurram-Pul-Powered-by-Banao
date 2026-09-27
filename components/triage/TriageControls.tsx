@@ -8,8 +8,8 @@ import { useT } from "@/lib/useT";
 export function TriageDisclaimer() {
   const { t } = useT();
   return (
-    <p role="note" className="flex items-start gap-2 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium text-ink-2">
-      <ShieldAlert aria-hidden className="mt-px size-4 shrink-0" />
+    <p role="note" className="flex items-start gap-2 rounded-md border border-border bg-surface px-3 py-2 text-caption font-medium text-text-secondary">
+      <ShieldAlert aria-hidden />
       {t("triage.disclaimer")}
     </p>
   );
@@ -28,8 +28,8 @@ export function ModeToggle() {
 
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-xs font-semibold text-muted">{t("triage.modeLabel")}</span>
-      <div role="group" aria-label={t("triage.modeLabel")} className="inline-flex rounded-full border border-line bg-surface-2 p-0.5">
+      <span className="text-caption font-semibold text-text-secondary">{t("triage.modeLabel")}</span>
+      <div role="group" aria-label={t("triage.modeLabel")} className="inline-flex rounded-full border border-border bg-surface-raised p-1">
         {options.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
@@ -37,11 +37,11 @@ export function ModeToggle() {
             aria-pressed={mode === id}
             data-triage-mode={id}
             onClick={() => setMode(id)}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
-              mode === id ? "bg-ink text-surface" : "text-ink-2 hover:text-ink"
+            className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-body font-medium transition-colors ${
+              mode === id ? "bg-brand text-on-brand" : "text-text-secondary hover:text-text-primary"
             }`}
           >
-            <Icon aria-hidden className="size-4" />
+            <Icon aria-hidden />
             {label}
           </button>
         ))}
@@ -58,12 +58,12 @@ export function AreaPicker() {
   const setArea = useAppStore((s) => s.setTriageArea);
 
   return (
-    <label className="flex min-w-52 flex-1 flex-col gap-1 text-xs font-semibold text-muted">
+    <label className="flex min-w-52 flex-1 flex-col gap-1 text-caption font-semibold text-text-secondary">
       {t("triage.areaLabel")}
       <select
         value={area ?? ""}
         onChange={(e) => setArea(e.target.value)}
-        className="h-10 w-full rounded-full border border-line-strong bg-surface px-3.5 text-sm font-medium text-ink"
+        className="h-10 w-full rounded-full border border-border-control bg-surface px-4 text-body font-medium text-text-primary"
       >
         <option value="" disabled>
           {t("triage.areaPlaceholder")}

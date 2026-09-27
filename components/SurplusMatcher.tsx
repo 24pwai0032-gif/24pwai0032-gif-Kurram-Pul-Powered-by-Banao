@@ -5,6 +5,7 @@ import { AiTextPanel } from "@/components/AiTextPanel";
 import { MatchCard } from "@/components/matcher/MatchCard";
 import { UnmatchedList } from "@/components/matcher/UnmatchedList";
 import { findMatches } from "@/lib/matching";
+import { riseOrder } from "@/lib/motion";
 import { useAppStore } from "@/lib/store";
 import { useT } from "@/lib/useT";
 
@@ -27,35 +28,35 @@ export function SurplusMatcher() {
   return (
     <section aria-labelledby="matcher-title" className="space-y-4">
       <header className="space-y-2">
-        <h1 id="matcher-title" className="text-xl font-semibold text-ink">
+        <h1 id="matcher-title" className="text-heading text-text-primary">
           {t("matcher.title")}
         </h1>
-        <p className="text-sm text-ink-2">{t("matcher.subtitle")}</p>
+        <p className="text-body text-text-secondary">{t("matcher.subtitle")}</p>
       </header>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-start">
         <div className="space-y-3">
           <div>
-            <h2 className="text-base font-semibold text-ink">{t("matcher.matchesTitle", { count: matches.length })}</h2>
-            <p className="mt-0.5 text-xs text-muted">{t("matcher.rules")}</p>
+            <h2 className="text-body font-semibold text-text-primary">{t("matcher.matchesTitle", { count: matches.length })}</h2>
+            <p className="mt-1 text-caption text-text-secondary">{t("matcher.rules")}</p>
           </div>
           {matches.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-line-strong bg-surface p-4 text-sm text-ink-2">
+            <p className="rounded-lg border border-dashed border-border-control bg-surface p-4 text-body text-text-secondary">
               {t("matcher.none")}
             </p>
           ) : (
             <ol className="space-y-3">
-              {matches.map((match) => (
-                <li key={match.id}>
+              {matches.map((match, i) => (
+                <li key={match.id} className="rise" style={riseOrder(i)}>
                   <MatchCard match={match} />
                 </li>
               ))}
             </ol>
           )}
-          <p className="text-xs text-muted">{t("matcher.notifyNote")}</p>
+          <p className="text-caption text-text-secondary">{t("matcher.notifyNote")}</p>
         </div>
 
-        <div className="space-y-4">
+        <div className="rise space-y-4" style={riseOrder(1)}>
           <UnmatchedList unmatched={unmatched} />
           <AiTextPanel
             headingId="match-review-title"

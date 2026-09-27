@@ -61,13 +61,18 @@ function normalizeTier(value: unknown): UrgencyTier | null {
   return null;
 }
 
-// "None", and "None" with an explanation after it ("None—urgent assessment needed", "None (refer)",
-// "None needed"), which real models return instead of null.
-const NO_SUPPLY = /^(none|null|n\/?a|not applicable|no|nothing|-+)(\s+(needed|required))?\s*([.,;:(—–-].*)?$/i;
+// Real models write "no supply" many ways instead of null: "None specified; urgent medical
+// assessment is needed", "Not specified", "Unknown", "No specific supply", "N/A - refer". No
+// supply name starts like that, so anything that does is treated as no supply at all.
+const NO_SUPPLY_PHRASE =
+  /^(?:none|nothing|null|nil|n\/?a|unknown|unspecified|not\s+(?:applicable|specified|needed|required|identified|known)|no\s+(?:(?:specific|particular|additional|immediate)\s+)?(?:supply|supplies|medicine|medicines|medication|medications|item|items)|-+)(?=$|[\s.,;:!(—–-])/i;
+// A bare "No" counts too, but "No insulin at home" still names insulin.
+const BARE_NO = /^no(?=$|[.,;:!(—–-])/i;
 
 function normalizeSupply(value: unknown): string | null {
   const supply = Array.isArray(value) ? value.filter((v) => typeof v === "string").join(", ") : asText(value);
-  return supply && !NO_SUPPLY.test(supply) ? supply : null;
+  if (!supply || NO_SUPPLY_PHRASE.test(supply) || BARE_NO.test(supply)) return null;
+  return supply;
 }
 
 function findQuestion(json: Record<string, unknown>): string | null {

@@ -5,6 +5,7 @@ import { ClosureTimeline } from "@/components/forecast/ClosureTimeline";
 import { RiskGauge } from "@/components/forecast/RiskGauge";
 import { SignalsList } from "@/components/forecast/SignalsList";
 import { parseRiskLevel, withoutRiskLevelLine } from "@/lib/forecast";
+import { riseOrder } from "@/lib/motion";
 import { useAppStore } from "@/lib/store";
 import { useT } from "@/lib/useT";
 
@@ -25,15 +26,15 @@ export function ForecasterPanel() {
   return (
     <section aria-labelledby="forecast-title" className="space-y-4">
       <header className="space-y-2">
-        <h1 id="forecast-title" className="text-xl font-semibold text-ink">
+        <h1 id="forecast-title" className="text-heading text-text-primary">
           {t("forecast.title")}
         </h1>
-        <p className="text-sm text-ink-2">{t("forecast.subtitle")}</p>
+        <p className="text-body text-text-secondary">{t("forecast.subtitle")}</p>
       </header>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-start">
         {/* The spec puts the reasoning right under the badge, so they stay together on phones. */}
-        <div className="space-y-4">
+        <div className="rise space-y-4" style={riseOrder(0)}>
           <RiskGauge level={level} status={gaugeStatus} />
           <AiTextPanel
             headingId="forecast-reasoning-title"
@@ -51,7 +52,7 @@ export function ForecasterPanel() {
             }}
           />
         </div>
-        <div className="space-y-4">
+        <div className="rise space-y-4" style={riseOrder(1)}>
           <SignalsList signals={history.current_signals} />
           <ClosureTimeline closures={history.past_closures} />
         </div>

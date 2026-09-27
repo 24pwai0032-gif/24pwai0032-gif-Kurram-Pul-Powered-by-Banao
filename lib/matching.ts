@@ -21,6 +21,8 @@ export interface Need {
   report: ReportRecord | null;
   /** Triage cases in this area waiting on this supply. */
   triageCases: number;
+  /** The ones logged in this session (seed cases excluded), so the matcher can react to new ones. */
+  loggedCaseIds: string[];
 }
 
 export interface Offer {
@@ -57,7 +59,7 @@ function collectNeeds(areas: AreaRecord[], triageCases: TriageCaseRecord[]): Nee
     for (const report of area.reports) {
       if (report.status === "critical" || report.status === "low") {
         const urgency = report.status === "critical" ? "critical" : "needs_supplies";
-        needs.push({ area: area.name, supply: report.supply, urgency, report, triageCases: 0 });
+        needs.push({ area: area.name, supply: report.supply, urgency, report, triageCases: 0, loggedCaseIds: [] });
       }
     }
   }
@@ -67,13 +69,22 @@ function collectNeeds(areas: AreaRecord[], triageCases: TriageCaseRecord[]): Nee
     if (supply === null || triageCase.urgency_tier === "routine") continue;
     const urgency: NeedUrgency = triageCase.urgency_tier === "critical" ? "critical" : "needs_supplies";
     const existing = needs.find((n) => n.area === triageCase.area && sameSupply(n.supply, supply));
+    const logged = triageCase.loggedAt !== undefined ? [triageCase.id] : [];
     if (existing) {
       existing.triageCases++;
+      existing.loggedCaseIds.push(...logged);
       if (urgency === "critical") existing.urgency = "critical";
     } else {
       // Use the reports' name for the supply when one matches ("oral rehydration salts" → "ORS"),
       // so it groups and translates like every other mention of it.
-      needs.push({ area: triageCase.area, supply: canonicalSupply(supply, areas), urgency, report: null, triageCases: 1 });
+      needs.push({
+        area: triageCase.area,
+        supply: canonicalSupply(supply, areas),
+        urgency,
+        report: null,
+        triageCases: 1,
+        loggedCaseIds: logged,
+      });
     }
   }
   return needs;

@@ -6,6 +6,7 @@ import { DashboardStats } from "@/components/dashboard/DashboardStats";
 import { KurramMap } from "@/components/dashboard/KurramMap";
 import { SummaryPanel } from "@/components/dashboard/SummaryPanel";
 import { computeStats, summarizeAreas } from "@/lib/dashboard";
+import { riseOrder } from "@/lib/motion";
 import { useAppStore } from "@/lib/store";
 import { useT } from "@/lib/useT";
 
@@ -19,28 +20,36 @@ export function ShortageDashboard() {
   const stats = useMemo(() => computeStats(summaries), [summaries]);
 
   return (
-    <section aria-labelledby="dashboard-title" className="space-y-4">
+    <section aria-labelledby="dashboard-title" className="space-y-6">
       <header className="space-y-2">
-        <h1 id="dashboard-title" className="text-xl font-semibold text-ink">
+        <h1 id="dashboard-title" className="text-heading text-text-primary">
           {t("dashboard.title")}
         </h1>
-        <p className="text-sm text-ink-2">{t("dashboard.subtitle")}</p>
+        <p className="text-body text-text-secondary">{t("dashboard.subtitle")}</p>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-start">
-        <div className="space-y-4">
+      {/* Wide screens: the map leads, large, beside the AI summary and the figures. Phones read the summary first. */}
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-start">
+        <div className="rise space-y-4 lg:col-start-2 lg:row-start-1" style={riseOrder(1)}>
           <SummaryPanel />
           <DashboardStats stats={stats} />
-          <KurramMap summaries={summaries} />
         </div>
-        {/* Columns rather than a grid, so cards of different heights pack without row gaps. */}
-        <div className="gap-3 xl:columns-2">
-          {summaries.map((summary) => (
-            <div key={summary.area.name} className="break-inside-avoid pb-3">
-              <AreaCard summary={summary} />
-            </div>
-          ))}
-        </div>
+        <KurramMap
+          summaries={summaries}
+          title={t("dashboard.map.title")}
+          caption={t("dashboard.map.caption")}
+          className="rise lg:col-start-1 lg:row-start-1"
+          style={riseOrder(0)}
+        />
+      </div>
+
+      {/* Columns rather than a grid, so cards of different heights pack without row gaps. */}
+      <div className="gap-4 md:columns-2 xl:columns-3">
+        {summaries.map((summary, i) => (
+          <div key={summary.area.name} className="rise break-inside-avoid pb-4" style={riseOrder(i + 2)}>
+            <AreaCard summary={summary} />
+          </div>
+        ))}
       </div>
     </section>
   );

@@ -1,15 +1,15 @@
 "use client";
 
 import { CircleCheck, Clock, OctagonAlert, PackagePlus, TriangleAlert, type LucideIcon } from "lucide-react";
-import type { AreaCondition } from "@/lib/severity";
+import { BADGE_COLORS, CONDITION_TOKEN, type AreaCondition } from "@/lib/severity";
 import { useT } from "@/lib/useT";
 
-const STYLES: Record<AreaCondition, { icon: LucideIcon; className: string }> = {
-  critical: { icon: OctagonAlert, className: "bg-critical text-surface" },
-  low: { icon: TriangleAlert, className: "bg-low-bg text-low-ink" },
-  stable: { icon: CircleCheck, className: "bg-stable-bg text-stable-ink" },
-  surplus: { icon: PackagePlus, className: "bg-surplus-bg text-surplus-ink" },
-  stale: { icon: Clock, className: "bg-stale-bg text-stale-ink" },
+const ICONS: Record<AreaCondition, LucideIcon> = {
+  critical: OctagonAlert,
+  low: TriangleAlert,
+  stable: CircleCheck,
+  surplus: PackagePlus,
+  stale: Clock,
 };
 
 interface SeverityBadgeProps {
@@ -18,20 +18,21 @@ interface SeverityBadgeProps {
   muted?: boolean;
 }
 
+/** A report's or area's stock level: the hue's tint, its icon and its name, never colour alone. */
 export function SeverityBadge({ status, muted = false }: SeverityBadgeProps) {
   const { t } = useT();
-  const Icon = STYLES[status].icon;
-  const colors = STYLES[muted ? "stale" : status].className;
-  // The most urgent state gets the most visual weight, not just a different color.
-  const emphasis = status === "critical" && !muted;
+  const Icon = ICONS[status];
+  const token = muted ? "stale" : CONDITION_TOKEN[status];
+  // Critical carries more weight than the rest: a full rust outline and bold text.
+  const critical = token === "critical";
 
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-1 rounded-full ${colors} ${
-        emphasis ? "px-2.5 py-1 text-[13px] font-bold" : "px-2 py-0.5 text-xs font-semibold"
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-caption ${BADGE_COLORS[token]} ${
+        critical ? "border border-critical font-bold" : "font-semibold"
       }`}
     >
-      <Icon aria-hidden className={emphasis ? "size-4" : "size-3.5"} strokeWidth={2.25} />
+      <Icon aria-hidden />
       {t(`status.${status}`)}
     </span>
   );

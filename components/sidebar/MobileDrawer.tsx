@@ -29,7 +29,7 @@ export function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => 
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="m-0 h-dvh max-h-none w-[min(84vw,19rem)] bg-side p-0 text-on-side backdrop:bg-black/55 lg:hidden"
+      className="m-0 h-dvh max-h-none w-[min(84vw,19rem)] border-e border-border bg-surface-raised p-0 text-text-primary backdrop:bg-background/80 lg:hidden"
       style={{ insetInlineStart: 0, insetInlineEnd: "auto" }}
     >
       <div className="flex h-full flex-col">
@@ -38,9 +38,9 @@ export function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => 
             type="button"
             onClick={onClose}
             aria-label={t("nav.close")}
-            className="grid size-10 place-items-center rounded-lg text-on-side-muted hover:bg-side-2 hover:text-on-side"
+            className="grid size-10 place-items-center rounded-md text-text-secondary hover:bg-surface hover:text-text-primary"
           >
-            <X aria-hidden className="size-5" />
+            <X aria-hidden />
           </button>
         </div>
         <div className="min-h-0 flex-1">

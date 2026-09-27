@@ -2,20 +2,27 @@
 
 import { ArrowLeftRight, ChevronRight, Gauge, LayoutGrid, Stethoscope, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { KurramMap } from "@/components/dashboard/KurramMap";
 import { daysBetween, MODEL_CLOSURE, SOURCES, type Source } from "@/lib/about";
+import { riseOrder } from "@/lib/motion";
 import type { ViewId } from "@/lib/store";
 import { useT } from "@/lib/useT";
 
-/** Footnote-style source line: small caption under the claim it supports, with a link. */
+/** Footnote-style source line: small and quiet under the claim it supports, with a link. */
 function Citation({ sources }: { sources: Source[] }) {
   const { t, formatDate } = useT();
   return (
-    <p className="mt-2 text-xs text-muted">
+    <p className="mt-3 text-caption text-text-secondary">
       {sources.length > 1 ? t("about.sources") : t("about.source")}:{" "}
       {sources.map((s, i) => (
         <span key={s.url}>
           {i > 0 && "; "}
-          <a href={s.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">
+          <a
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-border-control underline-offset-4 transition-colors hover:text-text-primary hover:decoration-current"
+          >
             {t("about.citation", { outlet: t(`about.outlets.${s.outlet}`), date: formatDate(s.date, "full") })}
           </a>
         </span>
@@ -24,6 +31,10 @@ function Citation({ sources }: { sources: Source[] }) {
   );
 }
 
+/**
+ * One of the two figures the page turns on. Both use the same padding so their numbers share a
+ * baseline; the child deaths carry critical elevation (rust border and shadow) and a rust figure.
+ */
 function Stat({ value, label, sources, critical = false }: {
   value: ReactNode;
   label: string;
@@ -31,12 +42,11 @@ function Stat({ value, label, sources, critical = false }: {
   critical?: boolean;
 }) {
   return (
-    <div
-      className={`rounded-2xl border border-line bg-surface p-4 ${critical ? "border-s-4" : ""}`}
-      style={critical ? { borderInlineStartColor: "var(--critical)" } : undefined}
-    >
-      <p className="text-4xl font-bold tracking-tight text-ink tabular-nums">{value}</p>
-      <p className="mt-1 text-sm text-ink-2">{label}</p>
+    <div className={critical ? "card-critical" : "rounded-lg border border-border bg-surface p-6"}>
+      <p className={`font-display text-display font-semibold tabular-nums ${critical ? "text-critical-text" : "text-text-primary"}`}>
+        {value}
+      </p>
+      <p className="mt-2 text-body text-text-primary">{label}</p>
       <Citation sources={sources} />
     </div>
   );
@@ -44,9 +54,9 @@ function Stat({ value, label, sources, critical = false }: {
 
 function Point({ title, children, sources }: { title: string; children: ReactNode; sources?: Source[] }) {
   return (
-    <section className="border-s-2 border-line-strong ps-4">
-      <h3 className="font-semibold text-ink">{title}</h3>
-      <div className="reading mt-1 space-y-1 text-sm text-ink-2">{children}</div>
+    <section className="border-t border-border-control pt-4">
+      <h3 className="text-lead text-text-primary">{title}</h3>
+      <div className="mt-2 space-y-2 text-body text-text-secondary">{children}</div>
       {sources && <Citation sources={sources} />}
     </section>
   );
@@ -61,25 +71,34 @@ const EXPLORE: { view: Exclude<ViewId, "about">; icon: LucideIcon }[] = [
 
 /**
  * The problem, the stakes and the mechanism, legible to someone opening the link cold:
- * the real closure the app is modeled on (with sources), why phones fail with the road,
- * the existing coordination it formalizes, and why jirga elders verify reports.
+ * the real closure the app is modeled on (with sources), where it happens, why phones fail
+ * with the road, the existing coordination it formalizes, and why jirga elders verify reports.
+ *
+ * Laid out by its own width (container queries), so the same content reads well on the full
+ * About page and in the narrower first-visit dialog.
  */
-export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => void }) {
+export function AboutContent({ onNavigate, lead = true }: {
+  onNavigate: (view: ViewId) => void;
+  /** The place and the pitch. The About page shows them in its hero instead. */
+  lead?: boolean;
+}) {
   const { t, formatDate } = useT();
   const days = daysBetween(MODEL_CLOSURE.start, MODEL_CLOSURE.firstConvoy);
 
   return (
-    <div className="space-y-7">
-      <div>
-        <p className="text-xs font-semibold tracking-wide text-muted uppercase">{t("about.eyebrow")}</p>
-        <p className="reading mt-2 text-xl leading-snug font-semibold text-ink md:text-2xl md:leading-snug">{t("app.pitch")}</p>
-      </div>
+    <div className="@container space-y-12">
+      {lead && (
+        <div className="rise" style={riseOrder(0)}>
+          <p className="text-caption font-semibold tracking-wide text-text-secondary uppercase">{t("about.eyebrow")}</p>
+          <p className="mt-2 font-display text-title text-text-primary @xl:text-heading">{t("app.pitch")}</p>
+        </div>
+      )}
 
-      <section aria-labelledby="modeled-on-title">
-        <h2 id="modeled-on-title" className="text-sm font-semibold text-ink">
+      <section aria-labelledby="modeled-on-title" className="rise" style={riseOrder(1)}>
+        <h2 id="modeled-on-title" className="text-title text-text-primary">
           {t("about.modeledOn")}
         </h2>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <div className="mt-4 grid gap-4 @xl:grid-cols-2">
           <Stat
             value={t("about.closureStat", { days })}
             label={t("about.closureLabel", {
@@ -97,38 +116,40 @@ export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => voi
         </div>
       </section>
 
-      <div className="space-y-5">
+      <KurramMap variant="place" title={t("about.mapTitle")} caption={t("about.mapCaption")} className="rise" style={riseOrder(2)} />
+
+      <div className="rise grid gap-8 @3xl:grid-cols-3 @3xl:gap-6" style={riseOrder(3)}>
         <Point title={t("about.whyTitle")} sources={[SOURCES.mobileData]}>
           <p>{t("about.whyText")}</p>
-          <p className="font-medium text-ink">{t("about.commsFact")}</p>
+          <p className="font-medium text-text-primary">{t("about.commsFact")}</p>
         </Point>
         <Point title={t("about.existingTitle")}>
           <p>{t("about.existingText")}</p>
         </Point>
         <Point title={t("about.jirgaTitle")} sources={[SOURCES.jirgaAccord]}>
           <p>{t("about.jirgaText")}</p>
-          <p className="font-medium text-ink">{t("about.jirgaFact", { date: formatDate(MODEL_CLOSURE.jirgaAccord, "full") })}</p>
+          <p className="font-medium text-text-primary">{t("about.jirgaFact", { date: formatDate(MODEL_CLOSURE.jirgaAccord, "full") })}</p>
         </Point>
       </div>
 
-      <section aria-labelledby="explore-title">
-        <h2 id="explore-title" className="text-sm font-semibold text-ink">
+      <section aria-labelledby="explore-title" className="rise" style={riseOrder(4)}>
+        <h2 id="explore-title" className="text-title text-text-primary">
           {t("about.exploreTitle")}
         </h2>
-        <ul className="mt-2 divide-y divide-line rounded-2xl border border-line bg-surface">
+        <ul className="mt-4 divide-y divide-border rounded-lg border border-border bg-surface">
           {EXPLORE.map(({ view, icon: Icon }) => (
             <li key={view}>
               <button
                 type="button"
                 onClick={() => onNavigate(view)}
-                className="flex w-full items-center gap-3 px-4 py-3 text-start hover:bg-surface-2"
+                className="flex w-full items-center gap-3 px-4 py-3 text-start transition-colors hover:bg-surface-raised"
               >
-                <Icon aria-hidden className="size-5 shrink-0 text-ink-2" />
+                <Icon aria-hidden className="text-brand" />
                 <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold text-ink">{t(`nav.${view}`)}</span>
-                  <span className="block text-xs text-muted">{t(`about.explore.${view}`)}</span>
+                  <span className="block text-body font-semibold text-text-primary">{t(`nav.${view}`)}</span>
+                  <span className="block text-caption text-text-secondary">{t(`about.explore.${view}`)}</span>
                 </span>
-                <ChevronRight aria-hidden className="size-4 shrink-0 text-muted rtl:-scale-x-100" />
+                <ChevronRight aria-hidden className="text-text-secondary rtl:-scale-x-100" />
               </button>
             </li>
           ))}

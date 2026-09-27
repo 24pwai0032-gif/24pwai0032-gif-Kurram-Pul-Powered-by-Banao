@@ -14,18 +14,18 @@ export function ReportRow({ report, stale }: ReportView) {
   const age = formatAge(ageMs(report.timestamp, now));
 
   return (
-    <li className="flex flex-col gap-1.5 py-3">
+    <li className="flex flex-col gap-2 py-3">
       <div className="flex items-start justify-between gap-3">
         <span
           className={
-            stale ? "font-medium text-muted" : report.status === "critical" ? "text-[15px] font-bold text-ink" : "font-medium text-ink"
+            stale ? "font-medium text-text-secondary" : report.status === "critical" ? "text-body font-bold text-text-primary" : "font-medium text-text-primary"
           }
         >
           {tSupply(report.supply)}
         </span>
         <SeverityBadge status={report.status} muted={stale} />
       </div>
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-caption text-text-secondary">
         <VerificationTag label={report.verified_by} />
         <span>
           {t("dashboard.area.reportedBy", { name: tName(report.reported_by) })}
@@ -33,8 +33,8 @@ export function ReportRow({ report, stale }: ReportView) {
           {!stale && ` · ${age}`}
         </span>
         {stale && (
-          <span className="inline-flex items-center gap-1 font-semibold text-stale-ink">
-            <Clock aria-hidden className="size-3.5" />
+          <span className="inline-flex items-center gap-1 font-semibold text-stale-text">
+            <Clock aria-hidden />
             {t("time.lastUpdated", { age })}
           </span>
         )}

@@ -23,14 +23,47 @@ export const CONDITION_PRIORITY: Record<AreaCondition, number> = {
   surplus: 4,
 };
 
-/** CSS color for marks (pins, dots, borders). Text uses the matching `-ink` token instead. */
+/** The design-token severity for each condition (design-tokens.css). Reports say "low"; the token is "warning". */
+export type SeverityToken = "critical" | "warning" | "stable" | "surplus" | "stale";
+
+export const CONDITION_TOKEN: Record<AreaCondition, SeverityToken> = {
+  critical: "critical",
+  low: "warning",
+  stable: "stable",
+  surplus: "surplus",
+  stale: "stale",
+};
+
+/** CSS color for marks (pins, dots, bars). Text uses the matching `-text` token instead. */
 export function conditionColor(condition: AreaCondition): string {
-  return `var(--${condition})`;
+  return `var(--color-${CONDITION_TOKEN[condition]})`;
 }
 
-/** Mark color per triage urgency tier: red / orange / green (SPEC section 6). */
-export const TIER_COLOR: Record<UrgencyTier, string> = {
-  critical: "var(--critical)",
-  needs_supplies: "var(--low)",
-  routine: "var(--stable)",
+/**
+ * Elevation per severity (the card-* utilities in design-tokens.css): a critical card has a
+ * full rust border, a stronger shadow and more padding; a warning card an ochre border and a
+ * faint shadow; everything else sits flat with a hairline border.
+ */
+export const CARD_ELEVATION: Record<SeverityToken, string> = {
+  critical: "card-critical",
+  warning: "card-warning",
+  stable: "card-routine",
+  surplus: "card-routine",
+  stale: "card-routine",
+};
+
+/** Badge colours: the hue's 12% tint behind text in the hue's readable tone. */
+export const BADGE_COLORS: Record<SeverityToken, string> = {
+  critical: "bg-critical-tint text-critical-text",
+  warning: "bg-warning-tint text-warning-text",
+  stable: "bg-stable-tint text-stable-text",
+  surplus: "bg-surplus-tint text-surplus-text",
+  stale: "bg-stale-tint text-stale-text",
+};
+
+/** The token severity per triage urgency tier: rust / ochre / orchard green (SPEC section 6). */
+export const TIER_TOKEN: Record<UrgencyTier, SeverityToken> = {
+  critical: "critical",
+  needs_supplies: "warning",
+  routine: "stable",
 };

@@ -22,16 +22,16 @@ export function VerificationTag({ label }: VerificationTagProps) {
 
   if (label === null) {
     return (
-      <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-dashed border-line-strong px-2 py-0.5 text-xs text-muted">
-        <ShieldQuestion aria-hidden className="size-3.5" />
+      <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-dashed border-border-control px-2 py-1 text-caption text-text-secondary">
+        <ShieldQuestion aria-hidden />
         {t("verification.unverified")}
       </span>
     );
   }
 
   return (
-    <span className="inline-flex max-w-full items-center gap-1 rounded-full border border-line-strong bg-surface-2 px-2 py-0.5 text-xs font-medium text-ink">
-      <ShieldCheck aria-hidden className="size-3.5 shrink-0" strokeWidth={2.25} />
+    <span className="inline-flex max-w-full items-center gap-1 rounded-full border border-border-control bg-surface-raised px-2 py-1 text-caption font-medium text-text-primary">
+      <ShieldCheck aria-hidden className="text-text-secondary" />
       <span className="truncate">
         {tag ? `${t(`verification.types.${tag.type}`)} · ${isolate(tName(tag.name))}` : label}
       </span>

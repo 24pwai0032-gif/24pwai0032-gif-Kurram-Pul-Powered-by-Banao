@@ -22,8 +22,8 @@ export function ChatComposer() {
   };
 
   return (
-    <div className="sticky bottom-0 z-10 -mx-4 border-t border-line bg-page/95 px-4 pt-2.5 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur lg:mx-0 lg:border-t-0 lg:px-0">
-      <div className="mb-2.5 space-y-2.5">
+    <div className="sticky bottom-0 z-10 -mx-4 border-t border-border bg-background/95 px-4 pt-3 pb-[calc(--spacing(3)+env(safe-area-inset-bottom))] backdrop-blur lg:mx-0 lg:border-t-0 lg:px-0">
+      <div className="mb-3 space-y-3">
         <RecentlyLogged />
         <QuickCases />
       </div>
@@ -52,18 +52,18 @@ export function ChatComposer() {
               submit();
             }
           }}
-          className="min-h-11 flex-1 resize-none rounded-2xl border border-line-strong bg-surface px-3.5 py-2.5 text-sm text-ink placeholder:text-muted disabled:opacity-50"
+          className="min-h-11 flex-1 resize-none rounded-lg border border-border-control bg-surface px-4 py-3 text-body text-text-primary placeholder:text-text-secondary disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={!canSend}
           aria-label={t("triage.send")}
-          className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-ink text-surface disabled:opacity-40"
+          className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-brand font-semibold text-on-brand transition-colors hover:bg-brand-text disabled:bg-surface-raised disabled:text-text-muted"
         >
-          <Send aria-hidden className="size-4 rtl:-scale-x-100" />
+          <Send aria-hidden className="rtl:-scale-x-100" />
         </button>
       </form>
-      {area === null && <p className="mt-1.5 text-xs text-muted">{t("triage.areaFirst")}</p>}
+      {area === null && <p className="mt-2 text-caption text-text-secondary">{t("triage.areaFirst")}</p>}
     </div>
   );
 }

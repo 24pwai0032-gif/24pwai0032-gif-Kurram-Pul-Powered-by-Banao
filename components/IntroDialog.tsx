@@ -42,30 +42,30 @@ export function IntroDialog() {
         e.preventDefault();
         close();
       }}
-      className="m-auto max-h-[min(100dvh-2rem,56rem)] w-[min(100%-2rem,44rem)] overflow-y-auto rounded-2xl bg-page p-0 text-ink shadow-2xl backdrop:bg-black/55"
+      className="m-auto max-h-[min(100dvh-2rem,56rem)] w-[min(100%-2rem,44rem)] overflow-y-auto rounded-lg border border-border bg-background p-0 text-text-primary backdrop:bg-background/80"
     >
-      <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-line bg-page/95 px-5 py-3 backdrop-blur">
-        <p id="intro-title" className="font-semibold text-ink">
+      <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-background/95 px-6 py-3 backdrop-blur">
+        <p id="intro-title" className="font-semibold text-text-primary">
           {t("app.name")} · {t("about.title")}
         </p>
         <button
           type="button"
           onClick={() => close()}
           aria-label={t("about.close")}
-          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-ink-2 hover:bg-surface-2"
+          className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-text-secondary hover:bg-surface-raised"
         >
-          <X aria-hidden className="size-5" />
+          <X aria-hidden />
         </button>
       </div>
-      <div className="px-5 py-5">
+      <div className="px-6 py-6">
         <AboutContent onNavigate={close} />
       </div>
-      <div className="sticky bottom-0 border-t border-line bg-page/95 px-5 py-3 backdrop-blur">
+      <div className="sticky bottom-0 border-t border-border bg-background/95 px-6 py-3 backdrop-blur">
         <button
           type="button"
           autoFocus
           onClick={() => close("dashboard")}
-          className="w-full rounded-full bg-ink py-2.5 text-sm font-semibold text-surface"
+          className="w-full rounded-full py-3 text-body bg-brand font-semibold text-on-brand transition-colors hover:bg-brand-text"
         >
           {t("about.introContinue")}
         </button>

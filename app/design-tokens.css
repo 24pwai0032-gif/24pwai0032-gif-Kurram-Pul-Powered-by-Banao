@@ -1,0 +1,249 @@
+/*
+ * Kurram Pul design tokens: the single source of truth for color, type, spacing,
+ * elevation and motion. Components reach them only through Tailwind classes
+ * (bg-surface, text-critical-text, text-body, p-4, card-critical, …) or var(--color-…);
+ * no hex value, font size or shadow is written anywhere else in the app.
+ *
+ * Dark theme only. The palette is warm rather than neutral-cold, taken from Kurram's
+ * orchards and mountain stone; nothing here is decorative.
+ *
+ * Tailwind's default palette, type scale, fonts, shadows, radii and easings are reset,
+ * so a leftover class such as text-red-500 or text-sm generates nothing at all.
+ */
+
+@theme static {
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --shadow-*: initial;
+  --radius-*: initial;
+  --ease-*: initial;
+  --tracking-*: initial;
+
+  /* ── Ground, surfaces and text ─────────────────────────────────────────────── */
+
+  --color-background: #16181b; /* app background */
+  --color-surface: #1e211f; /* cards, panels, sidebar */
+  --color-surface-raised: #262a26; /* modals, popovers, the phone drawer */
+  --color-border: #2c302b; /* hairlines around and between things */
+
+  --color-text-primary: #f2efe9; /* 14.2:1 on surface */
+  --color-text-secondary: #a8ada3; /* 7.1:1 on surface: captions, timestamps, citations */
+  /* 3.2:1 on surface, below the 4.5:1 reading-text minimum. Use it for icons that sit
+     beside a label, disabled controls and dividers; never as the only carrier of words. */
+  --color-text-muted: #6b6f68;
+
+  --color-brand: #c97c4c; /* clay: logo mark, primary buttons, active nav */
+
+  /* Roles derived from the colors above: mixes only, no new hues. */
+  --color-on-brand: var(--color-background); /* text on a clay button: 5.5:1 */
+  --color-brand-text: color-mix(in srgb, var(--color-brand) 92%, var(--color-text-primary)); /* links: ≥4.6:1 on every surface, incl. raised */
+  --color-border-control: var(--color-text-muted); /* inputs and toggles: 3.2:1, meets WCAG 1.4.11 */
+  --color-focus: var(--color-brand);
+
+  /* ── Severity ──────────────────────────────────────────────────────────────── */
+  /* One scale for all four sections:
+       critical  critical stock · critical triage · high closure risk · serious signal
+       warning   low stock · needs supplies · elevated risk · moderate signal
+       stable    stable stock · routine triage · low risk
+       surplus   surplus stock
+       stale     no recent update · minor signal
+     Colour is never the only cue: every badge and pin also carries an icon and a label. */
+
+  --color-critical: #b5453b; /* deep rust */
+  --color-warning: #c48a3a; /* muted ochre */
+  --color-stable: #5c7a5e; /* orchard green */
+  --color-surplus: #4c6b7a; /* slate blue-grey */
+  --color-stale: var(--color-text-muted); /* intentionally quiet */
+
+  /* Badge grounds: each hue at 12% over the surface. */
+  --color-critical-tint: color-mix(in srgb, var(--color-critical) 12%, var(--color-surface)); /* #302522 */
+  --color-warning-tint: color-mix(in srgb, var(--color-warning) 12%, var(--color-surface)); /* #322e22 */
+  --color-stable-tint: color-mix(in srgb, var(--color-stable) 12%, var(--color-surface)); /* #252c27 */
+  --color-surplus-tint: color-mix(in srgb, var(--color-surplus) 12%, var(--color-surface)); /* #242a2a */
+  --color-stale-tint: color-mix(in srgb, var(--color-stale) 12%, var(--color-surface)); /* #272a28 */
+
+  /* Words and icons in each hue. The base hues are too dark for small text on this ground
+     (critical is 2.7:1 on its own tint), so each is lifted toward text-primary until it
+     reads at ≥4.5:1 on its tint and on every surface. */
+  --color-critical-text: color-mix(in srgb, var(--color-critical) 66%, var(--color-text-primary)); /* #ca7f76 · 4.8:1 on tint */
+  --color-warning-text: color-mix(in srgb, var(--color-warning) 94%, var(--color-text-primary)); /* #c79045 · 4.8:1 */
+  --color-stable-text: color-mix(in srgb, var(--color-stable) 70%, var(--color-text-primary)); /* #899d88 · 4.9:1 */
+  --color-surplus-text: color-mix(in srgb, var(--color-surplus) 66%, var(--color-text-primary)); /* #8498a0 · 4.9:1 */
+  --color-stale-text: color-mix(in srgb, var(--color-stale) 70%, var(--color-text-primary)); /* #94958f · 4.8:1 */
+
+  /* ── District map: roles over the palette ─────────────────────────────────── */
+
+  /* Pins, markers and roads carry meaning, so each reaches 3:1 against the land (WCAG 1.4.11).
+     The rust and slate pins alone don't (2.7:1, 2.6:1), so every pin and marker has a light ring. */
+  --color-map-land: var(--color-surface-raised);
+  --color-map-edge: var(--color-text-muted); /* 3.2:1 against the page */
+  --color-map-road: color-mix(in srgb, var(--color-text-muted) 65%, var(--color-text-secondary)); /* #80857d · 3.9:1 on land */
+  --color-map-ring: var(--color-text-secondary); /* outline on every pin and marker · 6.4:1 on land */
+
+  /* ── Typography ────────────────────────────────────────────────────────────── */
+  /* Faces are loaded by next/font in app/layout.tsx, which defines the --font-*-face variables. */
+
+  --font-display: var(--font-fraunces-face), Georgia, serif; /* page titles, area names, stat numbers */
+  --font-sans: var(--font-inter-face), system-ui, "Segoe UI", sans-serif; /* all data, labels, buttons, body copy */
+  /* Urdu: real Nastaliq shaping. If it fails to load, fall back to the Arabic sans already loaded for Pashto. */
+  --font-urdu: var(--font-nastaliq-face), var(--font-arabic-sans-face), serif;
+  /* Pashto: Noto Sans Arabic. Tested against Noto Nastaliq Urdu: both draw every Pashto letter
+     (ښ ځ ډ ړ ۍ ې ټ ګ ڼ), but Nastaliq gives Pashto's own endings Urdu-style forms, and Pashto
+     is normally printed upright (Naskh style), so the sans reads more naturally. */
+  --font-pashto: var(--font-arabic-sans-face), sans-serif;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* The only sizes in the app: 13, 15, 17, 22, 28, 40px. */
+  --text-caption: 13px; /* timestamps, citations, badge labels */
+  --text-caption--line-height: 18px;
+  --text-body: 15px; /* default for data, labels, buttons, body copy */
+  --text-body--line-height: 22px;
+  --text-lead: 17px; /* card titles, the pitch line on small screens */
+  --text-lead--line-height: 24px;
+  --text-title: 22px; /* area names, section titles */
+  --text-title--line-height: 28px;
+  --text-heading: 28px; /* page titles */
+  --text-heading--line-height: 34px;
+  --text-display: 40px; /* stat figures: "84 days", "50+" */
+  --text-display--line-height: 44px;
+  --text-display--letter-spacing: -0.01em;
+
+  --tracking-wide: 0.025em; /* uppercase labels ("PARACHINAR, KURRAM DISTRICT") */
+
+  /* Nastaliq needs room above and below the line; the Arabic sans needs a little. */
+  --leading-nastaliq: 2.1;
+  --leading-arabic: 1.75;
+
+  /* ── Spacing ───────────────────────────────────────────────────────────────── */
+  /* Base unit 4px, so Tailwind's p-1 = 4px. Padding, margin and gap use only the steps
+     1 2 3 4 6 8 12 16 = 4, 8, 12, 16, 24, 32, 48, 64px. */
+  --spacing: 4px;
+
+  /* ── Shape and icons ───────────────────────────────────────────────────────── */
+
+  --radius-sm: 4px; /* inner chips */
+  --radius-md: 8px; /* buttons, inputs */
+  --radius-lg: 12px; /* cards and panels */
+
+  --icon-size: 18px; /* every icon; stroke is currentColor, so it takes its text's colour */
+  --icon-stroke: 1.75;
+
+  /* ── Elevation ─────────────────────────────────────────────────────────────── */
+  /* Routine cards: border only. Warning: ochre border at 40% plus a faint shadow.
+     Critical: full rust border, a stronger shadow with a trace of rust, and more padding. */
+
+  --shadow-warning: 0 1px 3px rgb(0 0 0 / 0.35);
+  --shadow-critical: 0 10px 28px -12px rgb(0 0 0 / 0.75),
+    0 4px 18px -8px color-mix(in srgb, var(--color-critical) 40%, transparent);
+
+  /* ── Motion ────────────────────────────────────────────────────────────────── */
+  /* Calm and responsive: nothing over 250ms, no overshoot or bounce. */
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 150ms; /* hover, press, toggles */
+  --duration-base: 200ms; /* card entrance, language change */
+  --duration-slow: 240ms; /* the critical-case pulse */
+  --motion-rise: 8px; /* cards slide up this far on entrance */
+  --motion-stagger: 30ms; /* delay per card in a list */
+
+  /* Every hover and colour transition uses the same timing. */
+  --default-transition-duration: var(--duration-fast);
+  --default-transition-timing-function: var(--ease-standard);
+}
+
+/* ── Motion utilities ──────────────────────────────────────────────────────── */
+/* Each is one short animation (nothing loops); "backwards" holds the first frame through the
+   stagger delay and leaves no styles behind afterwards. Each is switched off for people who ask
+   their system for reduced motion. */
+
+@keyframes kp-rise {
+  from {
+    opacity: 0;
+    translate: 0 var(--motion-rise);
+  }
+}
+
+@keyframes kp-ring {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--pulse-color, var(--color-critical)) 70%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+@keyframes kp-pulse {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--pulse-color, var(--color-critical)) 70%, transparent);
+  }
+  45% {
+    scale: 1.08;
+  }
+  to {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+/* Cards fade in and slide up 8px on mount. Set --rise-index on each card in a list (0, 1, 2…)
+   and they start --motion-stagger apart. */
+@utility rise {
+  animation: kp-rise var(--duration-base) var(--ease-standard) backwards;
+  animation-delay: calc(var(--rise-index, 0) * var(--motion-stagger));
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* One pulse on a badge that has news: a newly logged critical case. It waits for its card's
+   entrance (inherited --rise-index) to finish first. */
+@utility pulse-once {
+  animation: kp-pulse var(--duration-slow) var(--ease-standard) backwards;
+  animation-delay: calc(var(--rise-index, 0) * var(--motion-stagger) + var(--duration-base));
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* One focus-coloured ring on the card another screen just linked to ("View on dashboard"). */
+@utility attention {
+  --pulse-color: var(--color-focus);
+  animation: kp-ring var(--duration-slow) var(--ease-standard) backwards;
+  animation-delay: calc(var(--rise-index, 0) * var(--motion-stagger) + var(--duration-base));
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Elevation, applied per card by severity. Each is complete on its own (ground, border,
+   radius, shadow, padding), so a card carries exactly one of them. */
+
+@utility card-routine {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: --spacing(4);
+}
+
+@utility card-warning {
+  background-color: var(--color-surface);
+  border: 1px solid color-mix(in srgb, var(--color-warning) 40%, transparent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-warning);
+  padding: --spacing(4);
+}
+
+@utility card-critical {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-critical);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-critical);
+  padding: --spacing(6);
+}

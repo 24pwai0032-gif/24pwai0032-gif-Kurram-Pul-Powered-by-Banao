@@ -26,7 +26,7 @@ cp .env.example .env.local   # then set LLM_PROVIDER and that provider's API key
 npm run dev                  # http://localhost:3000
 ```
 
-Checks: `npm run typecheck`, `npm run lint`, `npm run build`. The build needs no API key.
+Checks: `npm run typecheck`, `npm run lint`, `npm run check:tokens` (the design-token audit, below), `npm run build`. The build needs no API key.
 
 ## Choosing the AI provider: OpenAI or Grok
 
@@ -84,6 +84,7 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 
 | Path | What it holds |
 |---|---|
+| `app/design-tokens.css` | The design system: every colour, type size, space, radius, shadow and motion timing (see Look and feel) |
 | `app/layout.tsx` | Fonts, `<html lang dir>` and tab title from the language cookie, validated data into the store |
 | `app/api/aggregate/route.ts` | The dashboard's AI situation summary |
 | `app/api/triage/route.ts` | Classifies a patient description, or asks one clarifying question |
@@ -105,6 +106,8 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 | `lib/store.ts` | Zustand store: language, view, reports, triage cases and conversation, AI results |
 | `lib/api.ts` | Browser-side calls to the app's own API routes |
 | `lib/i18n.ts`, `lib/useT.ts` | English/Urdu/Pashto strings from `messages/`, typed keys, dates |
+| `lib/severity.ts`, `lib/motion.ts` | Severity → badge colours and card elevation; entrance order and once-only attention cues |
+| `scripts/check-tokens.mjs` | Fails the check if any file uses a colour, size, space, shadow or radius that isn't a token |
 | `data/` | Simulated data: supply reports, verification tags, closure history |
 
 ### Conventions
@@ -112,17 +115,17 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 - **Seed timestamps are relative.** `SEED_AS_OF` in `lib/seed.ts` is the moment the seed timestamps were written against; on load every timestamp shifts so it becomes "now".
 - **Prompts stay verbatim, in the reader's language.** Each spec prompt is kept word for word; the route sends its instructions as the system message and the data as the user message, so text inside a report can't act as an instruction. In Urdu or Pashto, one line is appended asking for the answer in that language ([lib/ai/language.ts](lib/ai/language.ts)); the fields the app reads (triage tiers, JSON keys, supply names, the forecast's `risk_level` line) stay in English.
 - **Stale = older than 12 hours** (`lib/staleness.ts`). A stale report stays visible, grayed out, and an area with only stale reports is flagged as a blind spot.
-- **Severity is never color alone.** Every badge and map pin has an icon or glyph plus a label; colors are tokens in `app/globals.css` (light and dark). One scheme across all four sections:
+- **Severity is never colour alone.** Every badge and map pin has an icon or glyph plus a label; colours are tokens in `app/design-tokens.css`. One scheme across all four sections:
 
-  | Color | Supply status | Triage tier | Closure risk | Signal strength |
+  | Colour | Supply status | Triage tier | Closure risk | Signal strength |
   |---|---|---|---|---|
-  | Red | critical | critical | high | serious |
-  | Amber | low | needs supplies | elevated | moderate |
-  | Green | stable | routine | low | |
-  | Gray | stale | | | minor |
-  | Blue | surplus | | | |
+  | Rust | critical | critical | high | serious |
+  | Ochre | low | needs supplies | elevated | moderate |
+  | Orchard green | stable | routine | low | |
+  | Quiet grey | stale | | | minor |
+  | Slate | surplus | | | |
 
-  The top of every scale is a solid red chip; everything else is a tinted one. Critical items also carry more weight: larger bold badges, a thicker edge and tinted header on critical area, match and triage cards, bolder report rows, a critical stat tile that spans its row, and larger map pins. Risk levels always read as "High risk" and signal strengths use different words ("Serious", "Minor"), so neither is confused with a stock level of "Low".
+  Critical items carry more weight, not just a different colour: critical badges have a full rust outline and bold text; critical cards (areas, matches, the triage result, the risk gauge, the lead stat) have a full rust border, a stronger shadow and more padding; critical map pins are drawn larger. Risk levels always read as "High risk" and signal strengths use different words ("Serious", "Minor"), so neither is confused with a stock level of "Low".
 - **Dates come from `messages/`, not `Intl`.** Browsers ship no Pashto date data and fall back to English, so month names are translated strings (`formatDate` in `lib/i18n.ts`).
 - **RTL:** use logical Tailwind utilities (`ms-`, `pe-`, `border-s`, `start-`) instead of left/right. Interpolated values are wrapped in bidi isolation marks, so English names inside Urdu sentences don't scramble word order.
 - **Adding a string:** add the key to all three files in `messages/`. A key missing from Urdu or Pashto is a type error.
@@ -130,25 +133,33 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 
 ## Look and feel
 
-Calm and clinical, warm without ornament. The colors come from the valley rather than from a UI kit: river-stone grey for the page, limestone for cards, a deodar-forest sidebar, walnut for the logo only. The district map is the one picture of the place. Status colors are deliberately plain so red always means the same thing.
+A serious health tool first: dark, warm and calm, grounded in Kurram's orchards and mountain stone without motifs or ornament. The district map and the About page's mountain silhouettes are the only pictures of the place.
 
-| Token | Light | Dark | Used for |
-|---|---|---|---|
-| `--page` | `#ebebe3` | `#121614` | Page ground (river stone) |
-| `--surface` | `#f8f7f2` | `#1b201e` | Cards (limestone) |
-| `--ink` / `--muted` | `#1c211f` / `#5f6661` | `#ecebe4` / `#98a09a` | Text: 15.2:1 and 5.5:1 on cards |
-| `--side` | `#1e2b27` | `#0e1412` | Sidebar and drawer (deodar) |
-| `--brand` | `#6b4a34` | `#a87650` | Logo mark only (walnut) |
-| `--land` | `#d8dbc4` | `#262b22` | District on the map |
-| `--critical` | `#b23b2a` | `#e0645a` | Critical / evacuate / high risk |
-| `--low` | `#c98a2b` | `#d9a447` | Low stock / needs supplies / elevated |
-| `--stable` | `#56823a` | `#5f9450` | Stable / routine / low risk |
-| `--surplus` | `#3a67a0` | `#7196d6` | Surplus stock |
-| `--stale` | `#c4c6be` | `#5a5f5b` | No recent update |
+**One source of truth.** Every value lives in [app/design-tokens.css](app/design-tokens.css) as a Tailwind 4 theme. Tailwind's own palette, type scale, shadows and radii are switched off, so a stray `text-red-500` or `text-sm` does nothing, and `npm run check:tokens` fails on any raw colour, off-scale size or space, undefined variable or per-icon size.
 
-The five status colors are at least ΔE 16 apart for normal vision in both themes; for color-blind readers each also has its own icon and label.
+| Token | Value | Used for |
+|---|---|---|
+| `background` | `#16181B` | App background |
+| `surface` / `surface-raised` | `#1E211F` / `#262A26` | Cards and panels / dialogs and the phone drawer |
+| `border` | `#2C302B` | Hairlines |
+| `text-primary` / `text-secondary` | `#F2EFE9` / `#A8ADA3` | Text: 14.2:1 and 7.1:1 on cards |
+| `text-muted` | `#6B6F68` | Icons beside labels, dividers, disabled controls (3.2:1, never the only carrier of words) |
+| `brand` | `#C97C4C` | Clay: the logo, primary buttons (with dark text, 5.5:1), the active section, links |
+| `critical` | `#B5453B` | Deep rust |
+| `warning` | `#C48A3A` | Muted ochre |
+| `stable` | `#5C7A5E` | Orchard green |
+| `surplus` | `#4C6B7A` | Slate blue-grey |
+| `stale` | `#6B6F68` | Deliberately quiet |
 
-Type: Noto Sans for English; Noto Naskh Arabic for Urdu and Pashto interface text; Noto Nastaliq Urdu for Urdu headings and reading text (the About panel, AI answers, triage reasons, forecast signals), which is how Urdu is normally printed. Pashto stays in Naskh, its usual script style. Any English inside Urdu text keeps Noto Sans.
+Each severity colour has a **tint** (the hue at 12% over the surface) behind badges, and a **text tone** (the hue lifted toward `text-primary`), because the base hues are too dark for small text on this ground: critical on its own tint is 2.7:1, its text tone 4.8:1.
+
+**Type:** Fraunces for page titles, area names and figures; Inter for everything else. Urdu is set in Noto Nastaliq Urdu throughout, Pashto in Noto Sans Arabic (both tested: Nastaliq draws every Pashto letter but gives Pashto's own endings Urdu-style forms, and Pashto is normally printed upright). Latin letters and digits inside Urdu or Pashto stay in Inter or Fraunces. Sizes: 13, 15, 17, 22, 28 and 40px only (Urdu captions step up to 15px, since Nastaliq is cramped at 13). Spacing: 4, 8, 12, 16, 24, 32, 48 and 64px only. Icons: 18px with a 1.75 stroke, coloured by their text.
+
+**Elevation** follows severity: routine cards have a hairline border only; warning cards an ochre border and a faint shadow; critical cards a full rust border, a stronger shadow and 24px padding instead of 16.
+
+**Motion** is CSS only and never longer than 250ms, never looping, never bouncy, and off for anyone whose system asks for reduced motion: cards fade up 8px, 30ms apart; a newly logged critical triage case pulses once on the dashboard and once on the matcher, so the loop between the four screens is visible; switching language cross-fades between left-to-right and right-to-left.
+
+**Contrast (WCAG 2.1 AA), measured in the rendered app:** every text element on every screen (about 1,500, in English and Urdu) passes; the lowest is 4.8:1. Map pins, markers and roads reach at least 3:1 against the map (each pin has a light ring, since the rust and slate fills alone are 2.6–2.7:1). Stable, surplus and stale are close in colour (ΔE 5–8), so they differ by shape too: stable has a check, surplus a plus, and stale is hollow and dashed with a clock.
 
 ## How it fits Kurram
 
@@ -158,4 +169,4 @@ This formalizes coordination that already happens. Pharmacy owners, DHQ Hospital
 
 - Built with Claude Code (Anthropic) as the coding assistant.
 - AI features run on OpenAI (`gpt-6-luna` by default) or xAI Grok, switchable with `LLM_PROVIDER`.
-- Fonts: Noto Sans, Noto Naskh Arabic, Noto Nastaliq Urdu. Icons: Lucide.
+- Fonts: Fraunces, Inter, Noto Nastaliq Urdu, Noto Sans Arabic. Icons: Lucide.

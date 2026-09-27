@@ -2,13 +2,14 @@
 
 import { CircleCheck, Pill, Siren, type LucideIcon } from "lucide-react";
 import type { UrgencyTier } from "@/lib/schemas";
+import { BADGE_COLORS, TIER_TOKEN } from "@/lib/severity";
 import { useT } from "@/lib/useT";
 
-// Red / orange / green per SPEC section 6, each with its own icon so color isn't the only cue.
-const STYLES: Record<UrgencyTier, { icon: LucideIcon; className: string }> = {
-  critical: { icon: Siren, className: "bg-critical text-surface" },
-  needs_supplies: { icon: Pill, className: "bg-low-bg text-low-ink" },
-  routine: { icon: CircleCheck, className: "bg-stable-bg text-stable-ink" },
+// Rust / ochre / orchard green per SPEC section 6, each with its own icon so colour isn't the only cue.
+const ICONS: Record<UrgencyTier, LucideIcon> = {
+  critical: Siren,
+  needs_supplies: Pill,
+  routine: CircleCheck,
 };
 
 interface UrgencyBadgeProps {
@@ -17,27 +18,23 @@ interface UrgencyBadgeProps {
   size?: "sm" | "lg";
   /** Prefixes a count, for per-area tallies on the dashboard. */
   count?: number;
+  /** Pulses once: this badge is news (a critical case logged moments ago). */
+  pulse?: boolean;
 }
 
-export function UrgencyBadge({ tier, size = "sm", count }: UrgencyBadgeProps) {
+export function UrgencyBadge({ tier, size = "sm", count, pulse = false }: UrgencyBadgeProps) {
   const { t } = useT();
-  const { icon: Icon, className } = STYLES[tier];
+  const Icon = ICONS[tier];
   const label = size === "lg" ? t(`triage.tiers.${tier}`) : t(`triage.tiersShort.${tier}`);
   const critical = tier === "critical";
-  const sizing =
-    size === "lg"
-      ? critical
-        ? "px-3.5 py-1.5 text-base font-bold"
-        : "px-3 py-1 text-sm font-semibold"
-      : critical
-        ? "px-2.5 py-1 text-[13px] font-bold"
-        : "px-2 py-0.5 text-xs font-semibold";
 
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-1 rounded-full ${className} ${sizing}`}
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full ${BADGE_COLORS[TIER_TOKEN[tier]]} ${
+        size === "lg" ? "px-3 py-1 text-body" : "px-2 py-1 text-caption"
+      } ${critical ? "border border-critical font-bold" : "font-semibold"} ${pulse ? "pulse-once" : ""}`}
     >
-      <Icon aria-hidden className={size === "lg" || critical ? "size-4" : "size-3.5"} strokeWidth={2.25} />
+      <Icon aria-hidden />
       {count !== undefined && <span className="tabular-nums">{count}</span>}
       {label}
     </span>
