@@ -1,5 +1,6 @@
 "use client";
 
+import { useTour } from "@/components/tour/useTour";
 import { riseOrder } from "@/lib/motion";
 import { useT } from "@/lib/useT";
 
@@ -16,6 +17,7 @@ const NEAR = "M0 278.9L38 278.8L75 277.7L113 277.1L150 275.9L188 274.6L225 272.1
  */
 export function AboutHero() {
   const { t } = useT();
+  const { start } = useTour();
 
   return (
     <header className="rise relative isolate min-h-112 overflow-hidden rounded-lg border border-border bg-surface" style={riseOrder(0)}>
@@ -38,6 +40,14 @@ export function AboutHero() {
           {t("about.title")}
         </h1>
         <p className="mt-4 font-display text-title text-text-primary md:text-heading">{t("app.pitch")}</p>
+        <button
+          type="button"
+          data-tour-start
+          onClick={start}
+          className="mt-6 rounded-md bg-brand px-4 py-3 text-body font-semibold text-on-brand transition-colors hover:bg-brand-text"
+        >
+          {t("tour.start")}
+        </button>
       </div>
     </header>
   );

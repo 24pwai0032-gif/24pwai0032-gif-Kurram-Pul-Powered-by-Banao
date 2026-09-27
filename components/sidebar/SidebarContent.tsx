@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowLeftRight, BookOpen, Gauge, Info, LayoutGrid, Stethoscope, type LucideIcon } from "lucide-react";
+import { ArrowLeftRight, BookOpen, Gauge, Info, LayoutGrid, PlayCircle, Stethoscope, type LucideIcon } from "lucide-react";
 import { useMemo, type ReactNode } from "react";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { BrandMark } from "@/components/sidebar/BrandMark";
+import { useTour } from "@/components/tour/useTour";
 import { computeStats, summarizeAreas } from "@/lib/dashboard";
 import { parseRiskLevel, type RiskLevel } from "@/lib/forecast";
 import { findMatches } from "@/lib/matching";
@@ -51,6 +52,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const triageCases = useAppStore((s) => s.triageCases);
   const now = useAppStore((s) => s.now);
   const forecast = useAppStore((s) => s.forecast);
+  const { start: startTour } = useTour();
 
   const critical = useMemo(() => computeStats(summarizeAreas(areas, triageCases, now)).critical, [areas, triageCases, now]);
   const matches = useMemo(() => findMatches(areas, triageCases, now).matches.length, [areas, triageCases, now]);
@@ -96,13 +98,16 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                     window.scrollTo({ top: 0 });
                     onNavigate?.();
                   }}
-                  className={`relative flex w-full items-center gap-3 rounded-md px-3 py-3 text-start text-body transition-colors ${
+                  className={`relative flex w-full items-center gap-3 rounded-md px-3 py-2 text-start text-body transition-colors ${
                     active ? "bg-surface-raised font-semibold text-text-primary" : "text-text-secondary hover:bg-surface-raised hover:text-text-primary"
                   }`}
                 >
                   {active && <span aria-hidden className="absolute inset-y-2 start-0 w-[3px] rounded-full bg-brand" />}
                   <Icon aria-hidden className={active ? "text-brand" : undefined} />
-                  <span className="min-w-0 truncate">{t(`nav.${id}`)}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate">{t(`nav.${id}`)}</span>
+                    <span className="block truncate text-caption font-normal text-text-secondary">{t(`nav.hint.${id}`)}</span>
+                  </span>
                   {badge(id)}
                 </button>
               </li>
@@ -112,6 +117,18 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
 
       <div className="mt-auto grid gap-3">
+        <button
+          type="button"
+          data-tour-start
+          onClick={() => {
+            startTour();
+            onNavigate?.();
+          }}
+          className="flex items-center justify-center gap-2 rounded-md border border-brand px-3 py-2 text-body font-semibold text-brand-text transition-colors hover:bg-brand hover:text-on-brand"
+        >
+          <PlayCircle aria-hidden />
+          {t("tour.start")}
+        </button>
         <p className="flex items-start gap-2 rounded-md border border-dashed border-border-control px-3 py-2 text-caption text-text-secondary">
           <Info aria-hidden />
           <span>

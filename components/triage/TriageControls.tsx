@@ -29,7 +29,7 @@ export function ModeToggle() {
   return (
     <div className="flex flex-col gap-1">
       <span className="text-caption font-semibold text-text-secondary">{t("triage.modeLabel")}</span>
-      <div role="group" aria-label={t("triage.modeLabel")} className="inline-flex rounded-full border border-border bg-surface-raised p-1">
+      <div role="group" aria-label={t("triage.modeLabel")} className="inline-flex gap-1 rounded-md border border-border bg-surface-raised p-1">
         {options.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
@@ -37,7 +37,7 @@ export function ModeToggle() {
             aria-pressed={mode === id}
             data-triage-mode={id}
             onClick={() => setMode(id)}
-            className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-body font-medium transition-colors ${
+            className={`inline-flex items-center gap-2 rounded-sm px-3 py-2 text-body font-medium transition-colors ${
               mode === id ? "bg-brand text-on-brand" : "text-text-secondary hover:text-text-primary"
             }`}
           >
@@ -63,7 +63,7 @@ export function AreaPicker() {
       <select
         value={area ?? ""}
         onChange={(e) => setArea(e.target.value)}
-        className="h-10 w-full rounded-full border border-border-control bg-surface px-4 text-body font-medium text-text-primary"
+        className="h-10 w-full rounded-md border border-border-control bg-surface px-3 text-body font-medium text-text-primary"
       >
         <option value="" disabled>
           {t("triage.areaPlaceholder")}

@@ -2,6 +2,7 @@
 
 import { ArrowLeftRight, ChevronRight, Gauge, LayoutGrid, Stethoscope, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { HowItWorks } from "@/components/about/HowItWorks";
 import { KurramMap } from "@/components/dashboard/KurramMap";
 import { daysBetween, MODEL_CLOSURE, SOURCES, type Source } from "@/lib/about";
 import { riseOrder } from "@/lib/motion";
@@ -74,51 +75,56 @@ const EXPLORE: { view: Exclude<ViewId, "about">; icon: LucideIcon }[] = [
  * the real closure the app is modeled on (with sources), where it happens, why phones fail
  * with the road, the existing coordination it formalizes, and why jirga elders verify reports.
  *
- * Laid out by its own width (container queries), so the same content reads well on the full
- * About page and in the narrower first-visit dialog.
+ * Laid out by its own width (container queries).
  */
-export function AboutContent({ onNavigate, lead = true }: {
-  onNavigate: (view: ViewId) => void;
-  /** The place and the pitch. The About page shows them in its hero instead. */
-  lead?: boolean;
-}) {
+/**
+ * The two figures the page turns on, the real closure the app is modeled on, each with its
+ * source. Shown on the About page and in the first-visit intro.
+ */
+export function ModelFigures() {
   const { t, formatDate } = useT();
   const days = daysBetween(MODEL_CLOSURE.start, MODEL_CLOSURE.firstConvoy);
+  return (
+    <section aria-labelledby="modeled-on-title" className="@container">
+      <h2 id="modeled-on-title" className="text-title text-text-primary">
+        {t("about.modeledOn")}
+      </h2>
+      <div className="mt-4 grid gap-4 @xl:grid-cols-2">
+        <Stat
+          value={t("about.closureStat", { days })}
+          label={t("about.closureLabel", {
+            start: formatDate(MODEL_CLOSURE.start, "full"),
+            end: formatDate(MODEL_CLOSURE.firstConvoy, "full"),
+          })}
+          sources={[SOURCES.closureStart, SOURCES.firstConvoy]}
+        />
+        <Stat
+          value={<span dir="ltr">{MODEL_CLOSURE.childDeathsAtLeast}+</span>}
+          label={t("about.childrenLabel")}
+          sources={[SOURCES.childDeaths]}
+          critical
+        />
+      </div>
+    </section>
+  );
+}
+
+export function AboutContent({ onNavigate }: { onNavigate: (view: ViewId) => void }) {
+  const { t, formatDate } = useT();
 
   return (
     <div className="@container space-y-12">
-      {lead && (
-        <div className="rise" style={riseOrder(0)}>
-          <p className="text-caption font-semibold tracking-wide text-text-secondary uppercase">{t("about.eyebrow")}</p>
-          <p className="mt-2 font-display text-title text-text-primary @xl:text-heading">{t("app.pitch")}</p>
-        </div>
-      )}
+      <div className="rise" style={riseOrder(1)}>
+        <ModelFigures />
+      </div>
 
-      <section aria-labelledby="modeled-on-title" className="rise" style={riseOrder(1)}>
-        <h2 id="modeled-on-title" className="text-title text-text-primary">
-          {t("about.modeledOn")}
-        </h2>
-        <div className="mt-4 grid gap-4 @xl:grid-cols-2">
-          <Stat
-            value={t("about.closureStat", { days })}
-            label={t("about.closureLabel", {
-              start: formatDate(MODEL_CLOSURE.start, "full"),
-              end: formatDate(MODEL_CLOSURE.firstConvoy, "full"),
-            })}
-            sources={[SOURCES.closureStart, SOURCES.firstConvoy]}
-          />
-          <Stat
-            value={<span dir="ltr">{MODEL_CLOSURE.childDeathsAtLeast}+</span>}
-            label={t("about.childrenLabel")}
-            sources={[SOURCES.childDeaths]}
-            critical
-          />
-        </div>
-      </section>
+      <div className="rise" style={riseOrder(2)}>
+        <HowItWorks />
+      </div>
 
-      <KurramMap variant="place" title={t("about.mapTitle")} caption={t("about.mapCaption")} className="rise" style={riseOrder(2)} />
+      <KurramMap variant="place" title={t("about.mapTitle")} caption={t("about.mapCaption")} className="rise" style={riseOrder(3)} />
 
-      <div className="rise grid gap-8 @3xl:grid-cols-3 @3xl:gap-6" style={riseOrder(3)}>
+      <div className="rise grid gap-8 @3xl:grid-cols-3 @3xl:gap-6" style={riseOrder(4)}>
         <Point title={t("about.whyTitle")} sources={[SOURCES.mobileData]}>
           <p>{t("about.whyText")}</p>
           <p className="font-medium text-text-primary">{t("about.commsFact")}</p>
@@ -132,7 +138,7 @@ export function AboutContent({ onNavigate, lead = true }: {
         </Point>
       </div>
 
-      <section aria-labelledby="explore-title" className="rise" style={riseOrder(4)}>
+      <section aria-labelledby="explore-title" className="rise" style={riseOrder(5)}>
         <h2 id="explore-title" className="text-title text-text-primary">
           {t("about.exploreTitle")}
         </h2>

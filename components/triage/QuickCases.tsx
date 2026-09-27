@@ -40,7 +40,7 @@ export function QuickCases() {
             data-quick-case={tier}
             disabled={pending}
             onClick={() => run(tier, suggestedArea)}
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border-control bg-surface py-1 ps-1 pe-3 text-caption font-medium text-text-primary hover:bg-surface-raised disabled:opacity-50"
+            className="inline-flex shrink-0 items-center gap-2 rounded-md border border-border-control bg-surface py-1 ps-1 pe-3 text-caption font-medium text-text-primary transition-colors hover:bg-surface-raised disabled:opacity-50"
           >
             <UrgencyBadge tier={tier} />
             {t(`triage.quick.${tier}.label`)}

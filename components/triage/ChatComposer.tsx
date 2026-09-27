@@ -58,7 +58,7 @@ export function ChatComposer() {
           type="submit"
           disabled={!canSend}
           aria-label={t("triage.send")}
-          className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-brand font-semibold text-on-brand transition-colors hover:bg-brand-text disabled:bg-surface-raised disabled:text-text-muted"
+          className="inline-flex size-11 shrink-0 items-center justify-center rounded-md bg-brand font-semibold text-on-brand transition-colors hover:bg-brand-text disabled:bg-surface-raised disabled:text-text-muted"
         >
           <Send aria-hidden className="rtl:-scale-x-100" />
         </button>

@@ -10,6 +10,7 @@ import { BrandMark } from "@/components/sidebar/BrandMark";
 import { MobileDrawer } from "@/components/sidebar/MobileDrawer";
 import { SidebarContent } from "@/components/sidebar/SidebarContent";
 import { SurplusMatcher } from "@/components/SurplusMatcher";
+import { TourCoach } from "@/components/tour/TourCoach";
 import { TriageChat } from "@/components/TriageChat";
 import { useAppStore, type ViewId } from "@/lib/store";
 import { useT } from "@/lib/useT";
@@ -31,6 +32,7 @@ export function AppShell() {
   const activeView = useAppStore((s) => s.activeView);
   const ActiveView = VIEW_COMPONENTS[activeView];
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const touring = useAppStore((s) => s.tour !== null);
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
@@ -54,7 +56,7 @@ export function AppShell() {
           <span className="truncate font-display text-lead font-semibold text-text-primary">{t("app.name")}</span>
           <span
             title={t("app.demoBadgeText")}
-            className="ms-auto shrink-0 rounded-full border border-dashed border-border-control px-3 py-1 text-caption font-medium text-text-secondary"
+            className="ms-auto shrink-0 rounded-md border border-dashed border-border-control px-2 py-1 text-caption font-medium text-text-secondary"
           >
             {t("app.demoBadge")}
           </span>
@@ -62,11 +64,14 @@ export function AppShell() {
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 pt-6 pb-12 lg:px-8 lg:pt-8">
           <ActiveView />
+          {/* Room for the tour's coach, so it never covers the end of the page. */}
+          {touring && <div aria-hidden className="h-64" />}
         </main>
       </div>
 
       <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <IntroDialog />
+      <TourCoach />
     </div>
   );
 }

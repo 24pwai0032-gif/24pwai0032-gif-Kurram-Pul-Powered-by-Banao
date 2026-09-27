@@ -23,7 +23,7 @@ export function LanguageToggle() {
   };
 
   return (
-    <div role="group" aria-label={t("language.label")} className="grid grid-cols-3 rounded-full border border-border bg-background p-1">
+    <div role="group" aria-label={t("language.label")} className="grid grid-cols-3 gap-1 rounded-md border border-border bg-background p-1">
       {LOCALES.map((locale) => {
         const active = locale === language;
         return (
@@ -34,7 +34,7 @@ export function LanguageToggle() {
             dir={dirFor(locale)}
             aria-pressed={active}
             onClick={() => choose(locale)}
-            className={`rounded-full px-2 py-2 text-caption font-semibold transition-colors ${
+            className={`rounded-sm px-2 py-2 text-caption font-semibold transition-colors ${
               active ? "bg-brand text-on-brand" : "text-text-secondary hover:text-text-primary"
             }`}
           >

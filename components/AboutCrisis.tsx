@@ -18,7 +18,7 @@ export function AboutCrisis() {
   return (
     <section aria-labelledby="about-title" className="mx-auto max-w-5xl space-y-12">
       <AboutHero />
-      <AboutContent onNavigate={open} lead={false} />
+      <AboutContent onNavigate={open} />
     </section>
   );
 }

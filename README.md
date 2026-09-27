@@ -12,6 +12,7 @@ During a Parachinar closure, phone and internet service break down along with su
 - **Triage assistant.** Someone describes a patient and gets an urgency level (critical, needs supplies, routine) and a next step. A chat mode works over full connectivity; a plain-text SMS mode works when mobile data is down. Each case is logged to the dashboard.
 - **Surplus matcher.** Spare stock in one area is matched to shortages nearby: same-day fixes that don't wait for the road to reopen. Needs that no other area can cover are listed separately.
 - **Closure-risk forecaster.** An estimate of the risk of a new closure, from past closures and current signals, with a stock-up recommendation, so hospitals prepare before the road shuts.
+- **A 60-second guided tour.** One tap (from the first-visit intro, the About page or the sidebar) walks through the whole loop with real actions: a critical case comes in through triage, appears on Parachinar's dashboard card, finds Alizai's spare insulin next door, and the forecaster says what to stock up on.
 - **About this crisis.** The 2024–25 closure the app is modeled on, why the road and the phones fail together, and why jirga elders verify reports, each fact with its news source. It opens by itself on a first visit.
 
 A sidebar (a drawer on phones) reaches every section from anywhere, with live counts: critical shortages, matches found, cases logged, current closure risk. The whole interface, including the AI's answers, works in English, Urdu and Pashto, with right-to-left layout for Urdu and Pashto.
@@ -170,6 +171,8 @@ A serious health tool first: dark, warm and calm, grounded in Kurram's orchards 
 | `stale` | `#6B6F68` | Deliberately quiet |
 
 Each severity colour has a **tint** (the hue at 12% over the surface) behind badges, and a **text tone** (the hue lifted toward `text-primary`), because the base hues are too dark for small text on this ground: critical on its own tint is 2.7:1, its text tone 4.8:1.
+
+**Logo:** پل ("pul", bridge), the product's own name, in Nastaliq. The letters are Noto Nastaliq Urdu's own outlines, shaped once and saved as a vector ([components/sidebar/BrandMark.tsx](components/sidebar/BrandMark.tsx), [app/icon.svg](app/icon.svg)), so they render the same everywhere without loading the Urdu font.
 
 **Type:** Fraunces for page titles, area names and figures; Inter for everything else. Urdu is set in Noto Nastaliq Urdu throughout, Pashto in Noto Sans Arabic (both tested: Nastaliq draws every Pashto letter but gives Pashto's own endings Urdu-style forms, and Pashto is normally printed upright). Latin letters and digits inside Urdu or Pashto stay in Inter or Fraunces. Sizes: 13, 15, 17, 22, 28 and 40px only (Urdu captions step up to 15px, since Nastaliq is cramped at 13). Spacing: 4, 8, 12, 16, 24, 32, 48 and 64px only. Icons: 18px with a 1.75 stroke, coloured by their text.
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCw, Sparkles, TriangleAlert } from "lucide-react";
+import { RefreshCw, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Markdown } from "@/components/Markdown";
 import { textDir, textLang } from "@/lib/i18n";
@@ -64,9 +64,10 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
   return (
     <section aria-labelledby={headingId} aria-busy={busy} className="rounded-lg border border-border bg-surface p-4">
       <div className="flex items-center justify-between gap-3">
-        <h2 id={headingId} className="flex items-center gap-2 text-body font-semibold text-text-primary">
-          <Sparkles aria-hidden className="text-text-secondary" />
+        <h2 id={headingId} className="flex items-center gap-2 text-lead text-text-primary">
           {title}
+          {/* Says plainly that a model wrote this, without the usual sparkle icon. */}
+          <span className="rounded-sm border border-border-control px-1 font-sans text-caption font-semibold text-text-secondary">AI</span>
         </h2>
         {!busy && (
           <button
@@ -75,7 +76,7 @@ export function AiTextPanel({ headingId, title, state, onRequest, displayText, l
               setExpanded(false);
               void onRequest();
             }}
-            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-caption font-medium text-text-secondary hover:bg-surface-raised hover:text-text-primary"
+            className="inline-flex shrink-0 items-center gap-1 rounded-md px-2 py-1 text-caption font-medium text-text-secondary transition-colors hover:bg-surface-raised hover:text-text-primary"
           >
             <RefreshCw aria-hidden />
             {state.status === "error" ? t("ai.retry") : t("ai.refresh")}

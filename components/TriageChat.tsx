@@ -36,7 +36,7 @@ export function TriageChat() {
             type="button"
             onClick={reset}
             disabled={pending}
-            className="inline-flex shrink-0 items-center gap-1 rounded-full border border-border bg-surface px-3 py-2 text-caption font-semibold text-text-primary disabled:opacity-50"
+            className="inline-flex shrink-0 items-center gap-1 rounded-md border border-border-control bg-surface px-3 py-2 text-caption font-semibold text-text-primary transition-colors hover:bg-surface-raised disabled:opacity-50"
           >
             <RotateCcw aria-hidden />
             {t("triage.newCase")}

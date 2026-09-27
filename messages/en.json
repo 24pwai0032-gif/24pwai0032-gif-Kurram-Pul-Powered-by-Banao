@@ -50,7 +50,28 @@
       "brecorder": "Business Recorder"
     },
     "mapTitle": "Where this happens",
-    "mapCaption": "Parachinar sits at the end of one road. When the Thall road and the Kharlachi crossing close, every area on this map is cut off at once. Illustrative, not to scale."
+    "mapCaption": "Parachinar sits at the end of one road. When the Thall road and the Kharlachi crossing close, every area on this map is cut off at once. Illustrative, not to scale.",
+    "how": {
+      "title": "How it works",
+      "report": {
+        "title": "Report",
+        "body": "A health worker or resident describes a patient, by chat or by SMS."
+      },
+      "see": {
+        "title": "See",
+        "body": "Every report lands on one shared dashboard, vouched for by named elders and facility records."
+      },
+      "match": {
+        "title": "Match",
+        "body": "Spare stock in one area is matched to shortages next door, the same day."
+      },
+      "prepare": {
+        "title": "Prepare",
+        "body": "Past closures and current signals warn hospitals when to stock up."
+      }
+    },
+    "introExplore": "Explore on my own",
+    "introReadMore": "Read the full background"
   },
   "nav": {
     "label": "Main sections",
@@ -63,7 +84,14 @@
     "close": "Close menu",
     "criticalCount": "{count} critical",
     "matchCount": "{count} matches",
-    "caseCount": "{count} logged"
+    "caseCount": "{count} logged",
+    "hint": {
+      "about": "The crisis and its sources",
+      "dashboard": "Who needs what, verified",
+      "matcher": "Spare stock nearby",
+      "triage": "Assess a patient",
+      "forecast": "Risk of the next closure"
+    }
   },
   "language": {
     "label": "Language"
@@ -350,5 +378,37 @@
     "Land dispute clashes spreading across several villages": "Land dispute clashes spreading across several villages",
     "Attack on a passenger convoy, then tribal clashes over land": "Attack on a passenger convoy, then tribal clashes over land",
     "Attack on an aid convoy after partial reopening": "Attack on an aid convoy after partial reopening"
+  },
+  "tour": {
+    "start": "Take the 60-second tour",
+    "label": "Guided tour",
+    "step": "Step {n} of {total}",
+    "next": "Next",
+    "back": "Back",
+    "finish": "Finish",
+    "exit": "Exit tour",
+    "waiting": "Classifying…",
+    "steps": {
+      "triage": {
+        "title": "A health worker reports a sick baby",
+        "body": "Triage reads the description and answers in seconds: critical, get to hospital now. The case is logged to Parachinar automatically, and the same works over SMS when mobile data is down."
+      },
+      "dashboard": {
+        "title": "It shows up where responders look",
+        "body": "Parachinar's card now lists the new critical case beside the hospital's own stock reports, each marked with who verified it."
+      },
+      "matcher": {
+        "title": "Spare stock next door, not across a closed road",
+        "body": "Alizai, one area away, has verified spare insulin for Parachinar's critical shortage. One tap tells the coordinator to move it today."
+      },
+      "forecast": {
+        "title": "Prepare before the road closes again",
+        "body": "Six past closures and this week's signals give a risk level, and what hospitals should stock up on now."
+      },
+      "done": {
+        "title": "That's the whole loop",
+        "body": "Report, see, match, prepare. Switch to اردو or پښتو at the foot of the menu, or type your own case in Triage."
+      }
+    }
   }
 }

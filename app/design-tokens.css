@@ -138,6 +138,8 @@
      Critical: full rust border, a stronger shadow with a trace of rust, and more padding. */
 
   --shadow-warning: 0 1px 3px rgb(0 0 0 / 0.35);
+  /* Floating panels (the guided tour's coach) sit above the page. */
+  --shadow-raised: 0 16px 40px -12px rgb(0 0 0 / 0.8);
   --shadow-critical: 0 10px 28px -12px rgb(0 0 0 / 0.75),
     0 4px 18px -8px color-mix(in srgb, var(--color-critical) 40%, transparent);
 

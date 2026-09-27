@@ -1,6 +1,5 @@
 "use client";
 
-import { PackageX } from "lucide-react";
 import { UrgencyBadge } from "@/components/UrgencyBadge";
 import type { Need, UnmatchedSupply } from "@/lib/matching";
 import { useFirstSight } from "@/lib/motion";
@@ -31,8 +30,7 @@ export function UnmatchedList({ unmatched }: { unmatched: UnmatchedSupply[] }) {
 
   return (
     <section aria-labelledby="unmatched-title" className="rounded-lg border border-border bg-surface p-4">
-      <h2 id="unmatched-title" className="flex items-center gap-2 text-body font-semibold text-text-primary">
-        <PackageX aria-hidden className="text-text-secondary" />
+      <h2 id="unmatched-title" className="text-lead text-text-primary">
         {t("matcher.noMatchTitle")}
       </h2>
       <p className="mt-1 text-caption text-text-secondary">{t("matcher.noMatchIntro")}</p>

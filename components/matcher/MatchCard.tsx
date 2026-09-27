@@ -89,7 +89,7 @@ export function MatchCard({ match }: { match: SurplusMatch }) {
           <span className="flex w-12 shrink-0 justify-center">
             <ArrowDown aria-hidden className="text-text-secondary" />
           </span>
-          <span className="rounded-full bg-surface-raised px-2 py-1 text-caption font-medium text-text-secondary">
+          <span className="rounded-sm bg-surface-raised px-2 py-1 text-caption font-medium text-text-secondary">
             {best.distance === 1 ? t("matcher.nextDoor") : t("matcher.hopsAway", { hops: best.distance })}
           </span>
         </div>
@@ -125,7 +125,7 @@ export function MatchCard({ match }: { match: SurplusMatch }) {
           <button
             type="button"
             onClick={() => notify(match.id)}
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-body bg-brand font-semibold text-on-brand transition-colors hover:bg-brand-text"
+            className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2 text-body font-semibold text-on-brand transition-colors hover:bg-brand-text"
           >
             <BellRing aria-hidden />
             {t("matcher.notify")}

@@ -35,7 +35,7 @@ function ErrorBubble({ message }: { message: Extract<TriageMessage, { kind: "err
         type="button"
         onClick={() => void retry()}
         disabled={pending}
-        className="mt-2 inline-flex items-center gap-1 rounded-full bg-surface-raised px-3 py-1 text-caption font-semibold text-text-primary disabled:opacity-50"
+        className="mt-2 inline-flex items-center gap-1 rounded-md bg-surface-raised px-3 py-1 text-caption font-semibold text-text-primary disabled:opacity-50"
       >
         <RotateCcw aria-hidden />
         {t("triage.retry")}

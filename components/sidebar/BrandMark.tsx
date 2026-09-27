@@ -1,22 +1,15 @@
 /**
- * Kurram Pul's mark: a bridge ("pul") in two strokes, drawn side-on like a stone footbridge:
- * the deck rising over the river, and the arch opening beneath it. Brand clay, line-based like
- * the interface icons; no tile, no ornament.
+ * Kurram Pul's mark: پل ("pul", bridge), the product's own name, set in Nastaliq, the way Urdu
+ * is printed in Parachinar's newspapers and shop signs. The letters are the Noto Nastaliq Urdu
+ * outlines themselves (shaped once and saved as a vector), so the mark looks the same on every
+ * page without loading the Urdu font. It takes the brand clay from design-tokens.css.
  */
+const PUL = "M287 -371Q207 -371 155 -346Q103 -322 73 -282Q43 -242 31 -192Q18 -143 18 -94Q18 14 49 120Q79 225 131 322L164 310Q139 253 123 193Q106 132 106 67Q106 7 125 -32Q143 -71 175 -94Q207 -117 249 -126Q290 -136 337 -136Q428 -136 494 -110Q559 -84 601 -45Q643 -6 665 32Q687 70 700 136Q712 201 716 295Q724 470 729 579Q733 687 736 741Q738 794 739 803L745 874Q747 891 751 914Q755 937 764 967Q772 997 786 1036Q799 1075 820 1126L847 1120Q840 1090 835 1041Q829 991 824 934Q819 876 816 821Q813 766 811 726Q809 685 809 670Q809 620 823 588Q837 556 866 541Q894 525 935 525Q959 525 969 500Q979 474 979 428Q979 389 969 360Q958 330 938 314Q917 297 886 297Q854 297 830 311Q806 324 791 350L790 339Q782 252 766 170Q749 88 724 15Q698 -59 663 -122Q621 -198 565 -254Q509 -310 440 -340Q371 -371 287 -371Z M859 -89Q831 -63 817 -49Q802 -36 792 -27Q782 -18 767 -8L767 2Q774 13 787 29Q800 45 816 62Q831 78 844 91Q857 104 863 108L873 108Q899 92 915 79Q931 66 941 55Q956 72 970 87Q984 102 995 113Q1006 123 1011 126L1021 126Q1062 100 1085 79Q1107 58 1107 34Q1107 9 1079 -19Q1050 -47 1015 -71L1007 -71Q1003 -66 998 -61Q992 -56 981 -45Q969 -35 945 -15Q923 -48 867 -89ZM934 -225Q917 -208 906 -197Q895 -187 884 -177Q873 -168 856 -154L856 -146Q867 -130 883 -113Q899 -96 915 -81Q931 -66 942 -58L950 -58Q974 -74 998 -96Q1021 -118 1021 -138Q1021 -156 1002 -176Q982 -196 943 -225Z  M886 297Q867 297 854 320Q841 343 841 398Q841 436 852 465Q862 493 883 509Q904 525 935 525Q976 525 1009 548Q1042 570 1061 616L1089 610Q1081 548 1064 492Q1046 436 1021 392Q995 348 961 323Q927 297 886 297Z";
+
 export function BrandMark({ size = "md" }: { size?: "sm" | "md" }) {
   return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      className={`shrink-0 text-brand ${size === "sm" ? "size-6" : "size-8"}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M2 15h3c1.6-4.2 4-6.3 7-6.3s5.4 2.1 7 6.3h3" />
-      <path d="M7.5 19a4.5 4.5 0 0 1 9 0" />
+    <svg aria-hidden viewBox="-42 -1186 1209 1617" className={`w-auto shrink-0 text-brand ${size === "sm" ? "h-7" : "h-9"}`} fill="currentColor">
+      <path transform="scale(1 -1)" d={PUL} />
     </svg>
   );
 }

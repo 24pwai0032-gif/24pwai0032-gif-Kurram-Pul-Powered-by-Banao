@@ -5,6 +5,7 @@ import type { Locale } from "@/lib/i18n";
 import type { AreaRecord, ClosureHistory, SeedReports, TriageCaseRecord, VerificationTag } from "@/lib/schemas";
 import { loadSeed, toSeedShape } from "@/lib/seed";
 import { canonicalSupply } from "@/lib/stock";
+import type { TourStep } from "@/lib/tour";
 import { composeDescription, type TriageClassification } from "@/lib/triage";
 
 export const VIEWS = ["about", "dashboard", "matcher", "triage", "forecast"] as const;
@@ -51,6 +52,8 @@ export interface AppState {
   activeView: ViewId;
   /** The first-visit "About this crisis" dialog. */
   introOpen: boolean;
+  /** The guided tour's current step, or null when it isn't running. */
+  tour: TourStep | null;
   areas: AreaRecord[];
   triageCases: TriageCaseRecord[];
   verificationTags: VerificationTag[];
@@ -73,6 +76,7 @@ export interface AppActions {
   setLanguage: (language: Locale) => void;
   setActiveView: (view: ViewId) => void;
   dismissIntro: () => void;
+  setTour: (step: TourStep | null) => void;
   tick: () => void;
   /** Asks /api/aggregate for a fresh summary of the current reports. No-op while one is loading. */
   requestSummary: () => Promise<void>;
@@ -196,6 +200,7 @@ export function createAppStore({ language, showIntro, seed, verificationTags, cl
       language,
       activeView: "dashboard",
       introOpen: showIntro,
+      tour: null,
       areas,
       triageCases,
       verificationTags,
@@ -211,6 +216,7 @@ export function createAppStore({ language, showIntro, seed, verificationTags, cl
       setLanguage: (language) => set({ language }),
       setActiveView: (activeView) => set({ activeView }),
       dismissIntro: () => set({ introOpen: false }),
+      setTour: (tour) => set({ tour }),
       tick: () => set({ now: Date.now() }),
 
       requestSummary: () => runAiText("summary", fetchSummary),
