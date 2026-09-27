@@ -20,7 +20,7 @@ export function TourCoach() {
 
   const index = TOUR_STEPS.indexOf(step);
   const last = step === "done";
-  // The first step waits for the real classification before moving on.
+  // The triage step waits for the real classification before moving on.
   const waiting = step === "triage" && pending;
 
   return (

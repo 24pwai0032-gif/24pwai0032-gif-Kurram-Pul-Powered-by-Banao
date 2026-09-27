@@ -51,7 +51,7 @@ export function AppStoreProvider({ children, ...init }: AppStoreProviderProps) {
     });
   }, [store]);
 
-  // Once the visitor has taken the tour, stop offering it. "Not now" only hides it for this visit.
+  // Once the tour has started (by itself on a first visit, or from a button), don't start it again.
   useEffect(
     () =>
       store.subscribe((state, prev) => {

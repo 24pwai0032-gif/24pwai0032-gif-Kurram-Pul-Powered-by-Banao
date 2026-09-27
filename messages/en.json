@@ -428,6 +428,10 @@
     "exit": "Exit tour",
     "waiting": "Classifying…",
     "steps": {
+      "about": {
+        "title": "Parachinar, at the end of one road",
+        "body": "When the road closes, medicine runs out: 84 days cut off in 2024–25, and 50+ children died. Next, follow one real case through Kurram Pul."
+      },
       "triage": {
         "title": "A health worker reports a sick baby",
         "body": "Triage reads the description and answers in seconds: critical, get to hospital now. The case is logged to Parachinar automatically, and the same works over SMS when mobile data is down."
@@ -448,11 +452,7 @@
         "title": "That's the whole loop",
         "body": "Report, see, match, prepare. Switch to اردو or پښتو at the foot of the menu, or type your own case in Triage."
       }
-    },
-    "promptTitle": "New here? See it all in 60 seconds",
-    "promptBody": "The tour follows one real case: a sick baby in Parachinar, from triage to the dashboard, to spare stock next door, to the next closure.",
-    "promptStart": "Start the tour",
-    "notNow": "Not now"
+    }
   },
   "road": {
     "label": "Road status · demo scenario",

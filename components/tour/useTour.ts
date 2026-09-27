@@ -22,7 +22,10 @@ export function useTour() {
   const go = useCallback(
     (step: TourStep) => {
       setTour(step);
-      if (step === "triage") {
+      if (step === "about") {
+        setActiveView("about");
+        window.scrollTo({ top: 0 });
+      } else if (step === "triage") {
         // A fresh, real case: the critical example, logged to Parachinar in chat mode.
         setActiveView("triage");
         setTriageMode("chat");
@@ -44,7 +47,7 @@ export function useTour() {
 
   const start = useCallback(() => {
     dismissIntro();
-    go("triage");
+    go("about");
   }, [dismissIntro, go]);
 
   const exit = useCallback(() => setTour(null), [setTour]);

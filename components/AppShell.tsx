@@ -11,7 +11,7 @@ import { SidebarContent } from "@/components/sidebar/SidebarContent";
 import { SidebarResizer, useSidebarWidth } from "@/components/sidebar/SidebarResizer";
 import { SurplusMatcher } from "@/components/SurplusMatcher";
 import { TourCoach } from "@/components/tour/TourCoach";
-import { TourPrompt } from "@/components/tour/TourPrompt";
+import { TourAutoStart } from "@/components/tour/TourAutoStart";
 import { TriageChat } from "@/components/TriageChat";
 import { useAppStore, type ViewId } from "@/lib/store";
 import { useT } from "@/lib/useT";
@@ -77,7 +77,7 @@ export function AppShell() {
       </div>
 
       <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
-      <TourPrompt />
+      <TourAutoStart />
       <TourCoach />
     </div>
   );
