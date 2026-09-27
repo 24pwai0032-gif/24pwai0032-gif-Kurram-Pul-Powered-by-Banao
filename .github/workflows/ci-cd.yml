@@ -1,0 +1,126 @@
+# CI/CD for Kurram Pul.
+#
+#   Every push and pull request: type check, lint, design-token audit, unit tests, production build.
+#   After the checks pass:
+#     push to main (or a manual run)  → deploy to Vercel production (kurram-pul.vercel.app)
+#     pull request from this repo     → deploy a Vercel preview and link it in the run summary
+#
+# Deploying needs three repository secrets (Settings → Secrets and variables → Actions):
+#   VERCEL_TOKEN       a token from vercel.com/account/tokens
+#   VERCEL_ORG_ID      from .vercel/project.json after `vercel link`
+#   VERCEL_PROJECT_ID  from .vercel/project.json after `vercel link`
+# Without them the checks still run and the deploy job skips itself with a notice.
+#
+# The app's own secrets (LLM_PROVIDER, OPENAI_API_KEY) live in the Vercel project's environment
+# variables, not here: the build needs no API key, and Vercel injects them at runtime.
+
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# One run per branch at a time. A newer push cancels an older pull-request run, but never a
+# production deploy that's already under way.
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Design-token audit
+        run: npm run check:tokens
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+  deploy:
+    name: Deploy to Vercel
+    needs: checks
+    # Forks don't get this repo's secrets, so their pull requests are checked but not deployed.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+      url: ${{ steps.deploy.outputs.url }}
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      # Production for main and manual runs, a preview for pull requests.
+      TARGET: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+      VERCEL_CLI: vercel@60
+    steps:
+      - name: Check deploy settings
+        id: ready
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::notice title=Deploy skipped::Add the VERCEL_TOKEN, VERCEL_ORG_ID and VERCEL_PROJECT_ID repository secrets to deploy from GitHub Actions."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v5
+        if: steps.ready.outputs.enabled == 'true'
+
+      - uses: actions/setup-node@v5
+        if: steps.ready.outputs.enabled == 'true'
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Pull the Vercel project settings
+        if: steps.ready.outputs.enabled == 'true'
+        run: npx --yes "$VERCEL_CLI" pull --yes --environment="$TARGET" --token="$VERCEL_TOKEN"
+
+      - name: Build for Vercel
+        if: steps.ready.outputs.enabled == 'true'
+        run: |
+          if [ "$TARGET" = production ]; then
+            npx --yes "$VERCEL_CLI" build --prod --token="$VERCEL_TOKEN"
+          else
+            npx --yes "$VERCEL_CLI" build --token="$VERCEL_TOKEN"
+          fi
+
+      - name: Deploy
+        id: deploy
+        if: steps.ready.outputs.enabled == 'true'
+        run: |
+          if [ "$TARGET" = production ]; then
+            url=$(npx --yes "$VERCEL_CLI" deploy --prebuilt --prod --token="$VERCEL_TOKEN")
+          else
+            url=$(npx --yes "$VERCEL_CLI" deploy --prebuilt --token="$VERCEL_TOKEN")
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "### Deployed to Vercel ($TARGET)" >> "$GITHUB_STEP_SUMMARY"
+          echo "$url" >> "$GITHUB_STEP_SUMMARY"

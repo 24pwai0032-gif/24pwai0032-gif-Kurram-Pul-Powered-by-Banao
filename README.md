@@ -26,7 +26,7 @@ cp .env.example .env.local   # then set LLM_PROVIDER and that provider's API key
 npm run dev                  # http://localhost:3000
 ```
 
-Checks: `npm run typecheck`, `npm run lint`, `npm run check:tokens` (the design-token audit, below), `npm run build`. The build needs no API key.
+Checks: `npm run typecheck`, `npm run lint`, `npm run check:tokens` (the design-token audit, below), `npm test` (unit tests; Node 22.18+ or 24), `npm run build`. The build needs no API key. CI runs all of them on every push (see Deploying).
 
 ## Choosing the AI provider: OpenAI or Grok
 
@@ -69,12 +69,28 @@ Measured with `gpt-6-luna`: triage replies in 3–4.5 s, the forecast in 5–7 s
 - **No database.** Triage cases logged in the app live in the browser tab; reloading the page resets to the seed data.
 - **Not a doctor.** The triage assistant is a prototype and says so at all times.
 
-## Deploying (Vercel)
+## Deploying (Vercel) and CI/CD
 
-1. Push the repository to GitHub. `.env.local` is git-ignored and never leaves your machine.
-2. In Vercel, import the repository. It detects Next.js; keep the default build settings.
-3. Under Settings → Environment Variables, add `LLM_PROVIDER` and the matching key (`OPENAI_API_KEY` or `GROK_API_KEY`).
-4. Deploy. Open the link in a private window and click through all five sections, in English and Urdu.
+The live app is at **https://kurram-pul.vercel.app**. GitHub Actions ([.github/workflows/ci-cd.yml](.github/workflows/ci-cd.yml)) checks every change and deploys it only if the checks pass:
+
+| When | What runs |
+|---|---|
+| Every push and pull request | `npm ci`, then type check, lint, design-token audit (`npm run check:tokens`), unit tests (`npm test`) and a production build |
+| Push to `main`, or a manual run (Actions → CI/CD → Run workflow) | The checks, then a **production** deploy to Vercel |
+| Pull request from this repository | The checks, then a **preview** deploy; its link appears in the run summary |
+
+The deploy uses the Vercel CLI (`vercel pull`, `vercel build`, `vercel deploy --prebuilt`), so what's deployed is exactly what passed the checks. It needs three repository secrets (Settings → Secrets and variables → Actions); without them the checks still run and the deploy step skips itself with a notice:
+
+| Secret | Where it comes from |
+|---|---|
+| `VERCEL_TOKEN` | Create one at vercel.com/account/tokens (scope: your team), then `gh secret set VERCEL_TOKEN` and paste it when asked |
+| `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` | `.vercel/project.json`, written by `vercel link` |
+
+The app's own secrets stay in Vercel, not GitHub: under the Vercel project's Settings → Environment Variables, set `LLM_PROVIDER` and the matching key (`OPENAI_API_KEY` or `GROK_API_KEY`) for Production. The build needs no key; Vercel injects them at runtime. Add them to the Preview environment too if pull-request previews should answer with AI; otherwise their AI panels say they aren't configured.
+
+Keep Vercel's own Git integration disconnected for this project, or deploys would happen twice (once from Vercel, once from Actions) and skip the checks.
+
+To deploy by hand instead: `vercel link` once, then `vercel deploy --prod` from a clean checkout. `.env.local` is git-ignored and never leaves your machine.
 
 Before sharing the link publicly: the AI routes need no login, so anyone with the link spends your API credits. Set a monthly budget on the OpenAI project (or the xAI team) and rotate the key after the event. The routes accept only POST requests with size-limited input.
 
@@ -108,6 +124,8 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 | `lib/i18n.ts`, `lib/useT.ts` | English/Urdu/Pashto strings from `messages/`, typed keys, dates |
 | `lib/severity.ts`, `lib/motion.ts` | Severity → badge colours and card elevation; entrance order and once-only attention cues |
 | `scripts/check-tokens.mjs` | Fails the check if any file uses a colour, size, space, shadow or radius that isn't a token |
+| `tests/unit/` | Unit tests for the triage reply parser, supply names, matching and the forecast (`npm test`) |
+| `.github/workflows/ci-cd.yml` | CI/CD: checks on every push and pull request, then a Vercel deploy |
 | `data/` | Simulated data: supply reports, verification tags, closure history |
 
 ### Conventions
