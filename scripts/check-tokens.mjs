@@ -33,7 +33,7 @@ const tokenCss = readFileSync(TOKENS_FILE, "utf8");
 const defined = new Set([...tokenCss.matchAll(/(--[a-z0-9-]+)\s*:/g)].map((m) => m[1]));
 // Set at runtime rather than in the token file: font faces (app/layout.tsx), motion indices
 // (lib/motion.ts), and Tailwind's own internals.
-for (const v of ["--font-fraunces-face", "--font-inter-face", "--font-nastaliq-face", "--font-arabic-sans-face", "--rise-index", "--pulse-color"]) {
+for (const v of ["--font-display-face", "--font-body-face", "--font-nastaliq-face", "--font-arabic-sans-face", "--rise-index", "--pulse-color"]) {
   defined.add(v);
 }
 const isDefined = (name) => defined.has(name) || name.startsWith("--tw-");

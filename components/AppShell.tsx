@@ -4,13 +4,13 @@ import { Menu } from "lucide-react";
 import { useState, type ComponentType } from "react";
 import { AboutCrisis } from "@/components/AboutCrisis";
 import { ForecasterPanel } from "@/components/ForecasterPanel";
-import { IntroDialog } from "@/components/IntroDialog";
 import { ShortageDashboard } from "@/components/ShortageDashboard";
 import { BrandMark } from "@/components/sidebar/BrandMark";
 import { MobileDrawer } from "@/components/sidebar/MobileDrawer";
 import { SidebarContent } from "@/components/sidebar/SidebarContent";
 import { SurplusMatcher } from "@/components/SurplusMatcher";
 import { TourCoach } from "@/components/tour/TourCoach";
+import { TourPrompt } from "@/components/tour/TourPrompt";
 import { TriageChat } from "@/components/TriageChat";
 import { useAppStore, type ViewId } from "@/lib/store";
 import { useT } from "@/lib/useT";
@@ -36,27 +36,27 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
-      <aside className="sticky top-0 hidden h-dvh overflow-y-auto border-e border-border bg-surface lg:block">
+      <aside className="sticky top-0 hidden h-dvh overflow-y-auto bg-sign lg:block">
         <SidebarContent />
       </aside>
 
       <div className="flex min-h-dvh min-w-0 flex-col">
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-surface/95 px-4 py-3 backdrop-blur lg:hidden">
+        <header data-sign className="sticky top-0 z-30 flex items-center gap-3 bg-sign px-4 py-3 text-on-sign lg:hidden">
           <button
             type="button"
             data-menu-button
             onClick={() => setDrawerOpen(true)}
             aria-label={t("nav.open")}
             aria-expanded={drawerOpen}
-            className="grid size-10 shrink-0 place-items-center rounded-md border border-border text-text-primary hover:bg-surface-raised"
+            className="grid size-10 shrink-0 place-items-center rounded-md border border-sign-raised text-on-sign transition-colors hover:bg-sign-raised"
           >
             <Menu aria-hidden />
           </button>
           <BrandMark size="sm" />
-          <span className="truncate font-display text-lead font-semibold text-text-primary">{t("app.name")}</span>
+          <span className="truncate font-display text-title font-bold tracking-wide text-on-sign uppercase">{t("app.name")}</span>
           <span
             title={t("app.demoBadgeText")}
-            className="ms-auto shrink-0 rounded-md border border-dashed border-border-control px-2 py-1 text-caption font-medium text-text-secondary"
+            className="ms-auto shrink-0 rounded-md border border-dashed border-on-sign-muted px-2 py-1 text-caption font-medium text-on-sign-muted"
           >
             {t("app.demoBadge")}
           </span>
@@ -70,7 +70,7 @@ export function AppShell() {
       </div>
 
       <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
-      <IntroDialog />
+      <TourPrompt />
       <TourCoach />
     </div>
   );

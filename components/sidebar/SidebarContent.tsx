@@ -30,7 +30,7 @@ function Count({ children, label, tone = "plain" }: { children: ReactNode; label
   return (
     <span
       className={`ms-auto rounded-full px-2 text-caption font-bold tabular-nums ${
-        tone === "critical" ? "border border-critical bg-critical-tint text-critical-text" : "bg-background text-text-secondary"
+        tone === "critical" ? "border border-critical bg-critical-tint text-critical-text" : "bg-sign-deep text-on-sign"
       }`}
     >
       <span aria-hidden>{children}</span>
@@ -74,12 +74,12 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   };
 
   return (
-    <div className="flex h-full flex-col gap-6 px-3 py-6">
+    <div data-sign className="flex h-full flex-col gap-6 px-3 py-6 text-on-sign">
       <div className="flex items-center gap-3 px-2">
         <BrandMark />
         <div className="min-w-0">
-          <p className="truncate font-display text-lead font-semibold text-text-primary">{t("app.name")}</p>
-          <p className="truncate text-caption text-text-secondary">{t("about.eyebrow")}</p>
+          <p className="truncate font-display text-title font-bold tracking-wide text-on-sign uppercase">{t("app.name")}</p>
+          <p className="truncate text-caption text-on-sign-muted">{t("about.eyebrow")}</p>
         </div>
       </div>
 
@@ -99,14 +99,14 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                     onNavigate?.();
                   }}
                   className={`relative flex w-full items-center gap-3 rounded-md px-3 py-2 text-start text-body transition-colors ${
-                    active ? "bg-surface-raised font-semibold text-text-primary" : "text-text-secondary hover:bg-surface-raised hover:text-text-primary"
+                    active ? "bg-sign-raised font-semibold text-on-sign" : "text-on-sign-muted hover:bg-sign-raised hover:text-on-sign"
                   }`}
                 >
-                  {active && <span aria-hidden className="absolute inset-y-2 start-0 w-[3px] rounded-full bg-brand" />}
-                  <Icon aria-hidden className={active ? "text-brand" : undefined} />
+                  {active && <span aria-hidden className="absolute inset-y-2 start-0 w-[3px] rounded-full bg-signal" />}
+                  <Icon aria-hidden className={active ? "text-signal" : undefined} />
                   <span className="min-w-0 flex-1">
                     <span className="block truncate">{t(`nav.${id}`)}</span>
-                    <span className="block truncate text-caption font-normal text-text-secondary">{t(`nav.hint.${id}`)}</span>
+                    <span className="block truncate text-caption font-normal text-on-sign-muted">{t(`nav.hint.${id}`)}</span>
                   </span>
                   {badge(id)}
                 </button>
@@ -124,15 +124,15 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
             startTour();
             onNavigate?.();
           }}
-          className="flex items-center justify-center gap-2 rounded-md border border-brand px-3 py-2 text-body font-semibold text-brand-text transition-colors hover:bg-brand hover:text-on-brand"
+          className="flex items-center justify-center gap-2 rounded-md bg-signal px-3 py-2 text-body font-semibold text-on-signal transition-colors hover:bg-on-sign"
         >
           <PlayCircle aria-hidden />
           {t("tour.start")}
         </button>
-        <p className="flex items-start gap-2 rounded-md border border-dashed border-border-control px-3 py-2 text-caption text-text-secondary">
+        <p className="flex items-start gap-2 rounded-md border border-dashed border-on-sign-muted px-3 py-2 text-caption text-on-sign-muted">
           <Info aria-hidden />
           <span>
-            <strong className="block font-semibold text-text-primary">{t("app.demoBadge")}</strong>
+            <strong className="block font-semibold text-on-sign">{t("app.demoBadge")}</strong>
             {t("app.demoBadgeText")}
           </span>
         </p>

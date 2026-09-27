@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter, Noto_Nastaliq_Urdu, Noto_Sans_Arabic } from "next/font/google";
+import { Atkinson_Hyperlegible_Next, Barlow_Condensed, Noto_Nastaliq_Urdu, Noto_Sans_Arabic } from "next/font/google";
 import { cookies } from "next/headers";
 import type { CSSProperties } from "react";
 import { AppStoreProvider } from "@/components/AppStoreProvider";
@@ -10,11 +10,11 @@ import "./globals.css";
 
 // The faces behind the --font-* tokens in design-tokens.css.
 
-// Headings, area names and stat figures. The optical-size axis keeps large figures crisp.
-const fraunces = Fraunces({ subsets: ["latin"], axes: ["opsz"] });
+// Headings, area names and figures: drawn from highway signage, for a product about a road.
+const display = Barlow_Condensed({ subsets: ["latin"], weight: ["500", "600", "700"] });
 
-// All data, labels, buttons and body copy.
-const inter = Inter({ subsets: ["latin"] });
+// All data, labels, buttons and body copy: designed for legibility, for reading under stress.
+const body = Atkinson_Hyperlegible_Next({ subsets: ["latin"] });
 
 // Urdu, in real Nastaliq. Large, so it's fetched only when a page uses it, not preloaded.
 const nastaliq = Noto_Nastaliq_Urdu({ subsets: ["arabic"], preload: false });
@@ -30,8 +30,8 @@ const arabicSans = Noto_Sans_Arabic({ subsets: ["arabic"], preload: false });
 const family = (font: { style: { fontFamily: string } }) => font.style.fontFamily.split(",")[0].trim();
 
 const FONT_FACES = {
-  "--font-fraunces-face": family(fraunces),
-  "--font-inter-face": family(inter),
+  "--font-display-face": family(display),
+  "--font-body-face": family(body),
   "--font-nastaliq-face": family(nastaliq),
   "--font-arabic-sans-face": family(arabicSans),
 } as CSSProperties;
@@ -50,9 +50,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  // The browser chrome can't read CSS variables, so this repeats --color-background from design-tokens.css.
-  themeColor: "#16181b", // token-audit: allow
-  colorScheme: "dark",
+  // The browser chrome can't read CSS variables, so this repeats --color-sign from design-tokens.css.
+  themeColor: "#0b4a31", // token-audit: allow
+  colorScheme: "light",
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

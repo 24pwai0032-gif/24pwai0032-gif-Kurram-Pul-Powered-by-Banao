@@ -12,7 +12,7 @@ During a Parachinar closure, phone and internet service break down along with su
 - **Triage assistant.** Someone describes a patient and gets an urgency level (critical, needs supplies, routine) and a next step. A chat mode works over full connectivity; a plain-text SMS mode works when mobile data is down. Each case is logged to the dashboard.
 - **Surplus matcher.** Spare stock in one area is matched to shortages nearby: same-day fixes that don't wait for the road to reopen. Needs that no other area can cover are listed separately.
 - **Closure-risk forecaster.** An estimate of the risk of a new closure, from past closures and current signals, with a stock-up recommendation, so hospitals prepare before the road shuts.
-- **A 60-second guided tour.** One tap (from the first-visit intro, the About page or the sidebar) walks through the whole loop with real actions: a critical case comes in through triage, appears on Parachinar's dashboard card, finds Alizai's spare insulin next door, and the forecaster says what to stock up on.
+- **A 60-second guided tour.** One tap (from the first-visit notification, the About page or the sidebar) walks through the whole loop with real actions: a critical case comes in through triage, appears on Parachinar's dashboard card, finds Alizai's spare insulin next door, and the forecaster says what to stock up on.
 - **About this crisis.** The 2024–25 closure the app is modeled on, why the road and the phones fail together, and why jirga elders verify reports, each fact with its news source. It opens by itself on a first visit.
 
 A sidebar (a drawer on phones) reaches every section from anywhere, with live counts: critical shortages, matches found, cases logged, current closure risk. The whole interface, including the AI's answers, works in English, Urdu and Pashto, with right-to-left layout for Urdu and Pashto.
@@ -138,13 +138,13 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 
   | Colour | Supply status | Triage tier | Closure risk | Signal strength |
   |---|---|---|---|---|
-  | Rust | critical | critical | high | serious |
-  | Ochre | low | needs supplies | elevated | moderate |
-  | Orchard green | stable | routine | low | |
+  | Red | critical | critical | high | serious |
+  | Amber | low | needs supplies | elevated | moderate |
+  | Green | stable | routine | low | |
   | Quiet grey | stale | | | minor |
-  | Slate | surplus | | | |
+  | Blue | surplus | | | |
 
-  Critical items carry more weight, not just a different colour: critical badges have a full rust outline and bold text; critical cards (areas, matches, the triage result, the risk gauge, the lead stat) have a full rust border, a stronger shadow and more padding; critical map pins are drawn larger. Risk levels always read as "High risk" and signal strengths use different words ("Serious", "Minor"), so neither is confused with a stock level of "Low".
+  Critical items carry more weight, not just a different colour: critical badges have a full red outline and bold text; critical cards (areas, matches, the triage result, the risk gauge, the lead stat) have a full red border, a stronger shadow and more padding; critical map pins are drawn larger. Risk levels always read as "High risk" and signal strengths use different words ("Serious", "Minor"), so neither is confused with a stock level of "Low".
 - **Dates come from `messages/`, not `Intl`.** Browsers ship no Pashto date data and fall back to English, so month names are translated strings (`formatDate` in `lib/i18n.ts`).
 - **RTL:** use logical Tailwind utilities (`ms-`, `pe-`, `border-s`, `start-`) instead of left/right. Interpolated values are wrapped in bidi isolation marks, so English names inside Urdu sentences don't scramble word order.
 - **Adding a string:** add the key to all three files in `messages/`. A key missing from Urdu or Pashto is a type error.
@@ -152,35 +152,36 @@ Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Zustand · Z
 
 ## Look and feel
 
-A serious health tool first: dark, warm and calm, grounded in Kurram's orchards and mountain stone without motifs or ornament. The district map and the About page's mountain silhouettes are the only pictures of the place.
+The identity is Pakistan's motorway signs, because the product is about a road: a deep sign-green panel with white type (the sidebar, the phone header, the About hero), signal yellow for what needs your eye, and bright, plain pages for the data. The district map and the About hero's mountain ridges are the only pictures of the place; nothing is decorative.
 
 **One source of truth.** Every value lives in [app/design-tokens.css](app/design-tokens.css) as a Tailwind 4 theme. Tailwind's own palette, type scale, shadows and radii are switched off, so a stray `text-red-500` or `text-sm` does nothing, and `npm run check:tokens` fails on any raw colour, off-scale size or space, undefined variable or per-icon size.
 
 | Token | Value | Used for |
 |---|---|---|
-| `background` | `#16181B` | App background |
-| `surface` / `surface-raised` | `#1E211F` / `#262A26` | Cards and panels / dialogs and the phone drawer |
-| `border` | `#2C302B` | Hairlines |
-| `text-primary` / `text-secondary` | `#F2EFE9` / `#A8ADA3` | Text: 14.2:1 and 7.1:1 on cards |
-| `text-muted` | `#6B6F68` | Icons beside labels, dividers, disabled controls (3.2:1, never the only carrier of words) |
-| `brand` | `#C97C4C` | Clay: the logo, primary buttons (with dark text, 5.5:1), the active section, links |
-| `critical` | `#B5453B` | Deep rust |
-| `warning` | `#C48A3A` | Muted ochre |
-| `stable` | `#5C7A5E` | Orchard green |
-| `surplus` | `#4C6B7A` | Slate blue-grey |
-| `stale` | `#6B6F68` | Deliberately quiet |
+| `sign` / `sign-raised` | `#0B4A31` / `#155D40` | The sign panel and its active row |
+| `signal` | `#FFC300` | The logo plate, the active marker, the tour button (dark text, 10.8:1) |
+| `brand` | `#0A6B44` | Motorway green: primary buttons (white text, 6.6:1), links |
+| `background` / `surface` | `#F2F4EF` / `#FFFFFF` | Page / cards |
+| `text-primary` / `text-secondary` | `#0F1D17` / `#44544B` | Text: 15.7:1 and 8.0:1 |
+| `critical` | `#D0212F` | Signal red |
+| `warning` | `#E38B00` | Amber |
+| `stable` | `#3F9A3B` | Leaf green |
+| `surplus` | `#1F6FB5` | Sign blue |
+| `stale` | `#8C948D` | Deliberately quiet |
 
-Each severity colour has a **tint** (the hue at 12% over the surface) behind badges, and a **text tone** (the hue lifted toward `text-primary`), because the base hues are too dark for small text on this ground: critical on its own tint is 2.7:1, its text tone 4.8:1.
+Each severity colour has a **tint** (the hue at 12% over white) behind badges, and a **text tone** darkened toward `text-primary` so it reads at 4.5:1 or better (amber alone is 2.6:1 on white).
 
-**Logo:** پل ("pul", bridge), the product's own name, in Nastaliq. The letters are Noto Nastaliq Urdu's own outlines, shaped once and saved as a vector ([components/sidebar/BrandMark.tsx](components/sidebar/BrandMark.tsx), [app/icon.svg](app/icon.svg)), so they render the same everywhere without loading the Urdu font.
+**Logo:** پل ("pul", bridge), the product's own name, in Nastaliq, on a signal-yellow sign plate, beside a KURRAM PUL wordmark. The letters are Noto Nastaliq Urdu's own outlines, shaped once and saved as a vector ([components/sidebar/BrandMark.tsx](components/sidebar/BrandMark.tsx), [app/icon.svg](app/icon.svg)), so they render the same everywhere without loading the Urdu font.
 
-**Type:** Fraunces for page titles, area names and figures; Inter for everything else. Urdu is set in Noto Nastaliq Urdu throughout, Pashto in Noto Sans Arabic (both tested: Nastaliq draws every Pashto letter but gives Pashto's own endings Urdu-style forms, and Pashto is normally printed upright). Latin letters and digits inside Urdu or Pashto stay in Inter or Fraunces. Sizes: 13, 15, 17, 22, 28 and 40px only (Urdu captions step up to 15px, since Nastaliq is cramped at 13). Spacing: 4, 8, 12, 16, 24, 32, 48 and 64px only. Icons: 18px with a 1.75 stroke, coloured by their text.
+**Type:** Barlow Condensed, drawn from highway signage, for page titles, area names and figures; Atkinson Hyperlegible Next, designed for legibility, for everything else. Urdu is set in Noto Nastaliq Urdu throughout, Pashto in Noto Sans Arabic (both tested: Nastaliq draws every Pashto letter but gives Pashto's own endings Urdu-style forms, and Pashto is normally printed upright). Latin letters and digits inside Urdu or Pashto stay in the Latin faces. Sizes: 13, 15, 17, 22, 28 and 40px only (Urdu captions step up to 15px, since Nastaliq is cramped at 13). Spacing: 4, 8, 12, 16, 24, 32, 48 and 64px only. Icons: 18px with a 1.75 stroke, coloured by their text.
 
-**Elevation** follows severity: routine cards have a hairline border only; warning cards an ochre border and a faint shadow; critical cards a full rust border, a stronger shadow and 24px padding instead of 16.
+**First visit:** the visitor lands on the About page (the problem, the two sourced figures, how it works), and a notification offers the 60-second guided tour, with "Not now" remembered.
+
+**Elevation** follows severity: routine cards have a hairline border only; warning cards an amber border and a faint shadow; critical cards a full red border, a stronger shadow and 24px padding instead of 16.
 
 **Motion** is CSS only and never longer than 250ms, never looping, never bouncy, and off for anyone whose system asks for reduced motion: cards fade up 8px, 30ms apart; a newly logged critical triage case pulses once on the dashboard and once on the matcher, so the loop between the four screens is visible; switching language cross-fades between left-to-right and right-to-left.
 
-**Contrast (WCAG 2.1 AA), measured in the rendered app:** every text element on every screen (about 1,500, in English and Urdu) passes; the lowest is 4.8:1. Map pins, markers and roads reach at least 3:1 against the map (each pin has a light ring, since the rust and slate fills alone are 2.6–2.7:1). Stable, surplus and stale are close in colour (ΔE 5–8), so they differ by shape too: stable has a check, surplus a plus, and stale is hollow and dashed with a clock.
+**Contrast (WCAG 2.1 AA), measured in the rendered app:** every text element on every screen (about 1,500, in English and Urdu) passes; the lowest is 4.8:1. Map pins, markers and roads reach at least 3:1 against the map (each pin has a dark ring, since the amber and grey fills alone are 2.3–2.7:1 on the light map). Every status also differs by shape: stable has a check, surplus a plus, and stale is hollow and dashed with a clock.
 
 ## How it fits Kurram
 
@@ -190,4 +191,4 @@ This formalizes coordination that already happens. Pharmacy owners, DHQ Hospital
 
 - Built with Claude Code (Anthropic) as the coding assistant.
 - AI features run on OpenAI (`gpt-6-luna` by default) or xAI Grok, switchable with `LLM_PROVIDER`.
-- Fonts: Fraunces, Inter, Noto Nastaliq Urdu, Noto Sans Arabic. Icons: Lucide.
+- Fonts: Barlow Condensed, Atkinson Hyperlegible Next, Noto Nastaliq Urdu, Noto Sans Arabic. Icons: Lucide.

@@ -28,7 +28,7 @@ export function TourCoach() {
       aria-label={t("tour.label")}
       aria-live="polite"
       data-tour-step={step}
-      className="rise fixed inset-x-3 bottom-3 z-40 mx-auto max-w-md rounded-lg border border-brand bg-surface-raised p-4 shadow-raised lg:inset-x-auto lg:end-6 lg:bottom-6 lg:w-96"
+      className="rise fixed inset-x-3 bottom-3 z-40 mx-auto max-w-md rounded-lg border border-brand bg-surface p-4 shadow-raised lg:inset-x-auto lg:end-6 lg:bottom-6 lg:w-96"
     >
       <div className="flex items-center justify-between gap-3">
         <p className="text-caption font-semibold text-brand-text">
@@ -39,7 +39,7 @@ export function TourCoach() {
           type="button"
           onClick={exit}
           aria-label={t("tour.exit")}
-          className="-m-2 grid size-9 place-items-center rounded-md text-text-secondary transition-colors hover:bg-surface hover:text-text-primary"
+          className="-m-2 grid size-9 place-items-center rounded-md text-text-secondary transition-colors hover:bg-surface-raised hover:text-text-primary"
         >
           <X aria-hidden />
         </button>
@@ -60,7 +60,7 @@ export function TourCoach() {
           <button
             type="button"
             onClick={() => go(TOUR_STEPS[index - 1])}
-            className="rounded-md border border-border-control px-4 py-2 text-body font-semibold text-text-primary transition-colors hover:bg-surface"
+            className="rounded-md border border-border-control px-4 py-2 text-body font-semibold text-text-primary transition-colors hover:bg-surface-raised"
           >
             {t("tour.back")}
           </button>
@@ -70,7 +70,7 @@ export function TourCoach() {
           data-tour-next
           disabled={waiting}
           onClick={() => (last ? exit() : go(TOUR_STEPS[index + 1]))}
-          className="rounded-md bg-brand px-4 py-2 text-body font-semibold text-on-brand transition-colors hover:bg-brand-text disabled:bg-surface disabled:text-text-secondary"
+          className="rounded-md bg-brand px-4 py-2 text-body font-semibold text-on-brand transition-colors hover:bg-brand-text disabled:bg-surface-raised disabled:text-text-secondary"
         >
           {waiting ? t("tour.waiting") : last ? t("tour.finish") : t("tour.next")}
         </button>

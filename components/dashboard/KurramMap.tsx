@@ -41,15 +41,15 @@ const THALL = { x: 342, y: 220 };
 const GLYPHS: Record<Exclude<AreaCondition, "stale">, ReactNode> = {
   critical: (
     <>
-      <rect x={-1.3} y={-5.2} width={2.6} height={6.4} rx={1.2} fill="var(--color-text-primary)" />
-      <circle cy={3.9} r={1.4} fill="var(--color-text-primary)" />
+      <rect x={-1.3} y={-5.2} width={2.6} height={6.4} rx={1.2} fill="var(--color-on-severity)" />
+      <circle cy={3.9} r={1.4} fill="var(--color-on-severity)" />
     </>
   ),
-  low: <rect x={-4.5} y={-1.3} width={9} height={2.6} rx={1.2} fill="var(--color-background)" />,
+  low: <rect x={-4.5} y={-1.3} width={9} height={2.6} rx={1.2} fill="var(--color-on-warning)" />,
   stable: (
-    <path d="M-4 0.3 L-1.3 3 L4 -2.6" fill="none" stroke="var(--color-text-primary)" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M-4 0.3 L-1.3 3 L4 -2.6" fill="none" stroke="var(--color-on-severity)" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
   ),
-  surplus: <path d="M0 -4.5 V4.5 M-4.5 0 H4.5" stroke="var(--color-text-primary)" strokeWidth={2.4} strokeLinecap="round" />,
+  surplus: <path d="M0 -4.5 V4.5 M-4.5 0 H4.5" stroke="var(--color-on-severity)" strokeWidth={2.4} strokeLinecap="round" />,
 };
 
 /** A status pin drawn at the origin. Each status has its own glyph, so colour is never the only cue. */
@@ -76,7 +76,7 @@ function ClosedMarker({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x} ${y})`} aria-hidden>
       <circle r={7} fill="var(--color-critical)" stroke="var(--color-map-ring)" strokeWidth={1.5} />
-      <path d="M-2.6 -2.6 L2.6 2.6 M2.6 -2.6 L-2.6 2.6" stroke="var(--color-text-primary)" strokeWidth={1.8} strokeLinecap="round" />
+      <path d="M-2.6 -2.6 L2.6 2.6 M2.6 -2.6 L-2.6 2.6" stroke="var(--color-on-severity)" strokeWidth={1.8} strokeLinecap="round" />
     </g>
   );
 }

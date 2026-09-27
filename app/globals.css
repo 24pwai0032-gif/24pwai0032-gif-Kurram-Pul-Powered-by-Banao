@@ -8,7 +8,7 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   html,
@@ -26,7 +26,7 @@
     line-height: var(--text-body--line-height);
   }
 
-  /* Headings, area names and stat figures are set in Fraunces. */
+  /* Headings, area names and figures are set in the display face (Barlow Condensed). */
   h1,
   h2,
   h3 {
@@ -53,6 +53,11 @@
     outline-offset: 2px;
   }
 
+  /* On the dark sign panel, the focus ring is signal yellow. */
+  [data-sign] :focus-visible {
+    outline-color: var(--color-signal);
+  }
+
   ::selection {
     background-color: color-mix(in srgb, var(--color-brand) 35%, transparent);
   }
@@ -70,26 +75,26 @@
 }
 
 /*
- * Scripts. Latin letters and digits always render in Inter or Fraunces; Arabic-script
+ * Scripts. Latin letters and digits always render in the body or display face; Arabic-script
  * letters fall through to the language's own face: Nastaliq for Urdu, Noto Sans Arabic for
  * Pashto. The family is set only where a lang attribute is declared (the page, or a block of
- * model text) and inherited from there, so a span inside a Fraunces heading stays Fraunces.
+ * model text) and inherited from there, so a span inside a heading keeps the display face.
  * Unlayered, so these win over the utilities.
  */
 [lang="ur"] {
-  font-family: var(--font-inter-face), var(--font-urdu);
+  font-family: var(--font-body-face), var(--font-urdu);
 }
 
 [lang="ps"] {
-  font-family: var(--font-inter-face), var(--font-pashto);
+  font-family: var(--font-body-face), var(--font-pashto);
 }
 
 [lang="ur"] :is(h1, h2, h3, .font-display) {
-  font-family: var(--font-fraunces-face), var(--font-urdu);
+  font-family: var(--font-display-face), var(--font-urdu);
 }
 
 [lang="ps"] :is(h1, h2, h3, .font-display) {
-  font-family: var(--font-fraunces-face), var(--font-pashto);
+  font-family: var(--font-display-face), var(--font-pashto);
 }
 
 /* Line height on every element, since Tailwind's per-size line heights would clip Nastaliq's tall letterforms. */

@@ -409,6 +409,10 @@
         "title": "That's the whole loop",
         "body": "Report, see, match, prepare. Switch to اردو or پښتو at the foot of the menu, or type your own case in Triage."
       }
-    }
+    },
+    "promptTitle": "New here? See it all in 60 seconds",
+    "promptBody": "The tour follows one real case: a sick baby in Parachinar, from triage to the dashboard, to spare stock next door, to the next closure.",
+    "promptStart": "Start the tour",
+    "notNow": "Not now"
   }
 }

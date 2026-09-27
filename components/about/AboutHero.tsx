@@ -20,31 +20,29 @@ export function AboutHero() {
   const { start } = useTour();
 
   return (
-    <header className="rise relative isolate min-h-112 overflow-hidden rounded-lg border border-border bg-surface" style={riseOrder(0)}>
+    <header data-sign className="rise relative isolate min-h-112 overflow-hidden rounded-lg bg-sign text-on-sign" style={riseOrder(0)}>
       <svg
         aria-hidden
         viewBox="0 0 1200 320"
         preserveAspectRatio="xMidYMax slice"
         className="absolute inset-x-0 bottom-0 -z-10 h-3/5 w-full rtl:-scale-x-100"
       >
-        <path d={FAR} fill="var(--color-border)" stroke="var(--color-border-control)" strokeOpacity={0.35} />
-        <path d={MID} fill="var(--color-surface-raised)" />
-        <path d={NEAR} fill="var(--color-background)" />
+        <path d={FAR} fill="var(--color-sign-raised)" />
+        <path d={MID} fill="var(--color-sign-deep)" fillOpacity={0.55} />
+        <path d={NEAR} fill="var(--color-sign-deep)" />
       </svg>
-      {/* Fades the foothills into the page, so the hero has no hard bottom edge. */}
-      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-linear-to-t from-background to-transparent" />
 
       <div className="max-w-2xl px-6 pt-8 pb-16 md:px-8 md:pt-12">
-        <p className="text-caption font-semibold tracking-wide text-text-secondary uppercase">{t("about.eyebrow")}</p>
-        <h1 id="about-title" className="mt-2 text-heading text-text-primary">
+        <p className="text-caption font-semibold tracking-wide text-signal uppercase">{t("about.eyebrow")}</p>
+        <h1 id="about-title" className="mt-2 text-heading text-on-sign-muted">
           {t("about.title")}
         </h1>
-        <p className="mt-4 font-display text-title text-text-primary md:text-heading">{t("app.pitch")}</p>
+        <p className="mt-3 font-display text-title font-semibold text-on-sign md:text-display">{t("app.pitch")}</p>
         <button
           type="button"
           data-tour-start
           onClick={start}
-          className="mt-6 rounded-md bg-brand px-4 py-3 text-body font-semibold text-on-brand transition-colors hover:bg-brand-text"
+          className="mt-8 rounded-md bg-signal px-6 py-3 text-lead font-bold text-on-signal transition-colors hover:bg-on-sign"
         >
           {t("tour.start")}
         </button>
