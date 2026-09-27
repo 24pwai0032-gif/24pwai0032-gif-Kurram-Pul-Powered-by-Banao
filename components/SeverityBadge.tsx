@@ -1,38 +1,53 @@
 "use client";
 
-import { CircleCheck, Clock, OctagonAlert, PackagePlus, TriangleAlert, type LucideIcon } from "lucide-react";
-import { BADGE_COLORS, CONDITION_TOKEN, type AreaCondition } from "@/lib/severity";
+import { OctagonAlert } from "lucide-react";
+import { CONDITION_TOKEN, type AreaCondition } from "@/lib/severity";
 import { useT } from "@/lib/useT";
 
-const ICONS: Record<AreaCondition, LucideIcon> = {
-  critical: OctagonAlert,
-  low: TriangleAlert,
-  stable: CircleCheck,
-  surplus: PackagePlus,
-  stale: Clock,
+// Dot and word colours per severity token (the dot is the hue, the word its readable tone).
+const DOT: Record<string, string> = {
+  critical: "bg-critical",
+  warning: "bg-warning",
+  stable: "bg-stable",
+  surplus: "bg-surplus",
+  stale: "bg-stale",
+};
+const WORD: Record<string, string> = {
+  critical: "font-bold text-critical-text",
+  warning: "text-warning-text",
+  stable: "text-stable-text",
+  surplus: "text-surplus-text",
+  stale: "text-stale-text",
 };
 
 interface SeverityBadgeProps {
   status: AreaCondition;
-  /** Grays the badge out (for a stale report) but keeps its own icon and label. */
+  /** Grays the badge out (for a stale report) but keeps its own label. */
   muted?: boolean;
+  /** Dot and word even for critical: for rows inside a card whose header already carries the chip. */
+  quiet?: boolean;
 }
 
-/** A report's or area's stock level: the hue's tint, its icon and its name, never colour alone. */
-export function SeverityBadge({ status, muted = false }: SeverityBadgeProps) {
+/**
+ * A report's or area's stock level. Only critical is a chip (red, outlined, bold), and only once
+ * per card, so it stands out; everything else is a coloured dot and a word, quiet by design. The word
+ * is always there, so colour is never the only cue.
+ */
+export function SeverityBadge({ status, muted = false, quiet = false }: SeverityBadgeProps) {
   const { t } = useT();
-  const Icon = ICONS[status];
   const token = muted ? "stale" : CONDITION_TOKEN[status];
-  // Critical carries more weight than the rest: a full rust outline and bold text.
-  const critical = token === "critical";
 
+  if (token === "critical" && !quiet) {
+    return (
+      <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-critical bg-critical-tint px-2 py-1 text-caption font-bold text-critical-text">
+        <OctagonAlert aria-hidden />
+        {t(`status.${status}`)}
+      </span>
+    );
+  }
   return (
-    <span
-      className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-caption ${BADGE_COLORS[token]} ${
-        critical ? "border border-critical font-bold" : "font-semibold"
-      }`}
-    >
-      <Icon aria-hidden />
+    <span className={`inline-flex shrink-0 items-center gap-2 text-caption font-semibold ${WORD[token]}`}>
+      <span aria-hidden className={`size-2 rounded-full ${DOT[token]}`} />
       {t(`status.${status}`)}
     </span>
   );

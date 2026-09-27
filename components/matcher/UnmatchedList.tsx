@@ -18,7 +18,7 @@ function UnmatchedRow({ supply, needs }: { supply: string; needs: Need[] }) {
         <p className={critical ? "font-bold text-text-primary" : "font-medium text-text-primary"}>{tSupply(supply)}</p>
         <p className="mt-1 text-caption text-text-secondary">{needs.map((n) => tArea(n.area)).join(t("app.listSeparator"))}</p>
       </div>
-      <UrgencyBadge tier={critical ? "critical" : "needs_supplies"} pulse={fresh} />
+      <UrgencyBadge tier={critical ? "critical" : "needs_supplies"} pulse={fresh} quiet={!fresh} />
     </li>
   );
 }

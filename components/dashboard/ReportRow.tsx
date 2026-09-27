@@ -23,7 +23,7 @@ export function ReportRow({ report, stale }: ReportView) {
         >
           {tSupply(report.supply)}
         </span>
-        <SeverityBadge status={report.status} muted={stale} />
+        <SeverityBadge status={report.status} muted={stale} quiet />
       </div>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-caption text-text-secondary">
         <VerificationTag label={report.verified_by} />

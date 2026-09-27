@@ -45,7 +45,7 @@ function NearestStock({ supply, area }: { supply: string | null; area: string })
                   area: lead.distance === 0 ? t("triage.sameArea") : tArea(lead.area),
                 })}
               </span>
-              <SeverityBadge status={lead.report.status} muted={lead.stale} />
+              <SeverityBadge status={lead.report.status} muted={lead.stale} quiet />
               <VerificationTag label={lead.report.verified_by} />
             </li>
           ))}

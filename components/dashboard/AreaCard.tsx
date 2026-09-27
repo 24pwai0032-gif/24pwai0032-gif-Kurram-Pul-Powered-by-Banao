@@ -20,7 +20,7 @@ function NewCaseRow({ triageCase: c }: { triageCase: TriageCaseRecord }) {
   const fresh = useFirstSight(c.urgency_tier === "critical" ? `dashboard:${c.id}` : null);
   return (
     <li className="flex flex-wrap items-center gap-2 text-caption text-text-secondary">
-      <span className="rounded-full bg-brand px-2 text-caption font-bold tracking-wide text-on-brand uppercase">
+      <span className="text-caption font-bold tracking-wide text-brand-text uppercase">
         {t("dashboard.area.newCase")}
       </span>
       <UrgencyBadge tier={c.urgency_tier} pulse={fresh} />
@@ -60,9 +60,9 @@ export function AreaCard({ summary }: { summary: AreaSummary }) {
       </header>
 
       {triageCount > 0 && (
-        <div className="mt-3 flex flex-wrap items-center gap-2">
+        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
           {URGENCY_TIERS.filter((tier) => triageByTier[tier] > 0).map((tier) => (
-            <UrgencyBadge key={tier} tier={tier} count={triageByTier[tier]} />
+            <UrgencyBadge key={tier} tier={tier} count={triageByTier[tier]} quiet />
           ))}
         </div>
       )}

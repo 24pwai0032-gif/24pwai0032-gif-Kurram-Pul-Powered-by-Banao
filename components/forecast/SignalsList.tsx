@@ -7,8 +7,8 @@ import { useT } from "@/lib/useT";
 
 const SEVERITY_STYLE: Record<SignalSeverity, { icon: LucideIcon; className: string }> = {
   high: { icon: OctagonAlert, className: "border border-critical bg-critical-tint font-bold text-critical-text" },
-  moderate: { icon: TriangleAlert, className: "bg-warning-tint text-warning-text" },
-  low: { icon: Info, className: "bg-stale-tint text-stale-text" },
+  moderate: { icon: TriangleAlert, className: "text-warning-text" },
+  low: { icon: Info, className: "text-stale-text" },
 };
 
 /** The current incident signals the forecaster weighs, newest first. */

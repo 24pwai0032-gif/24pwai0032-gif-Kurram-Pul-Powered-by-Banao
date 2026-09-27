@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 import { AreaCard } from "@/components/dashboard/AreaCard";
-import { DashboardStats } from "@/components/dashboard/DashboardStats";
 import { KurramMap } from "@/components/dashboard/KurramMap";
+import { RoadStatus } from "@/components/dashboard/RoadStatus";
 import { SummaryPanel } from "@/components/dashboard/SummaryPanel";
 import { computeStats, summarizeAreas } from "@/lib/dashboard";
 import { riseOrder } from "@/lib/motion";
@@ -28,25 +28,27 @@ export function ShortageDashboard() {
         <p className="text-body text-text-secondary">{t("dashboard.subtitle")}</p>
       </header>
 
-      {/* Wide screens: the map leads, large, beside the AI summary and the figures. Phones read the summary first. */}
+      {/* First, the situation in one line: the road is closed, and what that means right now. */}
+      <RoadStatus summaries={summaries} stats={stats} className="rise" style={riseOrder(0)} />
+
+      {/* Wide screens: the map beside the AI summary. Phones read the summary first. */}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-start">
-        <div className="rise space-y-4 lg:col-start-2 lg:row-start-1" style={riseOrder(1)}>
+        <div className="rise lg:col-start-2 lg:row-start-1" style={riseOrder(2)}>
           <SummaryPanel />
-          <DashboardStats stats={stats} />
         </div>
         <KurramMap
           summaries={summaries}
           title={t("dashboard.map.title")}
           caption={t("dashboard.map.caption")}
           className="rise lg:col-start-1 lg:row-start-1"
-          style={riseOrder(0)}
+          style={riseOrder(1)}
         />
       </div>
 
       {/* Columns rather than a grid, so cards of different heights pack without row gaps. */}
       <div className="gap-4 md:columns-2 xl:columns-3">
         {summaries.map((summary, i) => (
-          <div key={summary.area.name} className="rise break-inside-avoid pb-4" style={riseOrder(i + 2)}>
+          <div key={summary.area.name} className="rise break-inside-avoid pb-4" style={riseOrder(i + 3)}>
             <AreaCard summary={summary} />
           </div>
         ))}

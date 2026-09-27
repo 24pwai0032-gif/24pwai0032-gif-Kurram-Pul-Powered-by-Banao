@@ -20,13 +20,31 @@ interface UrgencyBadgeProps {
   count?: number;
   /** Pulses once: this badge is news (a critical case logged moments ago). */
   pulse?: boolean;
+  /** A coloured dot and a word instead of a chip, for tallies and lists that sit beside a card's main chip. */
+  quiet?: boolean;
 }
 
-export function UrgencyBadge({ tier, size = "sm", count, pulse = false }: UrgencyBadgeProps) {
+const QUIET_DOT = { critical: "bg-critical", warning: "bg-warning", stable: "bg-stable" } as const;
+const QUIET_WORD = { critical: "text-critical-text", warning: "text-warning-text", stable: "text-stable-text" } as const;
+
+export function UrgencyBadge({ tier, size = "sm", count, pulse = false, quiet = false }: UrgencyBadgeProps) {
   const { t } = useT();
   const Icon = ICONS[tier];
   const label = size === "lg" ? t(`triage.tiers.${tier}`) : t(`triage.tiersShort.${tier}`);
   const critical = tier === "critical";
+  const token = TIER_TOKEN[tier] as keyof typeof QUIET_DOT;
+
+  if (quiet) {
+    return (
+      <span className={`inline-flex shrink-0 items-center gap-2 text-caption font-semibold ${QUIET_WORD[token]}`}>
+        <span aria-hidden className={`size-2 rounded-full ${QUIET_DOT[token]}`} />
+        <span>
+          {count !== undefined && <span className="tabular-nums">{count} </span>}
+          {label}
+        </span>
+      </span>
+    );
+  }
 
   return (
     <span

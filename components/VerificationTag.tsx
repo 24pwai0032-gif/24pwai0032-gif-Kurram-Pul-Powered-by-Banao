@@ -11,8 +11,8 @@ interface VerificationTagProps {
 }
 
 /**
- * Trust signal on a report. Verified reports get a solid chip naming the elder,
- * facility or coordinator who vouched for them; unverified ones get a dashed outline.
+ * Trust signal on a report, as a quiet line of text rather than a chip: a green shield and the
+ * elder, facility or coordinator who vouched for it, or a grey "Unverified".
  */
 export function VerificationTag({ label }: VerificationTagProps) {
   const { t, tName } = useT();
@@ -22,16 +22,16 @@ export function VerificationTag({ label }: VerificationTagProps) {
 
   if (label === null) {
     return (
-      <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-dashed border-border-control px-2 py-1 text-caption text-text-secondary">
-        <ShieldQuestion aria-hidden />
+      <span className="inline-flex shrink-0 items-center gap-1 text-caption text-text-secondary">
+        <ShieldQuestion aria-hidden className="text-text-muted" />
         {t("verification.unverified")}
       </span>
     );
   }
 
   return (
-    <span className="inline-flex max-w-full items-center gap-1 rounded-full border border-border-control bg-surface-raised px-2 py-1 text-caption font-medium text-text-primary">
-      <ShieldCheck aria-hidden className="text-text-secondary" />
+    <span className="inline-flex max-w-full min-w-0 items-center gap-1 text-caption font-medium text-text-primary">
+      <ShieldCheck aria-hidden className="text-brand" />
       <span className="truncate">
         {tag ? `${t(`verification.types.${tag.type}`)} · ${isolate(tName(tag.name))}` : label}
       </span>

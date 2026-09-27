@@ -414,5 +414,14 @@
     "promptBody": "The tour follows one real case: a sick baby in Parachinar, from triage to the dashboard, to spare stock next door, to the next closure.",
     "promptStart": "Start the tour",
     "notNow": "Not now"
+  },
+  "road": {
+    "label": "Road status · demo scenario",
+    "closed": "Thall road and Kharlachi crossing closed",
+    "critical": "critical shortages",
+    "matches": "same-day matches next door",
+    "silent": "areas silent 12 h+",
+    "verified": "reports verified",
+    "verifiedValue": "{verified}/{total}"
   }
 }

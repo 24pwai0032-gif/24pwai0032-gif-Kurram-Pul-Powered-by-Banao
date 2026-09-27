@@ -30,7 +30,7 @@ function Endpoint({ label, area, report, children }: {
         {report && (
           <div className="mt-1 flex flex-wrap items-center gap-2 text-caption text-text-secondary">
             <span>{tName(report.reported_by)}</span>
-            <SeverityBadge status={report.status} muted={isStale(report.timestamp, now)} />
+            <SeverityBadge status={report.status} muted={isStale(report.timestamp, now)} quiet />
             <VerificationTag label={report.verified_by} />
           </div>
         )}
@@ -89,7 +89,7 @@ export function MatchCard({ match }: { match: SurplusMatch }) {
           <span className="flex w-12 shrink-0 justify-center">
             <ArrowDown aria-hidden className="text-text-secondary" />
           </span>
-          <span className="rounded-sm bg-surface-raised px-2 py-1 text-caption font-medium text-text-secondary">
+          <span className="text-caption font-semibold text-text-secondary">
             {best.distance === 1 ? t("matcher.nextDoor") : t("matcher.hopsAway", { hops: best.distance })}
           </span>
         </div>
