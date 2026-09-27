@@ -1,0 +1,1 @@
+# 24pwai0032-gif-Kurram-Pul-Powered-by-Banao
