@@ -1,0 +1,16 @@
+{
+  "past_closures": [
+    {"start": "2022-05-14", "end": "2022-05-24", "duration_days": 10, "trigger": "Tribal clashes after a shooting incident"},
+    {"start": "2023-07-08", "end": "2023-07-20", "duration_days": 12, "trigger": "Tribal clashes over a land dispute"},
+    {"start": "2023-08-10", "end": "2023-08-25", "duration_days": 15, "trigger": "Security incident on convoy"},
+    {"start": "2024-07-24", "end": "2024-08-09", "duration_days": 16, "trigger": "Land dispute clashes spreading across several villages"},
+    {"start": "2024-10-12", "end": "2025-01-04", "duration_days": 84, "trigger": "Attack on a passenger convoy, then tribal clashes over land"},
+    {"start": "2025-02-15", "end": "2025-03-10", "duration_days": 23, "trigger": "Attack on an aid convoy after partial reopening"}
+  ],
+  "current_signals": [
+    {"date": "2026-09-20", "signal": "Reported tension between tribal groups near Sadda", "severity": "moderate"},
+    {"date": "2026-09-22", "signal": "Fuel convoy held at Thall pending security clearance", "severity": "moderate"},
+    {"date": "2026-09-24", "signal": "Increased security checkpoints on Thall road", "severity": "low"},
+    {"date": "2026-09-25", "signal": "Traders in Parachinar bazaar report stockpiling of flour and fuel", "severity": "low"}
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "app": {
+    "name": "Kurram Pul",
+    "tagline": "Who needs what, how urgently, and who can help nearby",
+    "listSeparator": ", ",
+    "pitch": "When the road to Parachinar closes, Kurram Pul tells responders who needs what, how urgently, who can help nearby, and how soon it might happen again.",
+    "demoBadge": "Demo data",
+    "demoBadgeText": "Simulated reports and history. Not real-world findings."
+  },
+  "ai": {
+    "refresh": "Refresh",
+    "retry": "Try again",
+    "generatedBy": "{model} · {age}",
+    "caution": "AI-generated from simulated reports. Check before acting on it.",
+    "showMore": "Show more",
+    "showLess": "Show less"
+  },
+  "about": {
+    "title": "About this crisis",
+    "eyebrow": "Parachinar, Kurram District",
+    "modeledOn": "The closure this is modeled on",
+    "closureStat": "{days} days",
+    "closureLabel": "Parachinar’s only road was shut to all traffic from {start} until the first relief convoy was sent on {end}.",
+    "childrenLabel": "children died in Parachinar from shortages of medicine caused by the closure.",
+    "source": "Source",
+    "sources": "Sources",
+    "citation": "{outlet}, {date}",
+    "whyTitle": "Why the road and the phones fail together",
+    "whyText": "The violence that closes the road also brings security shutdowns of mobile phones and internet, so people can’t call for help or report shortages just when supplies run out.",
+    "commsFact": "Mobile data (3G/4G) in Kurram has been suspended for nearly two years.",
+    "existingTitle": "It formalizes coordination that already happens",
+    "existingText": "Pharmacies, DHQ Hospital staff and Edhi Foundation volunteers already coordinate by phone and WhatsApp during closures. Kurram Pul makes that shared, structured and verifiable, and adds what phone calls can’t: matching spare stock in one area to shortages in another.",
+    "jirgaTitle": "Why jirga elders verify reports",
+    "jirgaText": "Kurram’s closures have been resolved through jirga mediation, so reports here are vouched for by named jirga elders and facility records rather than an anonymous crowd.",
+    "jirgaFact": "A grand jirga in Kohat brokered the 14-point peace accord both sides signed on {date}.",
+    "exploreTitle": "Try it in a minute",
+    "explore": {
+      "dashboard": "See which areas are short of what, who verified each report, and which areas have gone silent.",
+      "matcher": "See spare stock in one area matched to shortages nearby.",
+      "triage": "Tap a critical example to see a case classified and logged.",
+      "forecast": "See the risk of the next closure and what to stock up on."
+    },
+    "introContinue": "Open the dashboard",
+    "close": "Close",
+    "outlets": {
+      "dawn": "Dawn",
+      "nation": "The Nation",
+      "geo": "Geo News",
+      "news": "The News",
+      "brecorder": "Business Recorder"
+    }
+  },
+  "nav": {
+    "label": "Main sections",
+    "about": "About",
+    "dashboard": "Shortages",
+    "matcher": "Surplus match",
+    "triage": "Triage",
+    "forecast": "Forecast",
+    "open": "Open menu",
+    "close": "Close menu",
+    "criticalCount": "{count} critical",
+    "matchCount": "{count} matches",
+    "caseCount": "{count} logged"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "status": {
+    "critical": "Critical",
+    "low": "Low",
+    "stable": "Stable",
+    "surplus": "Surplus",
+    "stale": "No recent update"
+  },
+  "verification": {
+    "unverified": "Unverified",
+    "types": {
+      "jirga_elder": "Jirga elder",
+      "institutional": "Facility record",
+      "ngo_coordinator": "Edhi coordinator"
+    }
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{count} min ago",
+    "hoursAgo": "{count} h ago",
+    "daysAgo": "{count} d ago",
+    "lastUpdated": "Last updated {age}",
+    "monthYear": "{month} {year}",
+    "dayMonth": "{day} {month}",
+    "dayMonthYear": "{day} {month} {year}"
+  },
+  "months": {
+    "m1": "Jan",
+    "m2": "Feb",
+    "m3": "Mar",
+    "m4": "Apr",
+    "m5": "May",
+    "m6": "Jun",
+    "m7": "Jul",
+    "m8": "Aug",
+    "m9": "Sep",
+    "m10": "Oct",
+    "m11": "Nov",
+    "m12": "Dec"
+  },
+  "dashboard": {
+    "title": "Shortage dashboard",
+    "subtitle": "Supply reports from each area, weighted by who verified them and how recent they are.",
+    "summary": {
+      "title": "Situation summary",
+      "loading": "Reading {reports} reports and {cases} triage cases…",
+      "notConfigured": "The AI summary is off: no LLM provider is configured on the server.",
+      "failed": "Couldn’t generate the summary.",
+      "outdated": "New triage cases since this summary. Refresh to include them."
+    },
+    "stats": {
+      "label": "Overview",
+      "critical": "Critical shortages",
+      "surplus": "Surplus available",
+      "stale": "Stale reports",
+      "verified": "Verified reports",
+      "verifiedValue": "{verified} of {total}"
+    },
+    "map": {
+      "title": "District map",
+      "caption": "Illustrative, not to scale. Tap a pin to jump to that area.",
+      "thallRoad": "Thall road: closed",
+      "kharlachi": "Kharlachi crossing: closed",
+      "border": "Afghanistan border",
+      "legend": "Legend"
+    },
+    "area": {
+      "triageCases": "Triage cases: {count}",
+      "updated": "Updated {age}",
+      "noReports": "No reports from this area yet.",
+      "blindSpot": "No update for {hours} h. Silence may mean conditions are getting worse.",
+      "reportedBy": "Reported by {name}",
+      "newCase": "New"
+    }
+  },
+  "triage": {
+    "title": "Triage assistant",
+    "subtitle": "Describe the patient’s condition. You’ll get an urgency level and a next step.",
+    "disclaimer": "This is a prototype triage tool, not a substitute for medical care.",
+    "modeLabel": "Connection",
+    "modeChat": "Chat",
+    "modeSms": "SMS mode",
+    "smsNote": "Simulated SMS gateway: plain text only, for when mobile data is down.",
+    "areaLabel": "Patient’s area",
+    "areaPlaceholder": "Choose an area",
+    "areaFirst": "Choose the patient’s area first.",
+    "inputLabel": "Describe the patient’s condition",
+    "inputPlaceholder": "e.g. My 2-year-old has a high fever and isn’t drinking",
+    "answerPlaceholder": "Answer the question above",
+    "send": "Send",
+    "thinking": "Classifying…",
+    "intro": "Each classified case is logged to the shortage dashboard for the area you choose.",
+    "you": "You",
+    "service": "Kurram Pul",
+    "reason": "Why",
+    "action": "Next step",
+    "supplyNeeded": "Supply needed",
+    "followUp": "Follow-up question",
+    "flagged": "Flagged for air ambulance / Edhi Foundation",
+    "edhiLine": "Edhi ambulance helpline: 115",
+    "nearestStock": "Nearest reported stock",
+    "stockLine": "{reporter}, {area}",
+    "sameArea": "in your area",
+    "noStock": "No area has reported spare {supply}.",
+    "recheck": "If symptoms get worse, send a new message.",
+    "loggedTo": "Logged to the dashboard for {area}.",
+    "viewOnDashboard": "View on dashboard",
+    "failed": "Couldn’t classify this message.",
+    "notConfigured": "The triage assistant is off: no LLM provider is configured on the server.",
+    "errorFallback": "If this could be an emergency, contact Edhi (115) now.",
+    "retry": "Try again",
+    "newCase": "New case",
+    "tiers": {
+      "critical": "Critical: evacuate",
+      "needs_supplies": "Needs medicine or supplies",
+      "routine": "Routine: monitor"
+    },
+    "tiersShort": {
+      "critical": "Critical",
+      "needs_supplies": "Needs supplies",
+      "routine": "Routine"
+    },
+    "quickTitle": "Try a case in one tap",
+    "quick": {
+      "critical": {
+        "label": "Infant, high fever, trouble breathing",
+        "text": "My 8-month-old baby has had a high fever since last night and is struggling to breathe"
+      },
+      "needs_supplies": {
+        "label": "Diabetic, out of insulin for 2 days",
+        "text": "My father is diabetic and has been out of insulin for 2 days. He is tired and thirsty, but awake and not vomiting"
+      },
+      "routine": {
+        "label": "Mild cold symptoms",
+        "text": "Mild cold for two days: runny nose and a light cough, no fever"
+      }
+    },
+    "recentTitle": "Recently logged",
+    "recentMore": "+{count} more",
+    "viewShortages": "Shortages",
+    "viewMatcher": "Surplus match"
+  },
+  "sms": {
+    "header": "KURRAM PUL",
+    "tiers": {
+      "critical": "CRITICAL",
+      "needs_supplies": "NEEDS SUPPLIES",
+      "routine": "ROUTINE"
+    },
+    "next": "NEXT",
+    "need": "NEED",
+    "stock": "NEAREST STOCK",
+    "edhi": "EDHI AMBULANCE 115",
+    "logged": "LOGGED",
+    "question": "QUESTION",
+    "error": "ERROR",
+    "counter": "{count} chars · {segments} SMS",
+    "send": "Send SMS",
+    "disclaimer": "Prototype triage tool, not a substitute for medical care."
+  },
+  "matcher": {
+    "title": "Surplus matcher",
+    "subtitle": "Spare stock in one area matched to shortages nearby: same-day fixes that don’t wait for the road to reopen.",
+    "matchesTitle": "Matches found: {count}",
+    "rules": "Surplus or stable stock matched to critical or low stock and triage needs for the same supply in other areas. Critical needs first, then nearest.",
+    "none": "No matches right now: no area has spare stock of anything another area is short of.",
+    "from": "From",
+    "to": "To",
+    "nextDoor": "Next door",
+    "hopsAway": "{hops} areas away",
+    "rationale": "{from} has {offer} and is {distance} {to}, which has {need}.",
+    "offer": {
+      "surplus": "surplus {supply}",
+      "stable": "a stable stock of {supply}"
+    },
+    "need": {
+      "critical": "a critical {supply} shortage",
+      "needs_supplies": "low {supply} stock"
+    },
+    "distance": {
+      "near": "a short distance from",
+      "far": "{hops} areas away from"
+    },
+    "triageWaiting": "Triage cases waiting on it: {count}",
+    "staleOffer": "Check first: this stock report is {hours} h old.",
+    "staleNeed": "Confirm first: this shortage report is {hours} h old.",
+    "alsoFrom": "Also available from: {sources}",
+    "notify": "Notify coordinator",
+    "notified": "Coordinator notified · {age}",
+    "notifyNote": "Demo: “Notify coordinator” doesn’t send a real message.",
+    "noMatchTitle": "No nearby surplus",
+    "noMatchIntro": "Nobody has reported spare stock of these. They need outside supply: an air drop or an Edhi delivery.",
+    "review": {
+      "title": "AI match review",
+      "loading": "Checking {reports} reports for matches…",
+      "notConfigured": "The AI review is off: no LLM provider is configured on the server. The matches here still work without it.",
+      "failed": "Couldn’t get the AI review. The matches here still work without it.",
+      "outdated": "Reports have changed since this review. Refresh to include them."
+    }
+  },
+  "forecast": {
+    "title": "Closure-risk forecaster",
+    "subtitle": "Flags rising risk of a new road closure from past closures and current signals, so hospitals and NGOs can stock up before the road shuts, not after.",
+    "riskLabel": "Risk of a new closure",
+    "levels": {
+      "low": "Low",
+      "elevated": "Elevated",
+      "high": "High"
+    },
+    "riskValue": "{level} risk",
+    "assessing": "Assessing…",
+    "unavailable": "Not available",
+    "estimateNote": "A pattern-based estimate from past closures, not a prediction.",
+    "reasoningTitle": "Why, and what to stock up on",
+    "loading": "Comparing {closures} past closures with {signals} current signals…",
+    "notConfigured": "The forecast is off: no LLM provider is configured on the server. The signals and history are still shown.",
+    "failed": "Couldn’t get the forecast. The signals and history are still shown.",
+    "signalsTitle": "Current signals",
+    "severity": {
+      "low": "Minor",
+      "moderate": "Moderate",
+      "high": "Serious"
+    },
+    "historyTitle": "Past closures",
+    "historyCaption": "How long the Thall–Parachinar road stayed closed each time. Illustrative history for the demo.",
+    "stats": {
+      "count": "Closures",
+      "median": "Median length",
+      "longest": "Longest"
+    },
+    "days": "{count} days",
+    "medianLine": "Dashed line: median, {count} days"
+  },
+  "areas": {
+    "Parachinar City Center": "Parachinar City Center",
+    "Pewar": "Pewar",
+    "Alizai": "Alizai",
+    "Balishkhel": "Balishkhel",
+    "Sadda": "Sadda",
+    "Bagan": "Bagan"
+  },
+  "supplies": {
+    "Insulin": "Insulin",
+    "Oxygen": "Oxygen",
+    "Surgical supplies": "Surgical supplies",
+    "Antibiotics": "Antibiotics",
+    "Paracetamol": "Paracetamol",
+    "IV fluids": "IV fluids",
+    "Asthma inhalers": "Asthma inhalers",
+    "Baby formula": "Baby formula",
+    "ORS": "ORS"
+  },
+  "names": {
+    "DHQ Hospital": "DHQ Hospital",
+    "Al-Shifa Pharmacy": "Al-Shifa Pharmacy",
+    "Community reporter": "Community reporter",
+    "Sadda Medical Store": "Sadda Medical Store",
+    "Alizai Pharmacy": "Alizai Pharmacy",
+    "Alizai Basic Health Unit": "Alizai Basic Health Unit",
+    "Balishkhel Medical Store": "Balishkhel Medical Store",
+    "Edhi Foundation field coordinator": "Edhi Foundation field coordinator",
+    "Pewar Basic Health Unit": "Pewar Basic Health Unit",
+    "DHQ Hospital Parachinar": "DHQ Hospital Parachinar",
+    "Basic Health Unit": "Basic Health Unit",
+    "Malik Jan": "Malik Jan",
+    "Sardar Khan": "Sardar Khan",
+    "Haji Gul": "Haji Gul",
+    "Sher Ali": "Sher Ali",
+    "Noor Muhammad": "Noor Muhammad",
+    "Edhi Foundation field team": "Edhi Foundation field team"
+  },
+  "events": {
+    "Reported tension between tribal groups near Sadda": "Reported tension between tribal groups near Sadda",
+    "Fuel convoy held at Thall pending security clearance": "Fuel convoy held at Thall pending security clearance",
+    "Increased security checkpoints on Thall road": "Increased security checkpoints on Thall road",
+    "Traders in Parachinar bazaar report stockpiling of flour and fuel": "Traders in Parachinar bazaar report stockpiling of flour and fuel",
+    "Tribal clashes after a shooting incident": "Tribal clashes after a shooting incident",
+    "Tribal clashes over a land dispute": "Tribal clashes over a land dispute",
+    "Security incident on convoy": "Security incident on convoy",
+    "Land dispute clashes spreading across several villages": "Land dispute clashes spreading across several villages",
+    "Attack on a passenger convoy, then tribal clashes over land": "Attack on a passenger convoy, then tribal clashes over land",
+    "Attack on an aid convoy after partial reopening": "Attack on an aid convoy after partial reopening"
+  }
+}

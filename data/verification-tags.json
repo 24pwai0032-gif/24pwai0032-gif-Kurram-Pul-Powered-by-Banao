@@ -1,0 +1,60 @@
+{
+  "tags": [
+    {
+      "label": "Hospital record",
+      "type": "institutional",
+      "name": "DHQ Hospital Parachinar",
+      "area": "Parachinar City Center",
+      "description": "Count taken from the hospital's own stock register."
+    },
+    {
+      "label": "Health facility record",
+      "type": "institutional",
+      "name": "Basic Health Unit",
+      "area": null,
+      "description": "Count taken from a Basic Health Unit's stock register."
+    },
+    {
+      "label": "Area elder - Malik Jan",
+      "type": "jirga_elder",
+      "name": "Malik Jan",
+      "area": "Sadda",
+      "description": "Jirga representative for Sadda. Confirms reports in person or by phone."
+    },
+    {
+      "label": "Area elder - Sardar Khan",
+      "type": "jirga_elder",
+      "name": "Sardar Khan",
+      "area": "Alizai",
+      "description": "Jirga representative for Alizai. Confirms reports in person or by phone."
+    },
+    {
+      "label": "Area elder - Haji Gul",
+      "type": "jirga_elder",
+      "name": "Haji Gul",
+      "area": "Balishkhel",
+      "description": "Jirga representative for Balishkhel. Confirms reports in person or by phone."
+    },
+    {
+      "label": "Area elder - Sher Ali",
+      "type": "jirga_elder",
+      "name": "Sher Ali",
+      "area": "Pewar",
+      "description": "Jirga representative for Pewar. Confirms reports in person or by phone."
+    },
+    {
+      "label": "Area elder - Noor Muhammad",
+      "type": "jirga_elder",
+      "name": "Noor Muhammad",
+      "area": "Bagan",
+      "description": "Jirga representative for Bagan. Confirms reports in person or by phone."
+    },
+    {
+      "label": "Edhi Foundation coordinator",
+      "type": "ngo_coordinator",
+      "name": "Edhi Foundation field team",
+      "area": null,
+      "description": "Edhi Foundation field coordinator who has seen the shortage first-hand."
+    }
+  ]
+}

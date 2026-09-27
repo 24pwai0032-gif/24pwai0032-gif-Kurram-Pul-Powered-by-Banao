@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Components use these via Tailwind (bg-surface, text-critical-ink, ...),
+ * so dark mode is a token swap here, not dark: variants everywhere.
+ *
+ * The palette comes from Kurram's own landscape, deliberately not a generic app palette:
+ * riverstone and limestone neutrals, deodar-pine green for the sidebar, walnut brown for
+ * the logo mark only, and olive for the map's land. It's calm and clinical, with no motifs.
+ *
+ * Severity: the plain token (--critical) colors marks such as pins, dots and borders;
+ * -bg and -ink are the badge tint and its text. Status is never shown by color alone:
+ * every badge and pin also carries an icon or glyph plus a label. These status colors were
+ * checked with a palette validator for separation in both themes.
+ */
+:root {
+  color-scheme: light;
+
+  --page: #ebebe3; /* riverstone */
+  --surface: #f8f7f2; /* limestone */
+  --surface-2: #e2e1d7;
+  --ink: #1c211f; /* basalt */
+  --ink-2: #434a46;
+  --muted: #5f6661;
+  --line: rgb(28 33 31 / 0.13);
+  --line-strong: rgb(28 33 31 / 0.28);
+  --focus: #3a67a0;
+
+  --side: #1e2b27; /* deodar */
+  --side-2: #2b3b36;
+  --on-side: #eeede4;
+  --on-side-muted: #a9b5af;
+  --brand: #6b4a34; /* walnut: the logo mark only */
+
+  --land: #d8dbc4; /* olive: map terrain only */
+  --land-line: #b5b99b;
+  --road: #8e8a7e;
+
+  --critical: #b23b2a;
+  --critical-bg: #f5ddd7;
+  --critical-ink: #7a2518;
+  --low: #c98a2b;
+  --low-bg: #f3e6cb;
+  --low-ink: #6b4611;
+  --stable: #56823a;
+  --stable-bg: #dfead5;
+  --stable-ink: #34521f;
+  --surplus: #3a67a0;
+  --surplus-bg: #dce5ef;
+  --surplus-ink: #22406b;
+  --stale: #c4c6be;
+  --stale-bg: #e6e6df;
+  --stale-ink: #545a55;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --page: #121614;
+    --surface: #1b201e;
+    --surface-2: #252b28;
+    --ink: #ecebe4;
+    --ink-2: #c5cac4;
+    --muted: #98a09a;
+    --line: rgb(236 235 228 / 0.12);
+    --line-strong: rgb(236 235 228 / 0.26);
+    --focus: #7196d6;
+
+    --side: #0e1412;
+    --side-2: #1e2a26;
+    --on-side: #ecebe4;
+    --on-side-muted: #93a19a;
+    --brand: #a87650;
+
+    --land: #262b22;
+    --land-line: #3c4234;
+    --road: #5e625a;
+
+    --critical: #e0645a;
+    --critical-bg: #3b1c18;
+    --critical-ink: #f4b1a8;
+    --low: #d9a447;
+    --low-bg: #382b13;
+    --low-ink: #f1cd8c;
+    --stable: #5f9450;
+    --stable-bg: #1c2a18;
+    --stable-ink: #a9d19a;
+    --surplus: #7196d6;
+    --surplus-bg: #18243a;
+    --surplus-ink: #b3c8ec;
+    --stale: #5a5f5b;
+    --stale-bg: #262b28;
+    --stale-ink: #bfc5bf;
+  }
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-focus: var(--focus);
+
+  --color-side: var(--side);
+  --color-side-2: var(--side-2);
+  --color-on-side: var(--on-side);
+  --color-on-side-muted: var(--on-side-muted);
+  --color-brand: var(--brand);
+
+  --color-critical: var(--critical);
+  --color-critical-bg: var(--critical-bg);
+  --color-critical-ink: var(--critical-ink);
+  --color-low: var(--low);
+  --color-low-bg: var(--low-bg);
+  --color-low-ink: var(--low-ink);
+  --color-stable: var(--stable);
+  --color-stable-bg: var(--stable-bg);
+  --color-stable-ink: var(--stable-ink);
+  --color-surplus: var(--surplus);
+  --color-surplus-bg: var(--surplus-bg);
+  --color-surplus-ink: var(--surplus-ink);
+  --color-stale: var(--stale);
+  --color-stale-bg: var(--stale-bg);
+  --color-stale-ink: var(--stale-ink);
+
+  --font-sans: var(--font-noto-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background: var(--page);
+    color: var(--ink);
+  }
+
+  /*
+   * One family across three scripts: Noto Sans (English) and Noto Naskh Arabic (Urdu and
+   * Pashto interface text) are drawn to share x-height and weight, so mixed lines don't jump.
+   * Naskh carries Pashto's own letters (ټ ځ څ ډ ړ ږ ښ ګ ڼ).
+   */
+  [lang="ur"],
+  [lang="ps"] {
+    font-family: var(--font-naskh), var(--font-noto-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* English blocks inside an Urdu/Pashto page switch back to the Latin face. */
+  [lang="en"] {
+    font-family: var(--font-noto-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Naskh has taller ascenders and descenders than Latin text, so give lines more room. */
+  html[lang="ur"],
+  html[lang="ps"] {
+    --text-xs--line-height: 1.75;
+    --text-sm--line-height: 1.75;
+    --text-base--line-height: 1.7;
+    --text-lg--line-height: 1.6;
+    --text-xl--line-height: 1.5;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+/*
+ * Urdu reading text (headings, the About text, AI answers) is set in Nastaliq, the script
+ * style Urdu readers see in newspapers and signs. Small UI text stays in Naskh, since
+ * Nastaliq gets cramped below 14px. Left unlayered so it wins over Tailwind's per-size line
+ * heights, which Nastaliq's tall letterforms would otherwise clip.
+ */
+html[lang="ur"] :is(h1, h2, h3, .reading):not([lang="en"], [lang="en"] *) {
+  font-family: var(--font-nastaliq), var(--font-naskh), serif;
+  line-height: 2.05;
+}
+html[lang="ur"] .reading:not([lang="en"], [lang="en"] *) {
+  line-height: 2.25;
+}
